@@ -3,7 +3,23 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-    <persistence-unit name="default">
-
+    <persistence-unit name="journey" transaction-type="RESOURCE_LOCAL">
+        <!-- Persistence provider -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="javax.persistence.jdbc.driver"
+                      value="org.postgresql.Driver" />
+            <property name="javax.persistence.jdbc.url"
+                      value="postgres://SNovy-88:selkpwf3tm2M@ep-floral-queen-94798601.eu-central-1.aws.neon.tech/Bee" />
+            <property name="javax.persistence.jdbc.user" value="SNovy-88" />
+            <property name="javax.persistence.jdbc.password" value="selkpwf3tm2M" />
+            <property name="hibernate.dialect"
+                      value="org.hibernate.dialect.H2Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="none" />
+            <property name="show_sql" value="true"/>
+            <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+        </properties>
     </persistence-unit>
 </persistence>

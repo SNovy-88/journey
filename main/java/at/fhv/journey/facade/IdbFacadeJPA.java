@@ -1,2 +1,19 @@
-package at.fhv.journey.facade;public interface IdbFacadeJPA {
+package at.fhv.journey.facade;
+
+import at.fhv.journey.model.Hike;
+
+import java.util.List;
+
+public interface IdbFacadeJPA {
+
+    // INSERT + UPDATE (SAVE)
+    public void save(Object value);
+
+    // DELETE
+    public void delete(Object value);
+
+    // READ
+    public List<Hike> getAllHikes();
+    public Hike getHikeByID(int id);
+
 }
