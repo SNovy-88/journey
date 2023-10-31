@@ -13,7 +13,7 @@
 <!--end of Navigation bar-->
 <div class="background">
   <div class="login">
-      <p> Test: Melde dich bei deinem Konto an <br/>
+      <p> Melde dich bei deinem Konto an <br/>
           oder erstelle gleich hier ein Konto!</p>
       <a href="register.jsp"><button>Jetzt anmelden!</button></a>
   </div>
