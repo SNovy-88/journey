@@ -10,9 +10,10 @@
             <property name="javax.persistence.jdbc.driver"
                       value="org.postgresql.Driver" />
             <property name="javax.persistence.jdbc.url"
-                      value="postgres://SNovy-88:selkpwf3tm2M@ep-floral-queen-94798601.eu-central-1.aws.neon.tech/Bee" />
+                      value="jdbc:postgresql://SNovy-88:selkpwf3tm2M@ep-floral-queen-94798601.eu-central-1.aws.neon.tech:5432/Bee" />
             <property name="javax.persistence.jdbc.user" value="SNovy-88" />
             <property name="javax.persistence.jdbc.password" value="selkpwf3tm2M" />
+
             <property name="hibernate.dialect"
                       value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="none" />
@@ -20,6 +21,7 @@
             <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
+
         </properties>
     </persistence-unit>
 </persistence>
