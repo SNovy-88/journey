@@ -6,8 +6,19 @@ import at.fhv.journey.model.Hike;
 import java.util.List;
 
 public class DatabaseFacade implements IdbFacadeJPA {
+
+    private static DatabaseFacade _instance;
+
+    public static DatabaseFacade getInstance(){
+        if (_instance == null){
+            _instance = new DatabaseFacade();
+        }
+        return _instance;
+    }
+
+
     @Override
-    public void save(Object value) {
+    public void saveObject(Object value) {
         if (value instanceof Hike) {
             HikeBrokerJPA hb = new HikeBrokerJPA();
             hb.save((Hike) value);
@@ -15,7 +26,7 @@ public class DatabaseFacade implements IdbFacadeJPA {
     }
 
     @Override
-    public void delete(Object value) {
+    public void deleteObject(Object value) {
         if (value instanceof Hike) {
             HikeBrokerJPA hb = new HikeBrokerJPA();
             hb.delete((Hike) value);
@@ -25,16 +36,22 @@ public class DatabaseFacade implements IdbFacadeJPA {
     @Override
     public List<Hike> getAllHikes() {
         HikeBrokerJPA hb = new HikeBrokerJPA();
-        List<Hike> hikes = hb.getAll();
-
-        return hikes;
+        return hb.getAll();
     }
 
     @Override
     public Hike getHikeByID(int id) {
         HikeBrokerJPA hb = new HikeBrokerJPA();
-        Hike hike = hb.get(id);
+        return hb.get(id);
+    }
 
-        return hike;
+    public static void main(String[] args) {
+        DatabaseFacade df = new DatabaseFacade();
+        List allHikes = df.getAllHikes();
+        for (Hike h : (List<Hike>) allHikes){
+            System.out.println(h.getName());
+        }
+
+
     }
 }

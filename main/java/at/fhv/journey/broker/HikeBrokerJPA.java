@@ -10,14 +10,11 @@ public class HikeBrokerJPA extends BrokerBaseJPA<Hike> {
 
 
     @Override
-    public Hike get(int value) {
+    public Hike get(int hikeID) {
         EntityManager entityManager = getEntityManager();
-        Query query = entityManager.createQuery("select h from Hike h where hike_id =: hikeID");
-        query.setParameter("hikeID", value);
-        Hike hik = (Hike)query.getSingleResult();
+        Hike hike = entityManager.find(Hike.class, hikeID);
         entityManager.close();
-
-        return hik;
+        return hike;
     }
 
     @Override
@@ -25,7 +22,6 @@ public class HikeBrokerJPA extends BrokerBaseJPA<Hike> {
         EntityManager entityManager = getEntityManager();
         List<Hike> hikes = (List<Hike>) entityManager.createQuery("select h from Hike h", Hike.class).getResultList();
         entityManager.close();
-
         return hikes;
     }
 }
