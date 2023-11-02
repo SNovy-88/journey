@@ -1,8 +1,7 @@
-package at.fhv.journey.broker;
+package at.fhv.journey.hibernate.broker;
 
 import at.fhv.journey.model.Hike;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 
 import java.util.List;
 

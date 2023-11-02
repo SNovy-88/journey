@@ -1,4 +1,4 @@
-package at.fhv.journey.facade;
+package at.fhv.journey.hibernate.facade;
 
 import at.fhv.journey.model.Hike;
 

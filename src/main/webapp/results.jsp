@@ -16,9 +16,11 @@
 <!--Navigation bar-->
 <jsp:include page="navbar.jsp"/>
 <!--end of Navigation bar-->
+<!--
     <a href="traildetails.jsp">
     <img src="pictures/results1.png" alt="Stand-In" class="center">
     <img src="pictures/results2.png" alt="Stand-In" class="center">
     </a>
+-->
 </body>
 </html>
