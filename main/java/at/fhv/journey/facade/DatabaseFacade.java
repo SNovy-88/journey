@@ -47,10 +47,16 @@ public class DatabaseFacade implements IdbFacadeJPA {
 
     public static void main(String[] args) {
         DatabaseFacade df = new DatabaseFacade();
-        List allHikes = df.getAllHikes();
+       /* List allHikes = df.getAllHikes();
         for (Hike h : (List<Hike>) allHikes){
             System.out.println(h.getName());
-        }
+        }*/
+
+        /*Hike testHike = df.getHikeByID(1);
+        System.out.println(testHike.getHike_id()+" "+testHike.getName());*/
+
+        Hike newHike = new Hike(2, "Alplochschlucht - Kirchle loop from Kehlegg", 8.66, 2, 50, 390, 3  );
+        df.saveObject(newHike);
 
 
     }

@@ -19,6 +19,21 @@ public class Hike {
     private int _heightDifference;
     private int _fitnessLevel;
 
+    public Hike(){
+
+    }
+
+    public Hike(int hike_id, String name, double distance, int durationHour, int durationMin,
+                int heightDifference, int fitnessLevel){
+        _hike_id = hike_id;
+        _name = name;
+        BigDecimal dist = BigDecimal.valueOf(distance);
+        _distance = dist;
+        _durationHour = durationHour;
+        _durationMin = durationMin;
+        _heightDifference = heightDifference;
+        _fitnessLevel = fitnessLevel;
+    }
 
     @Id
     @Column(name = "hike_id")
