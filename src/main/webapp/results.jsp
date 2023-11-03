@@ -33,15 +33,23 @@
     <div class="hike-box-container">
         <% for (Hike hike : hikeList) { %>
         <div class="hike-box">
+            <p class="fitnesslevel">
+                <span class="<%= getFitnessLevelCSSClass(hike.getFitnessLevel()) %>"><%= getFitnessLevelLabel(hike.getFitnessLevel()) %></span>
+            </p>
+
             <h2><%= hike.getName() %></h2>
-            <p>
+            <p class="description">
                 <%= hike.getDistance() %>km
+                <span class="output-margin"></span>
                 <%= hike.getDurationHour() %>h
                 <%= hike.getDurationMin() %>min
-                <%= getFitnessLevelLabel(hike.getFitnessLevel()) %>
+                <span class="output-margin"></span>
                 <%= hike.getHeightDifference() %>m
             </p>
-            <!-- Add more properties as needed -->
+            <hr>
+            <p class="linkdetail">
+                <a href="traildetails.jsp?trailId=<%= hike.getHike_id() %>">View Trail Details</a>
+            </p>
         </div>
         <% } %>
     </div>
@@ -50,19 +58,37 @@
 <%! String getFitnessLevelLabel(int fitnessLevel) {
     switch (fitnessLevel) {
         case 1:
-            return "easy";
+            return "EASY";
         case 2:
-            return "moderate";
+            return "MODERATE";
         case 3:
-            return "intermediate";
+            return "INTERMEDIATE";
         case 4:
-            return "challenging";
+            return "CHALLENGING";
         case 5:
-            return "expert";
+            return "EXPERT";
         default:
-            return "unknown";
+            return "UNKNOWN";
     }
 } %>
+
+<%! String getFitnessLevelCSSClass(int fitnessLevel) {
+    switch (fitnessLevel) {
+        case 1:
+            return "fitness-level-easy";
+        case 2:
+            return "fitness-level-moderate";
+        case 3:
+            return "fitness-level-intermediate";
+        case 4:
+            return "fitness-level-challenging";
+        case 5:
+            return "fitness-level-expert";
+        default:
+            return "fitness-level-unknown";
+    }
+} %>
+
 
 </body>
 </html>

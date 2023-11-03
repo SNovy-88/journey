@@ -4,6 +4,7 @@
 
 body {
     height: 100%;
+    background-color: #eaffc7;
 }
 
 .logo {
@@ -46,7 +47,7 @@ body {
 
 .background {
 
-    background-color: rgba(200,245,183,40%);
+    background-color: rgba(0,0,0,40%);
     height: 90vh;
 }
 

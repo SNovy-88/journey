@@ -3,22 +3,79 @@
     flex-wrap: wrap;
 }
 
-/* CSS for styling the hike boxes */
 .hike-box {
     border: 1px solid #ccc;
     padding: 10px;
     margin: 10px;
-    background-color: #c4ff61;
+    background-color: #ffffff;
     width: 100%;
     box-sizing: border-box; /* Include padding and border in the width */
 }
 
 .hike-box h2 {
-    font-size: 18px;
+    font-size: 22px;
     margin-bottom: 5px;
 }
 
-.hike-box p {
-    font-size: 16px;
+.fitnesslevel {
+    font-size: 14px;
+    margin-top: 7px;
+    margin-bottom: 13px;
 }
 
+.description {
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.linkdetail {
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.output-margin {
+    margin-right: 40px;
+}
+
+.fitness-level-easy {
+    background-color: green;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.fitness-level-moderate {
+    background-color: yellow;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.fitness-level-intermediate {
+    background-color: orange;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.fitness-level-challenging {
+    background-color: red;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.fitness-level-expert {
+    background-color: purple;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.fitness-level-unknown {
+    background-color: darkgrey;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
