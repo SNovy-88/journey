@@ -22,7 +22,7 @@ body {
     place-items: center;
 }
 .login > a > button  {
-    background-color: #4CAF50; /* Green */
+    background-color: green;
     border: none;
     color: white;
     padding: 16px 32px;
@@ -51,23 +51,32 @@ body {
     height: 90vh;
 }
 
-/*Horizontale Navigation*/
-#navbar ul{
-    list-style-type:none;
-    margin:0;
-    padding:0;
+#navbar {
+    height: 80px;
+    background-color: #1a1a1a;
+}
+
+#navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
     overflow: hidden;
-    background-color: #000000;
     width: 100%;
     display: flex;
-    font-size:1.3rem;
-
+    font-size: 1.3rem;
 }
+
 #navbar li {
     float: left;
-    margin-block: auto;
-
+    height: 80px;
+    display: flex;
+    align-items: center;
 }
+
+#navbar a {
+    display: block;
+}
+
 .links {
     color:white;
     padding: 100% 16px;

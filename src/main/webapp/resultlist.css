@@ -9,7 +9,8 @@
     margin: 10px;
     background-color: #ffffff;
     width: 100%;
-    box-sizing: border-box; /* Include padding and border in the width */
+    box-sizing: border-box;
+    position: relative;
 }
 
 .hike-box h2 {
@@ -29,9 +30,32 @@
     margin-bottom: 20px;
 }
 
-.linkdetail {
+.link-container {
     font-size: 16px;
-    margin-top: 20px;
+    text-align: left;
+    position: relative;
+}
+
+.safe-trail-link {
+    margin-top: 10px;
+    float: left;
+    color: green;
+    text-decoration: none;
+    background-color: #f5f5f5;
+    padding: 5px 10px;
+    border: 1px solid green;
+    border-radius: 5px;
+}
+
+.trail-details-link {
+    margin-top: 10px;
+    float: right;
+    color: blue;
+    text-decoration: none; /* Remove underline */
+    background-color: #f5f5f5;
+    padding: 5px 10px;
+    border: 1px solid blue;
+    border-radius: 5px;
 }
 
 .output-margin {

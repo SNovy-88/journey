@@ -17,9 +17,8 @@
     <title>Journey | Discover results</title>
 </head>
 <body>
-<!--Navigation bar-->
+
 <jsp:include page="navbar.jsp"/>
-<!--end of Navigation bar-->
 
 <!--
     <a href="traildetails.jsp">
@@ -47,9 +46,10 @@
                 <%= hike.getHeightDifference() %>m
             </p>
             <hr>
-            <p class="linkdetail">
-                <a href="traildetails.jsp?trailId=<%= hike.getHike_id() %>">View Trail Details</a>
-            </p>
+            <div class="links-container">
+                <a class="safe-trail-link" href="#">Safe Trail +</a>
+                <a class="trail-details-link" href="traildetails.jsp?trailId=<%= hike.getHike_id() %>"> View Trail Details ></a>
+            </div>
         </div>
         <% } %>
     </div>
