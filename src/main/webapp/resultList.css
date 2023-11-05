@@ -21,6 +21,8 @@ h1 {
     width: 100%;
     box-sizing: border-box;
     position: relative;
+    overflow: hidden; /* this makes sure that all boxes stay same width even when
+                        text is too long */
 }
 
 /* hike-box-image contains the image for the search result */
@@ -43,6 +45,11 @@ h1 {
     font-size: 22px;
     font-weight: normal;
     margin-bottom: 0px;
+    white-space: nowrap; /* this prevents the text from wrapping */
+    overflow: hidden; /* this hides overflow content if its too long */
+    text-overflow: ellipsis; /* this adds 3 dots when the text is too long */
+    max-width: 90%; /* this makes sure text is only 90% width of the available space*/
+
 }
 
 .fitnesslevel {
