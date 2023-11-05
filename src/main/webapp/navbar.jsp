@@ -15,8 +15,8 @@
 <div id="navbar">
     <ul>
         <li><a href="index.jsp"><img class="logo" src="pictures/logo_white.png" alt="Home button" style="width: 180px; height: auto"></a></li>
-        <li><a class="links" href="search.jsp">ENTDECKEN</a></li>
-        <li><a class="links" href="newtrail.jsp">ERSTELLEN</a></li>
+        <li><a class="links" href="search.jsp">DISCOVER</a></li>
+        <li><a class="links" href="newtrail.jsp">CREATE</a></li>
         <li id="profile" style="float:right"><a href="profile.jsp"><img src="pictures/profile.png" alt="profile-account"></a></li>
     </ul>
 </div>
