@@ -57,6 +57,8 @@
             <!--contains link for the hike details page-->
             <div class="links-container">
                 <!--<a class="safe-trail-link" href="#">Safe Trail +</a>--> <!--link for favourites not working yet-->
+                <!-- zur späteren implementierung sollte dies ein button sein,
+                der die hike_id mitbekommt, zur späteren abfrage-->
                 <a class="trail-details-link" href="traildetails.jsp?trailId=<%= hike.getHike_id() %>"> View Trail Details ></a>
             </div>
         </div>
