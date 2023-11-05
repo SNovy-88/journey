@@ -4,6 +4,7 @@ h1 {
     margin-bottom: 15px;
 }
 
+/* hike-box-container contains every hike element from the search results*/
 .hike-box-container {
     display: flex;
     flex-wrap: wrap;
@@ -11,6 +12,7 @@ h1 {
     margin-right: 20%;
 }
 
+/* hike-box is one hike in the search results list*/
 .hike-box {
     border: 1px solid #ccc;
     padding: 10px;
@@ -21,6 +23,7 @@ h1 {
     position: relative;
 }
 
+/* hike-box-image contains the image for the search result */
 .hike-box-image img {
     width: 150px;
     height: auto;
@@ -29,11 +32,13 @@ h1 {
      to be on the left instead of the two div elements being underneath each other*/
 }
 
+/* hike-box-information contains all the information related to one search result */
 .hike-box-information {
     margin-left: 160px;
     overflow: hidden;
 }
 
+/* h2 is the hike name */
 .hike-box h2 {
     font-size: 22px;
     font-weight: normal;
@@ -46,20 +51,22 @@ h1 {
     margin-bottom: 13px;
 }
 
+/* container for distance, duration and height difference */
 .description {
     font-size: 16px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-
+/* link-container contains link to details page of the hike result*/
 .link-container {
     font-size: 16px;
     text-align: left;
     position: relative;
 }
 
-.safe-trail-link {
+/* this is not working yet*/
+/*.safe-trail-link {
     margin-top: 10px;
     float: left;
     color: green;
@@ -68,8 +75,9 @@ h1 {
     padding: 5px 10px;
     border: 1px solid green;
     border-radius: 5px;
-}
+}*/
 
+/* Link to the details page of the hike result */
 .trail-details-link {
     margin-top: 10px;
     float: right;
@@ -81,9 +89,11 @@ h1 {
     border-radius: 5px;
 }
 
+/* placeholder for the white space between distance, duration, height difference details*/
 .output-margin {
     margin-right: 40px;
 }
+
 
 .fitness-level-easy {
     background-color: green;

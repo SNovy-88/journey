@@ -4,6 +4,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8"%>
 
+<!--Gets List of all the hikes-->
 <%
     HikeBrokerJPA hb = new HikeBrokerJPA();
     List<Hike> hikeList = hb.getAll();
@@ -20,28 +21,29 @@
 
 <jsp:include page="navbar.jsp"/>
 
-<!--
-    <a href="traildetails.jsp">
-    <img src="pictures/results1.png" alt="Stand-In" class="center">
-    <img src="pictures/results2.png" alt="Stand-In" class="center">
-    </a>
--->
-
 <h1>List of Hike Trails</h1>
 
-
+<!--hike-box-container contains every hike element from the search results-->
 <div class="hike-box-container">
     <% for (Hike hike : hikeList) { %>
+
+    <!--hike-box is one hike in the search results list-->
     <div class="hike-box">
+
+        <!--element containing the hike image-->
         <div class="hike-box-image">
             <img src="pictures/examples/ex02.jpg" alt="Hike image">
         </div>
+
+        <!--contains all the information related to one search result-->
         <div class="hike-box-information">
             <p class="fitnesslevel">
                 <span class="<%= getFitnessLevelCSSClass(hike.getFitnessLevel()) %>"><%= getFitnessLevelLabel(hike.getFitnessLevel()) %></span>
             </p>
 
             <h2><%= hike.getName() %></h2>
+
+            <!--container for distance, duration and height difference-->
             <p class="description">
                 <%= hike.getDistance() %>km
                 <span class="output-margin"></span>
@@ -51,8 +53,10 @@
                 <%= hike.getHeightDifference() %>m
             </p>
             <hr>
+
+            <!--contains link for the hike details page-->
             <div class="links-container">
-                <!--<a class="safe-trail-link" href="#">Safe Trail +</a>-->
+                <!--<a class="safe-trail-link" href="#">Safe Trail +</a>--> <!--link for favourites not working yet-->
                 <a class="trail-details-link" href="traildetails.jsp?trailId=<%= hike.getHike_id() %>"> View Trail Details ></a>
             </div>
         </div>
