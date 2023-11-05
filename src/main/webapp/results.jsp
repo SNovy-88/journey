@@ -27,8 +27,9 @@
     </a>
 -->
 
+<h1>List of Hike Trails</h1>
+
 <div class="hike-list">
-    <h1>List of Hike Trails</h1>
     <div class="hike-box-container">
         <% for (Hike hike : hikeList) { %>
         <div class="hike-box">
