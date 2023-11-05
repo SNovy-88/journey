@@ -47,7 +47,7 @@
             </p>
             <hr>
             <div class="links-container">
-                <a class="safe-trail-link" href="#">Safe Trail +</a>
+                <!--<a class="safe-trail-link" href="#">Safe Trail +</a>-->
                 <a class="trail-details-link" href="traildetails.jsp?trailId=<%= hike.getHike_id() %>"> View Trail Details ></a>
             </div>
         </div>
