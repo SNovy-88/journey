@@ -14,14 +14,14 @@
 <head lang="en">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="resultlist.css">
+    <link rel="stylesheet" href="resultList.css">
     <title>Journey | Discover results</title>
 </head>
 <body>
 
 <jsp:include page="navbar.jsp"/>
 
-<h1>List of Hike Trails</h1>
+<h1>List of all Hikes</h1>
 
 <!--hike-box-container contains every hike element from the search results-->
 <div class="hike-box-container">
@@ -58,8 +58,12 @@
             <div class="links-container">
                 <!--<a class="safe-trail-link" href="#">Safe Trail +</a>--> <!--link for favourites not working yet-->
                 <!-- zur späteren implementierung sollte dies ein button sein,
-                der die hike_id mitbekommt, zur späteren abfrage-->
-                <a class="trail-details-link" href="traildetails.jsp?trailId=<%= hike.getHike_id() %>"> View Trail Details ></a>
+                der die hike_id mitbekommt, zur späteren details abfrage, sowas in der art:
+                <form action="hikeDetails.jsp" >
+                    <input type="submit" value="detailsPage">
+                </form>
+                -->
+                <a class="hike-details-link" href="hikeDetails.jsp?trailId=<%= hike.getHike_id() %>"> View Hike Details ></a>
             </div>
         </div>
     </div>
