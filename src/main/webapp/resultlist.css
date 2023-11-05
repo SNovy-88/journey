@@ -21,6 +21,24 @@ h1 {
     position: relative;
 }
 
+.hike-box-image {
+    width: 100px;
+    height: auto;
+}
+
+.hike-box-image img {
+    width: 100px;
+    height: auto;
+    float: left;
+    /*this float and the overflow:hidden option in hike-box-information allows image
+     to be on the left instead of the two div elements being underneath each other*/
+}
+
+.hike-box-information {
+    margin-left: 110px;
+    overflow: hidden;
+}
+
 .hike-box h2 {
     font-size: 22px;
     margin-bottom: 5px;

@@ -29,10 +29,14 @@
 
 <h1>List of Hike Trails</h1>
 
-<div class="hike-list">
-    <div class="hike-box-container">
-        <% for (Hike hike : hikeList) { %>
-        <div class="hike-box">
+
+<div class="hike-box-container">
+    <% for (Hike hike : hikeList) { %>
+    <div class="hike-box">
+        <div class="hike-box-image">
+            <img src="pictures/examples/ex02.jpg" alt="Hike image">
+        </div>
+        <div class="hike-box-information">
             <p class="fitnesslevel">
                 <span class="<%= getFitnessLevelCSSClass(hike.getFitnessLevel()) %>"><%= getFitnessLevelLabel(hike.getFitnessLevel()) %></span>
             </p>
@@ -52,9 +56,10 @@
                 <a class="trail-details-link" href="traildetails.jsp?trailId=<%= hike.getHike_id() %>"> View Trail Details ></a>
             </div>
         </div>
-        <% } %>
     </div>
+    <% } %>
 </div>
+
 
 <%! String getFitnessLevelLabel(int fitnessLevel) {
     switch (fitnessLevel) {
