@@ -1,13 +1,13 @@
 <%@ page import="at.fhv.journey.model.Hike" %>
-<%@ page import="at.fhv.journey.hibernate.broker.HikeBrokerJPA" %>
 <%@ page import="java.util.List" %>
+<%@ page import="at.fhv.journey.hibernate.facade.DatabaseFacade" %>
 
 <%@ page contentType="text/html;charset=UTF-8"%>
 
 <!--Gets List of all the hikes-->
 <%
-    HikeBrokerJPA hb = new HikeBrokerJPA();
-    List<Hike> hikeList = hb.getAll();
+    DatabaseFacade df = new DatabaseFacade();
+    List<Hike> hikeList = df.getAllHikes();
 %>
 
 <html>
