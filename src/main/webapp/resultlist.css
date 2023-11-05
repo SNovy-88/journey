@@ -21,13 +21,8 @@ h1 {
     position: relative;
 }
 
-.hike-box-image {
-    width: 100px;
-    height: auto;
-}
-
 .hike-box-image img {
-    width: 100px;
+    width: 150px;
     height: auto;
     float: left;
     /*this float and the overflow:hidden option in hike-box-information allows image
@@ -35,13 +30,14 @@ h1 {
 }
 
 .hike-box-information {
-    margin-left: 110px;
+    margin-left: 160px;
     overflow: hidden;
 }
 
 .hike-box h2 {
     font-size: 22px;
-    margin-bottom: 5px;
+    font-weight: normal;
+    margin-bottom: 0px;
 }
 
 .fitnesslevel {
@@ -52,9 +48,10 @@ h1 {
 
 .description {
     font-size: 16px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
+
 
 .link-container {
     font-size: 16px;
