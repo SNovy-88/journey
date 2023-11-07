@@ -2,22 +2,25 @@
   Created by IntelliJ IDEA.
   User: wolfp
   Date: 26.10.2023
-  Time: 14:34
+  Time: 13:33
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8"%>
-<html>
-<head lang="de">
+<!DOCTYPE html>
+<html lang="de">
+<head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles.css">
-    <title>Profil</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+    <title>Wanderroute erstellen</title>
+
+
 </head>
 <body>
 <!--Navigation bar-->
-<jsp:include page="navbar.jsp"/>
+<jsp:include page="navBar.jsp"/>
 <!--end of Navigation bar-->
-<img src="pictures/profiledetail.png" alt="Stand-In" class="center">
 
+    <p>todo: formular</p>
+    <img src="pictures/newpath.png" alt="Stand-In" class="center">
 </body>
 </html>
-

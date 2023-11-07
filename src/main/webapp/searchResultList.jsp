@@ -13,13 +13,13 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="resultList.css">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/resultList.css">
     <title>Journey | Discover results</title>
 </head>
 <body>
 
-<jsp:include page="navbar.jsp"/>
+<jsp:include page="navBar.jsp"/>
 
 <h1>List of all Hikes</h1>
 
