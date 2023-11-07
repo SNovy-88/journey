@@ -91,4 +91,25 @@ public class Hike {
     public void setFitnessLevel(int fitnessLevel) {
         _fitnessLevel = fitnessLevel;
     }
+
+
+    //Functions to convert 1-5 Scales into String output
+
+    public String convertFitnessLevelToString() {
+
+        switch (_fitnessLevel) {
+            case 1:
+                return "EASY";
+            case 2:
+                return "MODERATE";
+            case 3:
+                return "INTERMEDIATE";
+            case 4:
+                return "CHALLENGING";
+            case 5:
+                return "EXPERT";
+            default:
+                return "UNKNOWN";
+        }
+    }
 }
