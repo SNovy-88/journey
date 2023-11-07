@@ -3,19 +3,18 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="CSS/styles.css">
   <title>index</title>
 </head>
 
 <body class="index">
 <!--Navigation bar-->
-<jsp:include page="navbar.jsp"/>
+<jsp:include page="navBar.jsp"/>
 <!--end of Navigation bar-->
 <div class="background">
   <div class="login">
-      <p> Melde dich bei deinem Konto an <br/>
-          oder erstelle gleich hier ein Konto!</p>
-      <a href="register.jsp"><button>Jetzt anmelden!</button></a>
+      <p> Find your path, embrace the journey! </p>
+      <a href="register.jsp"><button>Sign in or register!</button></a>
   </div>
 
 </div>

@@ -9,12 +9,12 @@
 <html>
 <head lang="de">
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="CSS/styles.css">
     <title>Anmeldung</title>
 </head>
 <body>
     <!--Navigation bar-->
-    <jsp:include page="navbar.jsp"/>
+    <jsp:include page="navBar.jsp"/>
     <!--end of Navigation bar-->
     <a href="welcome.jsp">
         <img src="pictures/anmeldung.png" alt="Stand-In" class="center">
