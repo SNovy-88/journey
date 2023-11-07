@@ -1,0 +1,145 @@
+h1 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+/* hike-box-container contains every hike element from the search results*/
+.hike-box-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+/* hike-box is one hike in the search results list*/
+.hike-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    background-color: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden; /* this makes sure that all boxes stay same width even when
+                        text is too long */
+}
+
+/* hike-box-image contains the image for the search result */
+.hike-box-image img {
+    width: 150px;
+    height: auto;
+    float: left;
+    /*this float and the overflow:hidden option in hike-box-information allows image
+     to be on the left instead of the two div elements being underneath each other*/
+}
+
+/* hike-box-information contains all the information related to one search result */
+.hike-box-information {
+    margin-left: 160px;
+    overflow: hidden;
+}
+
+/* h2 is the hike name */
+.hike-box h2 {
+    font-size: 22px;
+    font-weight: normal;
+    margin-bottom: 0px;
+    white-space: nowrap; /* this prevents the text from wrapping */
+    overflow: hidden; /* this hides overflow content if its too long */
+    text-overflow: ellipsis; /* this adds 3 dots when the text is too long */
+    max-width: 90%; /* this makes sure text is only 90% width of the available space*/
+
+}
+
+.fitnesslevel {
+    font-size: 14px;
+    margin-top: 7px;
+    margin-bottom: 13px;
+}
+
+/* container for distance, duration and height difference */
+.description {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* link-container contains link to details page of the hike result*/
+.link-container {
+    font-size: 16px;
+    text-align: left;
+    position: relative;
+}
+
+/* this is not working yet*/
+/*.safe-trail-link {
+    margin-top: 10px;
+    float: left;
+    color: green;
+    text-decoration: none;
+    background-color: #f5f5f5;
+    padding: 5px 10px;
+    border: 1px solid green;
+    border-radius: 5px;
+}*/
+
+/* Link to the details page of the hike result */
+.hike-details-link {
+    margin-top: 10px;
+    float: right;
+    color: blue;
+    text-decoration: none; /* Remove underline */
+    background-color: #f5f5f5;
+    padding: 5px 10px;
+    border: 1px solid blue;
+    border-radius: 5px;
+}
+
+/* placeholder for the white space between distance, duration, height difference details*/
+.output-margin {
+    margin-right: 40px;
+}
+
+
+.fitness-level-easy {
+    background-color: green;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.fitness-level-moderate {
+    background-color: yellow;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.fitness-level-intermediate {
+    background-color: orange;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.fitness-level-challenging {
+    background-color: red;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.fitness-level-expert {
+    background-color: purple;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.fitness-level-unknown {
+    background-color: darkgrey;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
