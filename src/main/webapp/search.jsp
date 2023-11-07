@@ -9,14 +9,14 @@
 <html>
 <head lang="de">
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="CSS/styles.css">
     <title>Suche</title>
 </head>
 <body>
 <!--Navigation bar-->
-<jsp:include page="navbar.jsp"/>
+<jsp:include page="navBar.jsp"/>
 <!--end of Navigation bar-->
-    <a href="results.jsp">
+    <a href="searchResultList.jsp">
         <img src="pictures/search.png" alt="Stand-In" class="center">
     </a>
 </body>

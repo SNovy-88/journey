@@ -44,7 +44,7 @@ body {
 }
 
 .index {
-    background-image: url("pictures/examples/ex02.jpg");
+    background-image: url("../pictures/examples/ex02.jpg");
     background-size: cover;
     background-repeat: no-repeat;
 }

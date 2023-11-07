@@ -3,13 +3,13 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="CSS/styles.css">
   <title>index</title>
 </head>
 
 <body class="index">
 <!--Navigation bar-->
-<jsp:include page="navbar.jsp"/>
+<jsp:include page="navBar.jsp"/>
 <!--end of Navigation bar-->
 <div class="background">
   <div class="login">

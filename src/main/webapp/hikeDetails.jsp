@@ -9,12 +9,12 @@
 <html>
 <head lang="de">
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="CSS/styles.css">
     <title>Wegdetails</title>
 </head>
 <body>
 <!--Navigation bar-->
-<jsp:include page="navbar.jsp"/>
+<jsp:include page="navBar.jsp"/>
 <!--end of Navigation bar-->
 
     <img src="pictures/hikeDetails.png" alt="Stand-In" class="center">
