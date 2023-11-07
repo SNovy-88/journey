@@ -3,6 +3,7 @@
 <%@ page import="at.fhv.journey.hibernate.facade.DatabaseFacade" %>
 
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
 
 <!--Gets List of all the hikes-->
 <%
@@ -38,7 +39,7 @@
         <!--contains all the information related to one search result-->
         <div class="hike-box-information">
             <p class="fitnesslevel">
-                <span class="<%= getFitnessLevelCSSClass(hike.getFitnessLevel()) %>"><%= getFitnessLevelLabel(hike.getFitnessLevel()) %></span>
+                <span class="<%= getFitnessLevelCSSClass(hike) %>"><%= hike.convertFitnessLevelToString() %></span>
             </p>
 
             <h2><%= hike.getName() %></h2>
@@ -69,42 +70,6 @@
     </div>
     <% } %>
 </div>
-
-
-<%! String getFitnessLevelLabel(int fitnessLevel) {
-    switch (fitnessLevel) {
-        case 1:
-            return "EASY";
-        case 2:
-            return "MODERATE";
-        case 3:
-            return "INTERMEDIATE";
-        case 4:
-            return "CHALLENGING";
-        case 5:
-            return "EXPERT";
-        default:
-            return "UNKNOWN";
-    }
-} %>
-
-<%! String getFitnessLevelCSSClass(int fitnessLevel) {
-    switch (fitnessLevel) {
-        case 1:
-            return "fitness-level-easy";
-        case 2:
-            return "fitness-level-moderate";
-        case 3:
-            return "fitness-level-intermediate";
-        case 4:
-            return "fitness-level-challenging";
-        case 5:
-            return "fitness-level-expert";
-        default:
-            return "fitness-level-unknown";
-    }
-} %>
-
 
 </body>
 </html>
