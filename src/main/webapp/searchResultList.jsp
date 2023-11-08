@@ -1,15 +1,8 @@
 <%@ page import="at.fhv.journey.model.Hike" %>
 <%@ page import="java.util.List" %>
-<%@ page import="at.fhv.journey.hibernate.facade.DatabaseFacade" %>
 
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
-
-<!--Gets List of all the hikes-->
-<%
-    DatabaseFacade df = new DatabaseFacade();
-    List<Hike> hikeList = df.getAllHikes();
-%>
 
 <html>
 <head lang="en">
@@ -26,7 +19,11 @@
 
 <!--hike-box-container contains every hike element from the search results-->
 <div class="hike-box-container">
-    <% for (Hike hike : hikeList) { %>
+
+    <%--Declaration and Initialisation of List hikeList with parameter from the request
+       attribute sent by servlet --%>
+    <% List<Hike> hikeList=(List<Hike>) request.getAttribute("hikeList");
+    for (Hike hike : hikeList) { %>
 
     <!--hike-box is one hike in the search results list-->
     <div class="hike-box">

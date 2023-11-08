@@ -16,7 +16,11 @@
 <!--Navigation bar-->
 <jsp:include page="navBar.jsp"/>
 <!--end of Navigation bar-->
-    <a href="searchResultList.jsp">
+
+<%--/journey_war_exploded is the context path. when the url is loaded in the browser, its the
+    path before the page name. ie.
+    http://localhost:8080/Journey_war_exploded/searchResultList--%>
+    <a href="/Journey_war_exploded/searchResultList">
         <img src="pictures/search.png" alt="Stand-In" class="center">
     </a>
 </body>
