@@ -49,7 +49,16 @@ h1 {
     overflow: hidden; /* this hides overflow content if its too long */
     text-overflow: ellipsis; /* this adds 3 dots when the text is too long */
     max-width: 90%; /* this makes sure text is only 90% width of the available space*/
+}
 
+.hike-box h2::after {
+    content: "";
+}
+
+.hike-box h2:hover::after {
+    content: attr(title);
+    display: none;
+    white-space: normal;
 }
 
 .fitnesslevel {
@@ -72,7 +81,7 @@ h1 {
     position: relative;
 }
 
-/* this is not working yet*/
+/* this is not working yet, is a future feature */
 /*.safe-trail-link {
     margin-top: 10px;
     float: left;
@@ -144,20 +153,3 @@ h1 {
     border-radius: 5px;
 }
 
-.tooltip:hover .tooltipText {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0s linear 600ms; /* creates a delay, so tooltip is shown after hovering for X ms */
-}
-
-.tooltipText {
-    visibility: hidden;
-    opacity: 0;
-    text-wrap: normal; /* allows the text to make line breaks if it is too long for container */
-    background-color: #eaffc7;
-    color: black;
-    text-align: left;
-    padding: 5px 0;
-    border-radius: 6px; /* for round edges */
-    display: flex; /* makes the tooltip box bigger to accommodate 2 lines if needed*/
-}

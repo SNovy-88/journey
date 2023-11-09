@@ -38,10 +38,8 @@
             <p class="fitnesslevel">
                 <span class="<%= getFitnessLevelCSSClass(hike) %>"><%= hike.convertFitnessLevelToString() %></span>
             </p>
-            <div class="tooltip">
-            <h2><%= hike.getName() %></h2>
-            <span class="tooltipText"><%= hike.getName() %></span>
-            </div>
+
+                <h2 title="<%=hike.getName()%>"><%= hike.getName() %></h2>
 
             <!--container for distance, duration and height difference-->
             <p class="description">
