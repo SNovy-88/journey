@@ -4,7 +4,7 @@ import at.fhv.journey.model.Hike;
 
 import java.util.List;
 
-public interface IdbFacadeJPA {
+public interface IdbFacadeJPA<T> {
 
     // INSERT + UPDATE (SAVE)
     public void saveObject(Object value);
@@ -13,7 +13,7 @@ public interface IdbFacadeJPA {
     public void deleteObject(Object value);
 
     // READ
-    public List<Hike> getAllHikes();
-    public Hike getHikeByID(int id);
+    public List<T> getAll();
+    public T getByID(int id);
 
 }
