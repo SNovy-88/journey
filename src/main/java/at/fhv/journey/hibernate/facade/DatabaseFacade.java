@@ -5,13 +5,13 @@ import at.fhv.journey.model.Hike;
 
 import java.util.List;
 
-public class HikeFacade implements IdbFacadeJPA {
+public class DatabaseFacade implements IdbFacadeJPA {
 
-    private static HikeFacade _instance;
+    private static DatabaseFacade _instance;
 
-    public static HikeFacade getInstance(){
+    public static DatabaseFacade getInstance(){
         if (_instance == null){
-            _instance = new HikeFacade();
+            _instance = new DatabaseFacade();
         }
         return _instance;
     }
@@ -49,7 +49,7 @@ public class HikeFacade implements IdbFacadeJPA {
     }
 
     public static void main(String[] args) {
-        HikeFacade df = new HikeFacade();
+        DatabaseFacade df = new DatabaseFacade();
 
         Hike newHike = new Hike(1, "Alplochschlucht - Kirchle loop from Kehlegg", 8.66, 2, 50, 390, 3);
         Hike newHike1 = new Hike(2, "TEST", 8.66, 2, 50, 390, 3);
