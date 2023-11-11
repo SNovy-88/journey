@@ -115,7 +115,7 @@
                     </div>
                     <div class="bs-stepper-content">
                         <div id="test-l-1" class="content">
-                            <p class="text-center">
+                            <p class="text-center"> <!-- not necessary? -->
                                 <div class="invalid-feedback" id="inputFeedback">
                                     Please choose a title.
                                 </div>
@@ -131,24 +131,104 @@
                                     <label for="floatingTextarea2">Description</label>
                                 </div>
                                 <br>
-                                <label class="form-label" for="customFile">Starting coordinates: Upload .gpx file</label>
+                                <label class="form-label" for="customFileStart">Starting coordinates: Upload .gpx file</label>
                                 <input type="file" class="form-control" id="customFileStart" />
                                 <br>
-                                <label class="form-label" for="customFile">Finishing coordinates: Upload .gpx file</label>
+                                <label class="form-label" for="customFileEnd">Finishing coordinates: Upload .gpx file</label>
                                 <input type="file" class="form-control" id="customFileEnd" />
                             </p>
                             <button class="btn btn-primary" onclick="if (validateStep1()) stepper1.next()">Next</button>
                         </div>
                         <div id="test-l-2" class="content">
-                            <p class="text-center">
-                                test 2
+                            <p class="text-center"> <!-- not necessary? -->
+                                <div class="form-floating mb-3">
+                                    <input type="number" id="typeNumberHour" class="form-control" />
+                                    <label class="form-label" for="typeNumberHour"> Duration Hour </label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" id="typeNumberMinute" class="form-control" />
+                                    <label class="form-label" for="typeNumberMinute"> Duration Minute </label>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Height difference" aria-label="Height difference" aria-describedby="basic-addon1">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon1">m</span>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Distance" aria-label="Distance" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">km</span>
+                                    </div>
+                                </div>
+                                <label for="customRange1" class="form-label"> Physical Condition </label>
+                                <input type="range" class="form-range" min="0" max="5" id="customRange1">
+                                <label for="customRange2" class="form-label"> Stamina </label>
+                                <input type="range" class="form-range" min="0" max="5" id="customRange2">
+                                <label for="customRange3" class="form-label"> Experience </label>
+                                <input type="range" class="form-range" min="0" max="5" id="customRange3">
+                                <label for="customRange4" class="form-label"> Landscape </label>
+                                <input type="range" class="form-range" min="0" max="5" id="customRange4">
+                                <label for="customRange5" class="form-label"> Preferred months </label>
+                                <input type="range" class="form-range" min="0" max="11" id="customRange5">
                             </p>
                             <button class="btn btn-primary" onclick="stepper1.next()">Next</button>
                             <button class="btn btn-primary" onclick="stepper1.previous()">Previous</button>
                         </div>
                         <div id="test-l-3" class="content">
-                            <p class="text-center">
-                                test 3
+                            <p class="text-center"> <!-- not necessary? -->
+                                <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+                                <div class="file-upload">
+
+                                    <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+
+                                    <div class="image-upload-wrap">
+                                        <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+                                        <div class="drag-text">
+                                            <h3>Drag and drop a file or select add Image</h3>
+                                        </div>
+                                    </div>
+                                    <div class="file-upload-content">
+                                        <img class="file-upload-image" src="#" alt="your image" />
+                                        <div class="image-title-wrap">
+                                            <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script>
+                                    function readURL(input) {
+                                        if (input.files && input.files[0]) {
+
+                                            var reader = new FileReader();
+
+                                            reader.onload = function(e) {
+                                                $('.image-upload-wrap').hide();
+
+                                                $('.file-upload-image').attr('src', e.target.result);
+                                                $('.file-upload-content').show();
+
+                                                $('.image-title').html(input.files[0].name);
+                                            };
+
+                                            reader.readAsDataURL(input.files[0]);
+
+                                        } else {
+                                            removeUpload();
+                                        }
+                                    }
+
+                                    function removeUpload() {
+                                        $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+                                        $('.file-upload-content').hide();
+                                        $('.image-upload-wrap').show();
+                                    }
+                                    $('.image-upload-wrap').bind('dragover', function () {
+                                        $('.image-upload-wrap').addClass('image-dropping');
+                                    });
+                                    $('.image-upload-wrap').bind('dragleave', function () {
+                                        $('.image-upload-wrap').removeClass('image-dropping');
+                                    });
+                                </script>
                             </p>
                             <button class="btn btn-primary" onclick="stepper1.next()">Next</button>
                             <button class="btn btn-primary" onclick="stepper1.previous()">Previous</button>
