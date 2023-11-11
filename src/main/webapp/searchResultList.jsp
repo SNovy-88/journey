@@ -40,7 +40,7 @@
 
                 <a class="hike-details-link-header" href="hikeDetails.jsp?trailId=<%= hike.getHike_id() %>"> <h2 title="<%=hike.getName()%>"><%= hike.getName() %></h2> </a>
 
-                <div class="container text-left">
+                <div class="container text-center">
                     <div class="row row-cols-auto"> <!-- table inside the grid for the description -->
                         <div class="col-md-3 fs-6"> <!-- distance with icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-arrows" viewBox="0 0 16 16">
