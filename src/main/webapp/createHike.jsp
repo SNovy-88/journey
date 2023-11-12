@@ -240,8 +240,8 @@
     </div>
 
     <script>
-        var stepper1Node = document.querySelector('#stepper1')
-        var stepper1 = new Stepper(document.querySelector('#stepper1'))
+        const stepper1Node = document.querySelector('#stepper1');
+        const stepper1 = new Stepper(document.querySelector('#stepper1'));
 
         stepper1Node.addEventListener('show.bs-stepper', function (event) {
             console.warn('show.bs-stepper', event);
@@ -281,16 +281,16 @@
         }
 
 
-        var stepper2 = new Stepper(document.querySelector('#stepper2'), {
+        const stepper2 = new Stepper(document.querySelector('#stepper2'), {
             linear: false,
             animation: true
         });
 
-        var stepper3 = new Stepper(document.querySelector('#stepper3'), {
+        const stepper3 = new Stepper(document.querySelector('#stepper3'), {
             animation: true
         });
 
-        var stepper4 = new Stepper(document.querySelector('#stepper4'));
+        const stepper4 = new Stepper(document.querySelector('#stepper4'));
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
