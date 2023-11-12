@@ -103,5 +103,42 @@ h1 {
     background-color: #999;
 }
 
+.fitness-level-easy {
+    background-color: green;
+    color: white;
+
+    border-radius: 5px;
+}
+.fitness-level-moderate {
+    background-color: yellow;
+    color: black;
+
+    border-radius: 5px;
+}
+.fitness-level-intermediate {
+    background-color: orange;
+    color: black;
+
+    border-radius: 5px;
+}
+.fitness-level-challenging {
+    background-color: red;
+    color: white;
+
+    border-radius: 5px;
+}
+.fitness-level-expert {
+    background-color: purple;
+    color: white;
+
+    border-radius: 5px;
+}
+.fitness-level-unknown {
+    background-color: darkgrey;
+    color: white;
+
+    border-radius: 5px;
+}
+
 
 
