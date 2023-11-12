@@ -18,12 +18,13 @@ public class Hike {
     private int _durationMin;
     private int _heightDifference;
     private int _fitnessLevel;
+    private String _description;
 
     public Hike(){
 
     }
 
-    public Hike(int hike_id, String name, double distance, int durationHour, int durationMin,
+    public Hike(int hike_id, String name, double distance, int durationHour, int durationMin, String Description,
                 int heightDifference, int fitnessLevel){
         _hike_id = hike_id;
         _name = name;
@@ -33,6 +34,7 @@ public class Hike {
         _durationMin = durationMin;
         _heightDifference = heightDifference;
         _fitnessLevel = fitnessLevel;
+        _description = Description;
     }
 
     @Id
@@ -92,6 +94,13 @@ public class Hike {
         _fitnessLevel = fitnessLevel;
     }
 
+    @Column(name = "description")
+    public String getDescription() {
+        return _description;
+    }
+    public void setDescription(String Description) {
+        _description = Description;
+    }
 
     //Functions to convert 1-5 Scales into String output
 

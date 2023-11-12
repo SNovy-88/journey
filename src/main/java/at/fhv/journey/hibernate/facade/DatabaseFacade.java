@@ -55,10 +55,10 @@ public class DatabaseFacade implements IdbFacadeJPA {
         /*Hike testHike = df.getHikeByID(1);
         System.out.println(testHike.getHike_id()+" "+testHike.getName());*/
 
-        Hike newHike = new Hike(1, "Alplochschlucht - Kirchle loop from Kehlegg", 8.66, 2, 50, 390, 3  );
-        Hike newHike1 = new Hike(2, "TEST", 8.66, 2, 50, 390, 3  );
-        df.saveObject(newHike);
-        df.saveObject(newHike1);
+        //Hike newHike = new Hike(1, "Alplochschlucht - Kirchle loop from Kehlegg", 8.66, 2, 50, 390, 3  );
+        //Hike newHike1 = new Hike(2, "TEST", 8.66, 2, 50, 390, 3  );
+        //df.saveObject(newHike);
+        //df.saveObject(newHike1);
 
         List<Hike> testlist = df.getAllHikes();
 
