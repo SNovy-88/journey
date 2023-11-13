@@ -18,12 +18,13 @@ public class Hike {
     private int _durationMin;
     private int _heightDifference;
     private int _fitnessLevel;
+    private String _description;
 
     public Hike(){
 
     }
 
-    public Hike(int hike_id, String name, double distance, int durationHour, int durationMin,
+    public Hike(int hike_id, String name, double distance, int durationHour, int durationMin, String description,
                 int heightDifference, int fitnessLevel){
         _hike_id = hike_id;
         _name = name;
@@ -33,6 +34,7 @@ public class Hike {
         _durationMin = durationMin;
         _heightDifference = heightDifference;
         _fitnessLevel = fitnessLevel;
+        _description = description;
     }
 
     @Id
@@ -90,5 +92,33 @@ public class Hike {
     }
     public void setFitnessLevel(int fitnessLevel) {
         _fitnessLevel = fitnessLevel;
+    }
+
+    @Column(name = "description")
+    public String getDescription() {
+        return _description;
+    }
+    public void setDescription(String description) {
+        _description = description;
+    }
+
+    //Functions to convert 1-5 Scales into String output
+
+    public String convertFitnessLevelToString() {
+
+        switch (_fitnessLevel) {
+            case 1:
+                return "EASY";
+            case 2:
+                return "MODERATE";
+            case 3:
+                return "INTERMEDIATE";
+            case 4:
+                return "CHALLENGING";
+            case 5:
+                return "EXPERT";
+            default:
+                return "UNKNOWN";
+        }
     }
 }
