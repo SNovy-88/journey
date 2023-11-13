@@ -1,6 +1,6 @@
 package at.fhv.journey.hibernate.facade;
 
-import at.fhv.journey.hibernate.broker.BrokerBaseJPA;
+import at.fhv.journey.hibernate.broker.HikeBrokerJPA;
 import at.fhv.journey.model.Hike;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class DatabaseFacade implements IdbFacadeJPA {
     @Override
     public void saveObject(Object value) {
         if (value instanceof Hike) {
-            try(BrokerBaseJPA<Hike> hb = new BrokerBaseJPA<>()) {
+            try(HikeBrokerJPA hb = new HikeBrokerJPA()) {
                 hb.save((Hike) value);
             }
         }
@@ -28,23 +28,23 @@ public class DatabaseFacade implements IdbFacadeJPA {
     @Override
     public void deleteObject(Object value) {
         if (value instanceof Hike) {
-            try (BrokerBaseJPA<Hike> hb = new BrokerBaseJPA<>()) {
+            try (HikeBrokerJPA hb = new HikeBrokerJPA()) {
                 hb.delete((Hike) value);
             }
         }
     }
 
-    @Override
-    public List<Hike> getAll() {
-        try (BrokerBaseJPA<Hike> hb = new BrokerBaseJPA<>()) {
+
+    public List<Hike> getAllHikes() {
+        try (HikeBrokerJPA hb = new HikeBrokerJPA()) {
             return hb.getAll(Hike.class);
         }
     }
 
-    @Override
-    public Hike getByID(int id) {
-        try (BrokerBaseJPA<Hike> hb = new BrokerBaseJPA<>()) {
-            return hb.get(Hike.class, id);
+
+    public Hike getHikeByID(int id) {
+        try (HikeBrokerJPA hb = new HikeBrokerJPA()) {
+            return hb.getById(Hike.class, id);
         }
     }
 
@@ -57,7 +57,7 @@ public class DatabaseFacade implements IdbFacadeJPA {
         df.saveObject(newHike);
         df.saveObject(newHike1);
 
-        List<Hike> testlist = df.getAll();
+        List<Hike> testlist = df.getAllHikes();
 
         for (Hike h: testlist) {
             System.out.println(h.getHike_id() + " " + h.getName());

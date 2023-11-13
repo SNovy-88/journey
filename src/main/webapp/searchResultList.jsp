@@ -7,7 +7,7 @@
 <!--Gets List of all the hikes-->
 <%
     DatabaseFacade df = new DatabaseFacade();
-    List<Hike> hikeList = df.getAll();
+    List<Hike> hikeList = df.getAllHikes();
 %>
 
 <html>

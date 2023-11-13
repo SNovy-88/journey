@@ -32,7 +32,7 @@ public class BrokerBaseJPA<T> implements AutoCloseable {
         entityManager.getTransaction().commit();
     }
 
-    public T get(Class<T> entityClass, int id) {
+    public T getById(Class<T> entityClass, int id) {
         T entity = entityManager.find(entityClass, id);
         return entity;
     }
