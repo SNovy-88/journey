@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/styles.css">
