@@ -54,6 +54,11 @@ public class DatabaseFacade implements IdbFacadeJPA {
         }
     }
 
+    public List<Hike> getHikesByName(String name) {
+        HikeBrokerJPA hb = new HikeBrokerJPA();
+        return hb.getHikesByName(name);
+    }
+
     public static void main(String[] args) {
         DatabaseFacade df = new DatabaseFacade();
 
