@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/search.css">
 
-    <title>Journey | Find your Journey!</title>
+    <title>Journey | Discover</title>
 </head>
 <body class="search">
 <div class="wrapper">

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="CSS/styles.css">
-  <title>index</title>
+  <title>Journey | Home</title>
 </head>
 
 <body class="index">

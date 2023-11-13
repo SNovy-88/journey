@@ -11,11 +11,11 @@
 <head lang="de">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css">
-    <title>Resultate</title>
+    <title>Journey | Results</title>
 </head>
 <body>
 <!--Navigation bar-->
-<jsp:include page="navbar.jsp"/>
+<jsp:include page="navBar.jsp"/>
 <!--end of Navigation bar-->
 <!--
     <a href="traildetails.jsp">

@@ -21,7 +21,7 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="CSS/styles.css">
         <link rel="stylesheet" href="CSS/hikeDetails.css">
-        <title>Detail-Page</title>
+        <title>Journey | Details</title>
     </head>
 
     <body>

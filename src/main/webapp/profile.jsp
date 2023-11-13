@@ -14,7 +14,7 @@
 </head>
 <body>
 <!--Navigation bar-->
-<jsp:include page="navbar.jsp"/>
+<jsp:include page="navBar.jsp"/>
 <!--end of Navigation bar-->
 <img src="pictures/profiledetail.png" alt="Stand-In" class="center">
 

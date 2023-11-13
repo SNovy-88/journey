@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/styles.css">
-    <title>Wanderroute erstellen</title>
+    <title>Journey | Create</title>
 
 
 </head>

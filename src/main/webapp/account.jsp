@@ -10,7 +10,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/styles.css">
-    <title>Profil</title>
+    <title>Journey | Account</title>
 </head>
 <body>
 <!--Navigation bar-->
