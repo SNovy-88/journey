@@ -7,20 +7,22 @@
 
     <title>Journey | Find your Journey!</title>
 </head>
-<body>
-<!-- Navigation bar -->
-<jsp:include page="navBar.jsp"/>
-<!-- End of Navigation bar -->
-
-<div class="search-container1">
-    <div class="h2">Discover the world with Journey – Your path to unforgettable adventures</div>
-    <div class="search-container">
-        <form action="/Journey_war_exploded/searchResultList">
-            <input type="text" class="search-input" name="searchString" placeholder="Enter hike name, city, or region">
-            <button class="search-button">Search</button>
-        </form>
+<body class="search">
+<div class="wrapper">
+    <div class="background">
+        <!-- Navigation bar -->
+        <jsp:include page="navBar.jsp"/>
+        <!-- End of Navigation bar -->
+        <div class="search-container1">
+            <div class="h2">Discover the world with Journey – Your path to unforgettable adventures</div>
+            <div class="search-container">
+                <form action="/Journey_war_exploded/searchResultList">
+                    <input type="text" class="search-input" name="searchString" placeholder="Enter hike name, city, or region">
+                    <button class="search-button">Search</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
-
 </body>
 </html>

@@ -8,16 +8,18 @@
 </head>
 
 <body class="index">
-<!--Navigation bar-->
-<jsp:include page="navBar.jsp"/>
-<!--end of Navigation bar-->
-<div class="background">
-  <div class="login">
-      <p> Find your path, embrace the journey! </p>
-      <a href="register.jsp"><button>Sign in or register!</button></a>
-  </div>
-
+<div class="wrapper">
+    <!--Navigation bar-->
+    <jsp:include page="navBar.jsp"/>
+    <!--end of Navigation bar-->
+    <div class="background">
+        <div class="login">
+            <p> Find your path, embrace the journey! </p>
+            <a href="register.jsp"><button class="loginButton">Sign in or register!</button></a>
+        </div>
+    </div>
 </div>
+
 
 </body>
 </html>
