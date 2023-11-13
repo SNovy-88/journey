@@ -7,13 +7,13 @@ import java.util.List;
 public interface IdbFacadeJPA {
 
     // INSERT + UPDATE (SAVE)
-    public void saveObject(Object value);
+    void saveObject(Object value);
 
     // DELETE
-    public void deleteObject(Object value);
+    void deleteObject(Object value);
 
     // READ
-    public List<Hike> getAllHikes();
-    public Hike getHikeByID(int id);
-
+    List<Hike> getAllHikes();
+    Hike getHikeByID(int id);
+    List<Hike> getHikesByName(String name);
 }
