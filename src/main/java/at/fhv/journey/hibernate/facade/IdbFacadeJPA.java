@@ -15,5 +15,5 @@ public interface IdbFacadeJPA {
     // READ
     List<Hike> getAllHikes();
     Hike getHikeByID(int id);
-
+    List<Hike> getHikesByName(String name);
 }
