@@ -19,7 +19,10 @@
 
 <jsp:include page="navBar.jsp"/>
 
-<h1>List of all Hikes</h1>
+<%-- Retrieve the search string from the request --%>
+<% String searchString = request.getParameter("searchString"); %>
+
+<h1>List of Hikes for "<%= searchString %>"</h1>
 
 <div class="hike-box-container"> <!-- hike-box-container contains every hike element from the search results -->
 

@@ -1,27 +1,26 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: wolfp
-  Date: 26.10.2023
-  Time: 14:16
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
-<head lang="de">
+<head lang="en">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/styles.css">
-    <title>Suche</title>
+    <link rel="stylesheet" href="CSS/search.css">
+
+    <title>Journey | Find your Journey!</title>
 </head>
 <body>
-<!--Navigation bar-->
+<!-- Navigation bar -->
 <jsp:include page="navBar.jsp"/>
-<!--end of Navigation bar-->
+<!-- End of Navigation bar -->
 
-<%--/journey_war_exploded is the context path. when the url is loaded in the browser, its the
-    path before the page name. ie.
-    http://localhost:8080/Journey_war_exploded/searchResultList--%>
-    <a href="/Journey_war_exploded/searchResultList">
-        <img src="pictures/search.png" alt="Stand-In" class="center">
-    </a>
+<div class="search-container1">
+    <div class="h2">Discover the world with Journey – Your path to unforgettable adventures</div>
+    <div class="search-container">
+        <form action="/Journey_war_exploded/searchResultList">
+            <input type="text" class="search-input" name="searchString" placeholder="Enter hike name, city, or region">
+            <button class="search-button">Search</button>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

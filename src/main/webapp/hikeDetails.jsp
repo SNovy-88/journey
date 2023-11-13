@@ -17,7 +17,7 @@
 
 %>
 <html>
-    <head lang="de">
+    <head lang="en">
         <meta charset="UTF-8">
         <link rel="stylesheet" href="CSS/styles.css">
         <link rel="stylesheet" href="CSS/hikeDetails.css">
