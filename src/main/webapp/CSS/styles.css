@@ -42,7 +42,6 @@ body {
     transition-duration: 300ms;
     background-color: #8ddb1f;
 }
-
 .index {
     background-image: url("../pictures/examples/ex02.jpg");
     background-size: cover;
