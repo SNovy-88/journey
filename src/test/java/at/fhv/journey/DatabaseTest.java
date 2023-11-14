@@ -1,4 +1,4 @@
-/*
+package at.fhv.journey;/*
  * Copyright (c) 2023 Sarah N
  *
  * Project Name:         Journey
@@ -8,6 +8,7 @@
  * Last Update:          13/11/2023
  */
 
+import at.fhv.journey.hibernate.facade.DatabaseFacade;
 import at.fhv.journey.model.Hike;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -29,6 +30,22 @@ public class DatabaseTest {
         for (Hike h: hikeList) {
             System.out.println(h.getHike_id()+" "+h.getName()+"\n");
         }
+
+
+        //Facade Tests
+        //DatabaseFacade df = new DatabaseFacade();
+
+        /*Hike newHike = new Hike(1, "Alplochschlucht - Kirchle loop from Kehlegg", 8.66, 2, 50, "This is test description",390, 3);
+        Hike newHike1 = new Hike(2, "TEST", 8.66, 2, 50, "This is test description", 390, 3);
+
+        df.saveObject(newHike);
+        df.saveObject(newHike1);
+
+        List<Hike> testlist = df.getAllHikes();
+
+        for (Hike h: testlist) {
+            System.out.println(h.getHike_id() + " " + h.getName());
+        }*/
 
 
     }
