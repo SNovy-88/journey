@@ -20,7 +20,7 @@ public class DatabaseTest {
 
     public static void main(String[] args) {
 
-        System.out.println("Database URL: " + System.getProperty("jakarta.persistence.jdbc.url"));
+       /* System.out.println("Database URL: " + System.getProperty("jakarta.persistence.jdbc.url"));
         System.out.println("Database Username: " + System.getProperty("jakarta.persistence.jdbc.user"));
         System.out.println("Database Password: " + System.getProperty("jakarta.persistence.jdbc.password"));
 
@@ -29,7 +29,7 @@ public class DatabaseTest {
         List<Hike> hikeList= (List<Hike>) entityManager.createQuery("from Hike").getResultList();
         for (Hike h: hikeList) {
             System.out.println(h.getHike_id()+" "+h.getName()+"\n");
-        }
+        }*/
 
 
         //Facade Tests

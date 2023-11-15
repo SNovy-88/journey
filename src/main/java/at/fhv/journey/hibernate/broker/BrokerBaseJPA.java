@@ -2,6 +2,7 @@ package at.fhv.journey.hibernate.broker;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 import java.util.List;
@@ -19,11 +20,11 @@ public class BrokerBaseJPA<T> implements AutoCloseable {
         return entityManager;
     }
 
-    public void save(T value) {
-        delete(value);
-        entityManager.getTransaction().begin();
-        entityManager.merge(value);
-        entityManager.getTransaction().commit();
+    public void insert(T value) {
+        EntityTransaction tx = entityManager.getTransaction();
+        tx.begin();
+        entityManager.merge(value); // merge macht update oder insert je nachdem ob es den Eintrag gibt
+        tx.commit();
     }
 
     public void delete(T value) {
