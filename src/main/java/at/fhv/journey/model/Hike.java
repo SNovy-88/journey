@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "hike", schema = "journey")
@@ -19,6 +20,13 @@ public class Hike {
     private int _heightDifference;
     private int _fitnessLevel;
     private String _description;
+
+    private int _stamina;
+    private int _experience;
+    private int _scenery;
+    private String _author;
+    private LocalDate _dateCreated;
+    private String _gpxLocation;
 
     public Hike(){
 
@@ -101,6 +109,61 @@ public class Hike {
     public void setDescription(String description) {
         _description = description;
     }
+
+
+
+
+
+
+
+    @Column(name = "stamina")
+    public int getStamina() {
+        return _stamina;
+    }
+    public void setStamina(int stamina) {
+        _stamina = stamina;
+    }
+
+    @Column(name = "experience")
+    public int getExperience() {
+        return _experience;
+    }
+    public void setExperience(int experience) {
+        _experience = experience;
+    }
+
+    @Column(name = "scenery")
+    public int getScenery() {
+        return _scenery;
+    }
+    public void setScenery(int scenery) {
+        _scenery = scenery;
+    }
+
+    @Column(name = "author")
+    public String getAuthor() {
+        return _author;
+    }
+    public void setAuthor(String author) {
+        _author = author;
+    }
+
+    @Column(name = "date")
+    public LocalDate getDateCreated() {
+        return _dateCreated;
+    }
+    public void setDateCreated(LocalDate dateCreated) {
+        _dateCreated = dateCreated;
+    }
+
+    @Column(name = "link")
+    public String getGpxLocation() {
+        return _gpxLocation;
+    }
+    public void setGpxLocation(String gpxLocation) {
+        _gpxLocation = gpxLocation;
+    }
+
 
     //Functions to convert 1-5 Scales into String output
 
