@@ -1,9 +1,12 @@
 package at.fhv.journey.model;
 
+import io.hypersistence.utils.hibernate.type.range.PostgreSQLRangeType;
+import io.hypersistence.utils.hibernate.type.range.Range;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
 
@@ -19,6 +22,7 @@ public class Hike {
     private int _heightDifference;
     private int _fitnessLevel;
     private String _description;
+    private Range _recommendedMonths;
 
     public Hike(){
 
@@ -28,8 +32,7 @@ public class Hike {
                 int heightDifference, int fitnessLevel){
         _hike_id = hike_id;
         _name = name;
-        BigDecimal dist = BigDecimal.valueOf(distance);
-        _distance = dist;
+        _distance = BigDecimal.valueOf(distance);
         _durationHour = durationHour;
         _durationMin = durationMin;
         _heightDifference = heightDifference;
@@ -100,6 +103,16 @@ public class Hike {
     }
     public void setDescription(String description) {
         _description = description;
+    }
+
+    @Column(name = "suggested_month", columnDefinition = "int4range")
+    @Type(PostgreSQLRangeType.class)
+    public Range getRecommendedMonths() {
+        return _recommendedMonths;
+    }
+
+    public void setRecommendedMonths(Range recommendedMonths) {
+        _recommendedMonths = recommendedMonths;
     }
 
     //Functions to convert 1-5 Scales into String output
