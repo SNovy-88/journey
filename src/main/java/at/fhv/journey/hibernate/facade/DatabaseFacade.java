@@ -20,7 +20,7 @@ public class DatabaseFacade implements IdbFacadeJPA {
     public void saveObject(Object value) {
         if (value instanceof Hike) {
             try(HikeBrokerJPA hb = new HikeBrokerJPA()) {
-                hb.save((Hike) value);
+                hb.insert((Hike) value);
             }
         }
     }
