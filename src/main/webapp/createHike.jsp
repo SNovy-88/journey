@@ -386,22 +386,21 @@
     </script>
 -->
 
-    <div id="map" style="height: 400px;"></div>
+    <div id="map" style="height: 400px;"></div> <!-- Show Map -->
 
-    <button onclick="exportAsGPX()">Export as GPX</button>
+    <button onclick="exportAsGPX()"> Export as GPX </button> <!-- Export button -->
 
-    <ul id="coordinates-list"></ul>
+    <ul id="coordinates-list"></ul> <!-- List of waypoints -->
 
-    <!-- Add a Bootstrap modal to your HTML -->
+    <!-- Bootstrap pop-up-modal -->
     <div class="modal fade" id="waypointModal" tabindex="-1" role="dialog" aria-labelledby="waypointModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="waypointModalLabel">Enter Waypoint Name</h5>
-                    <!-- Remove the "X" button from the modal header -->
+                    <h5 class="modal-title" id="waypointModalLabel"> Enter Waypoint Name </h5>
                 </div>
                 <div class="modal-body">
-                    <input type="text" id="waypointNameInput" class="form-control" placeholder="Enter name">
+                    <input type="text" id="waypointNameInput" class="form-control" placeholder="Enter name (optional)"> <!-- evtl. make it non-optional -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -413,7 +412,7 @@
 
     <script>
         // Initialize the map
-        var map = L.map('map').setView([0, 0], 2); // Set the initial view
+        const map = L.map('map').setView([47, 11], 7); // Set the initial view
 
         // Add a tile layer to the map (you can choose a different tile provider)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -421,17 +420,20 @@
         }).addTo(map);
 
         // Initialize an empty array to store waypoints
-        var waypoints = [];
+        const waypoints = [];
 
         // Initialize a polyline to connect waypoints
-        var polyline = L.polyline([], { color: 'blue' }).addTo(map);
+        const polyline = L.polyline([], {color: 'blue'}).addTo(map);
 
         // Get the <ul> element to display coordinates
-        var coordinatesList = document.getElementById('coordinates-list');
+        const coordinatesList = document.getElementById('coordinates-list');
 
         // Get the modal and input elements
-        var waypointModal = document.getElementById('waypointModal');
-        var waypointNameInput = document.getElementById('waypointNameInput');
+        const waypointModal = document.getElementById('waypointModal');
+        const waypointNameInput = document.getElementById('waypointNameInput');
+
+        // Flag to track unsaved changes
+        let unsavedChanges = false;
 
         // Add a click event listener to the map
         map.on('click', function (e) {
@@ -439,7 +441,7 @@
             $('#waypointModal').modal('show');
 
             // Store the clicked location in a variable
-            var clickedLatLng = e.latlng;
+            const clickedLatLng = e.latlng;
 
             // Set up a click event listener for the "Add Waypoint" button in the modal
             $('#waypointModal').on('shown.bs.modal', function () {
@@ -450,6 +452,7 @@
             $('#waypointModal .btn-secondary').on('click', function () {
                 // Close the modal without adding the waypoint
                 $('#waypointModal').modal('hide');
+                unsavedChanges = false;
             });
 
             $('#waypointModal').on('hidden.bs.modal', function () {
@@ -460,13 +463,13 @@
             // Function to be called when the "Add Waypoint" button is clicked
             window.addWaypoint = function () {
                 // Get the waypoint name from the input field
-                var waypointName = waypointNameInput.value;
+                const waypointName = waypointNameInput.value;
 
                 // Close the modal
                 $('#waypointModal').modal('hide');
 
                 // Add a marker at the clicked location
-                var marker = L.marker(clickedLatLng).addTo(map);
+                const marker = L.marker(clickedLatLng).addTo(map);
 
                 // Store the waypoint in the array with name
                 waypoints.push({ name: waypointName, latlng: clickedLatLng });
@@ -481,6 +484,9 @@
 
                 // Update the coordinates list
                 updateCoordinatesList();
+
+                // Set the flag for unsaved changes
+                unsavedChanges = true;
             };
         });
 
@@ -491,7 +497,7 @@
 
             // Add coordinates to the list
             waypoints.forEach(function (waypoint, index) {
-                var li = document.createElement('li');
+                const li = document.createElement('li');
                 li.textContent = 'Waypoint ' + (index + 1) + ': ' + waypoint.name + ' (' + waypoint.latlng.lat + ', ' + waypoint.latlng.lng + ')';
                 coordinatesList.appendChild(li);
             });
@@ -499,25 +505,33 @@
 
         // Function to export waypoints as GPX
         function exportAsGPX() {
-            var gpxData = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' +
-                '<gpx version="1.1" creator="YourAppName">' +
+            const gpxData = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' +
+                '<gpx version="1.1" creator="Journey">' +
                 waypoints.map(function (waypoint, index) {
-                    return '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' +
-                        '<name>' + waypoint.name + '</name>' +
-                        '</wpt>';
+                    return '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' + '<name>' + waypoint.name + '</name>' + '</wpt>';
                 }).join('') +
                 '</gpx>';
 
             // Create a Blob with the GPX data
-            var blob = new Blob([gpxData], { type: 'application/gpx+xml' });
+            const blob = new Blob([gpxData], {type: 'application/gpx+xml'});
 
             // Create a link for downloading the GPX file
-            var link = document.createElement('a');
+            const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = 'waypoints.gpx';
             link.click();
         }
+
+        // Attach a beforeunload event to show a warning if there are unsaved changes
+        window.addEventListener('beforeunload', function (e) {
+            if (unsavedChanges) {
+                const confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
+                (e || window.event).returnValue = confirmationMessage; // Standard
+                return confirmationMessage; // IE and Firefox
+            }
+        });
     </script>
+
 
     <!-- Include GraphHopper JavaScript -->
     <script src="https://graphhopper.com/api/1/client/js/graphhopper-client.js?key=493c4835-011d-4938-a7cb-ec0ce63b6940"></script>
