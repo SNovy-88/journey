@@ -15,6 +15,12 @@
     <!-- Include the bs-stepper JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
 
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
 </head>
 <body>
 
@@ -296,6 +302,225 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="bs-stepper.min.js"></script>
     <script src="dist/js/bs-stepper.js"></script>
+<!--
+    // Include Leaflet CSS
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    // Include Leaflet JavaScript
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    // Add a div for the map
+    <div id="map" style="height: 400px;"></div>
+
+    // Add a button to trigger route calculation
+    <button onclick="calculateRoute()">Calculate Route</button>
+
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([47.366260, 9.746780], 13);
+
+        // Add a base map layer (you can choose other tile providers)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        L.marker([47.366260, 9.746780]).addTo(map)
+            .bindPopup('A pretty CSS popup.<br> Easily customizable.')
+            .openPopup();
+
+        // Initialize GraphHopper
+        var gh = new GraphHopper();
+
+        // Function to calculate route
+        function calculateRoute() {
+            // Get waypoints or use predefined waypoints
+            var waypoints = [
+                { lat: 47.366260, lon: 9.746780 },  // Example waypoint 1
+                { lat: 47.387800, lon: 9.750780 }   // Example waypoint 2
+            ];
+
+            // Call GraphHopper API to calculate the route
+            gh.calculateRoute({
+                points: waypoints,
+                vehicle: 'foot',  // Specify the vehicle type (foot for hiking)
+                callback: async function (json) {
+                    const query = new URLSearchParams({
+                        key: '493c4835-011d-4938-a7cb-ec0ce63b6940'
+                    }).toString();
+
+                    const resp = await fetch(
+                        `https://graphhopper.com/api/1/route?${query}`,
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                points: [
+                                    [9.746780, 47.366260],
+                                    [9.750780, 47.387800]
+                                ],
+                                point_hints: [
+                                    'Lindenschmitstraße',
+                                    'Thalkirchener Str.'
+                                ],
+                                snap_preventions: [
+                                    'motorway',
+                                    'ferry',
+                                    'tunnel'
+                                ],
+                                details: ['road_class', 'surface'],
+                                vehicle: 'bike',
+                                locale: 'en',
+                                instructions: true,
+                                calc_points: true,
+                                points_encoded: false
+                            })
+                        }
+                    );
+
+                    const data = await resp.json();
+                    console.log(data);
+                    console.log(json);
+                }
+            });
+        }
+    </script>
+-->
+
+    <div id="map" style="height: 400px;"></div>
+
+    <button onclick="exportAsGPX()">Export as GPX</button>
+
+    <ul id="coordinates-list"></ul>
+
+    <!-- Add a Bootstrap modal to your HTML -->
+    <div class="modal fade" id="waypointModal" tabindex="-1" role="dialog" aria-labelledby="waypointModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="waypointModalLabel">Enter Waypoint Name</h5>
+                    <!-- Remove the "X" button from the modal header -->
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="waypointNameInput" class="form-control" placeholder="Enter name">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="addWaypoint()">Add Waypoint</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([0, 0], 2); // Set the initial view
+
+        // Add a tile layer to the map (you can choose a different tile provider)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Initialize an empty array to store waypoints
+        var waypoints = [];
+
+        // Initialize a polyline to connect waypoints
+        var polyline = L.polyline([], { color: 'blue' }).addTo(map);
+
+        // Get the <ul> element to display coordinates
+        var coordinatesList = document.getElementById('coordinates-list');
+
+        // Get the modal and input elements
+        var waypointModal = document.getElementById('waypointModal');
+        var waypointNameInput = document.getElementById('waypointNameInput');
+
+        // Add a click event listener to the map
+        map.on('click', function (e) {
+            // Open the modal when the map is clicked
+            $('#waypointModal').modal('show');
+
+            // Store the clicked location in a variable
+            var clickedLatLng = e.latlng;
+
+            // Set up a click event listener for the "Add Waypoint" button in the modal
+            $('#waypointModal').on('shown.bs.modal', function () {
+                $('#waypointNameInput').focus();
+            });
+
+            // Set up a click event listener for the "Cancel" button in the modal
+            $('#waypointModal .btn-secondary').on('click', function () {
+                // Close the modal without adding the waypoint
+                $('#waypointModal').modal('hide');
+            });
+
+            $('#waypointModal').on('hidden.bs.modal', function () {
+                // Clear the input field when the modal is closed
+                waypointNameInput.value = '';
+            });
+
+            // Function to be called when the "Add Waypoint" button is clicked
+            window.addWaypoint = function () {
+                // Get the waypoint name from the input field
+                var waypointName = waypointNameInput.value;
+
+                // Close the modal
+                $('#waypointModal').modal('hide');
+
+                // Add a marker at the clicked location
+                var marker = L.marker(clickedLatLng).addTo(map);
+
+                // Store the waypoint in the array with name
+                waypoints.push({ name: waypointName, latlng: clickedLatLng });
+
+                // Update the polyline with the new waypoint
+                polyline.setLatLngs(waypoints.map(wp => wp.latlng));
+
+                // If there are at least two waypoints, zoom the map to fit all waypoints
+                if (waypoints.length === 2) {
+                    map.fitBounds(polyline.getBounds());
+                }
+
+                // Update the coordinates list
+                updateCoordinatesList();
+            };
+        });
+
+        // Function to update the coordinates list
+        function updateCoordinatesList() {
+            // Clear the existing list
+            coordinatesList.innerHTML = '';
+
+            // Add coordinates to the list
+            waypoints.forEach(function (waypoint, index) {
+                var li = document.createElement('li');
+                li.textContent = 'Waypoint ' + (index + 1) + ': ' + waypoint.name + ' (' + waypoint.latlng.lat + ', ' + waypoint.latlng.lng + ')';
+                coordinatesList.appendChild(li);
+            });
+        }
+
+        // Function to export waypoints as GPX
+        function exportAsGPX() {
+            var gpxData = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' +
+                '<gpx version="1.1" creator="YourAppName">' +
+                waypoints.map(function (waypoint, index) {
+                    return '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' +
+                        '<name>' + waypoint.name + '</name>' +
+                        '</wpt>';
+                }).join('') +
+                '</gpx>';
+
+            // Create a Blob with the GPX data
+            var blob = new Blob([gpxData], { type: 'application/gpx+xml' });
+
+            // Create a link for downloading the GPX file
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'waypoints.gpx';
+            link.click();
+        }
+    </script>
+
+    <!-- Include GraphHopper JavaScript -->
+    <script src="https://graphhopper.com/api/1/client/js/graphhopper-client.js?key=493c4835-011d-4938-a7cb-ec0ce63b6940"></script>
 
 </body>
 </html>
