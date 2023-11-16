@@ -44,6 +44,8 @@
                         </svg>
                         Back
                     </a>
+                    <span class = "author"><%=hike.getAuthor() + " | " + hike.getDateCreated()%> </span>
+
                 </div>
                 <div class="image-container">
                     <img class="image" src="pictures/examples/ex02.jpg" alt="Hike picture"/>
@@ -101,10 +103,6 @@
                     <div class="pathdetail">
                         <span class="pathdetail-label">Scenery:</span>
                         <span class="pathdetail-value"><%= hike.getScenery() %></span>
-                    </div>
-                    <div class="pathdetail">
-                        <span class="pathdetail-label">Fitness level: </span>
-                        <p class="fitnesslevel"><span class="<%= getFitnessLevelCSSClass(hike) %>"><%= hike.convertFitnessLevelToString() %></span></p>
                     </div>
                 </div>
             </div>
