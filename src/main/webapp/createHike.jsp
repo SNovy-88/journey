@@ -390,6 +390,9 @@
 
     <button onclick="exportAsGPX()"> Export as GPX </button> <!-- Export button -->
 
+    <!-- Create Hike button -->
+    <button onclick="createHike()">Create Hike</button>
+
     <ul id="coordinates-list"></ul> <!-- List of waypoints -->
 
     <!-- Bootstrap pop-up-modal -->
@@ -530,6 +533,36 @@
                 return confirmationMessage; // IE and Firefox
             }
         });
+
+        // Function to create hike and send GPX data to the servlet
+        function createHike() {
+            const gpxData = exportAsGPX(); // for testing, we use this method (unwillingly downloads a .gpx)
+
+            // Create an XMLHttpRequest object
+            const xhr = new XMLHttpRequest();
+
+            // Specify the request method, URL, and set asynchronous to true
+            xhr.open('POST', 'createPageServlet', true);
+
+            // Set the request header for the POST request
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            // Define the callback function to handle the response from the servlet
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // Success: Handle the response from the servlet if needed
+                        console.log('Hike created successfully');
+                    } else {
+                        // Error: Handle the error if needed
+                        console.error('Error creating hike');
+                    }
+                }
+            };
+
+            // Send the GPX data as the POST body
+            xhr.send('gpxData=' + encodeURIComponent(gpxData));
+        }
     </script>
 
 
