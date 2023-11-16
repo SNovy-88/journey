@@ -13,7 +13,7 @@
 
     int hikeId = Integer.parseInt(request.getParameter("trailId"));
     HikeBrokerJPA hikeBroker = new HikeBrokerJPA();
-    Hike hike = hikeBroker.get(hikeId);
+    Hike hike = hikeBroker.getById(Hike.class, hikeId);
 
 %>
 <html>
