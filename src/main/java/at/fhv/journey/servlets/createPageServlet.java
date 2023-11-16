@@ -18,12 +18,18 @@ public class createPageServlet extends HttpServlet {
         // For demonstration purposes, let's print it to the console
         System.out.println("Received GPX data:\n" + gpxData);
 
-        // Send a response back to the client (optional)
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("Hike created successfully");
+        // Simulate success or failure (modify this based on your actual logic)
+        boolean hikeCreationSuccess = true;
 
-        // You might want to perform further processing or error handling here
+        // Set the response type to JSON
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        // Prepare the JSON response
+        String jsonResponse = "{\"success\": " + hikeCreationSuccess + "}";
+
+        // Send the JSON response back to the client
+        response.getWriter().write(jsonResponse);
     }
 }
 

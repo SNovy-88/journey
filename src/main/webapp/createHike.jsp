@@ -525,6 +525,16 @@
             link.click();
         }
 
+        // Function to create waypoints as GPX
+        function createGPX() {
+            const gpxData = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' +
+                '<gpx version="1.1" creator="Journey">' +
+                waypoints.map(function (waypoint, index) {
+                    return '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' + '<name>' + waypoint.name + '</name>' + '</wpt>';
+                }).join('') +
+                '</gpx>';
+        }
+
         // Attach a beforeunload event to show a warning if there are unsaved changes
         window.addEventListener('beforeunload', function (e) {
             if (unsavedChanges) {
@@ -536,13 +546,19 @@
 
         // Function to create hike and send GPX data to the servlet
         function createHike() {
-            const gpxData = exportAsGPX(); // for testing, we use this method (unwillingly downloads a .gpx)
+            const gpxData = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' +
+                '<gpx version="1.1" creator="Journey">' +
+                waypoints.map(function (waypoint, index) {
+                    return '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' + '<name>' + waypoint.name + '</name>' + '</wpt>';
+                }).join('') +
+                '</gpx>'; //change all this to seperate createGPX() method later on!!!!
 
             // Create an XMLHttpRequest object
             const xhr = new XMLHttpRequest();
 
             // Specify the request method, URL, and set asynchronous to true
-            xhr.open('POST', 'createPageServlet', true);
+            xhr.open('POST', '/Journey_war_exploded/createHike', true);
+
 
             // Set the request header for the POST request
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -553,9 +569,11 @@
                     if (xhr.status === 200) {
                         // Success: Handle the response from the servlet if needed
                         console.log('Hike created successfully');
+                        alert('Hike created successfully'); // Add this line to display a notification
                     } else {
                         // Error: Handle the error if needed
                         console.error('Error creating hike');
+                        alert('Error creating hike'); // Add this line to display an error notification
                     }
                 }
             };
@@ -565,6 +583,9 @@
         }
     </script>
 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js" integrity="sha384-cwmrdGZwrLYKw8X6zXkDo3MeqYTgVMiP+GxBSzLz3l2DE6/72UnZVJ8E+biqU1Kb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <!-- Include GraphHopper JavaScript -->
     <script src="https://graphhopper.com/api/1/client/js/graphhopper-client.js?key=493c4835-011d-4938-a7cb-ec0ce63b6940"></script>
