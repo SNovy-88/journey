@@ -9,6 +9,7 @@
 <%@ page import="at.fhv.journey.hibernate.broker.HikeBrokerJPA" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
+<%@ page import="static at.fhv.journey.utils.MonthsFunctions.*" %>
 <!-- Bootstrap css href -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -28,6 +29,30 @@
     </head>
 
     <body>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        // Document ready function
+        $(document).ready(function () {
+
+            // Extract the start and end months from the range
+            var start = <%=getStartMonthInt(hike.getRecommendedMonths())%>;
+            var end = <%=getEndMonthInt(hike.getRecommendedMonths())%>;
+
+            // Iterate over each month element
+            $('.month').each(function () {
+                var month = parseInt($(this).data('month'));
+
+                // Check if the month is within the range
+                if (month >= start && month <= end) {
+                    // Apply the green background color
+                    $(this).css('background-color', '#b1ff2e');
+                }
+            });
+        });
+    </script>
+
     <!--Navigation bar-->
     <jsp:include page="navBar.jsp"/>
     <!--end of Navigation bar-->
@@ -91,7 +116,7 @@
                     Favorite
                 </button>--%> <!-- Button has no functionality yet -->
                 <h1 class="pathdetails_title">Hike details</h1>
-                <div class = "pathdetails"> <!-- Container for Path-details -->
+                <div class = "pathdetails-container"> <!-- Container for Path-details -->
                     <div class="pathdetail">
                         <span class="pathdetail-label">Stamina:</span>
                         <span class="pathdetail-value"><%= hike.getStamina() %></span>
@@ -103,6 +128,55 @@
                     <div class="pathdetail">
                         <span class="pathdetail-label">Scenery:</span>
                         <span class="pathdetail-value"><%= hike.getScenery() %></span>
+                    </div>
+                </div>
+                <div class="months-container">
+                    <div class="binder-image-container">
+                        <img src="pictures/binder.png" alt = "Calendar Binder">
+                    </div>
+                    <div class="container text-center">
+                        <div class = "row">
+                            <div class = "col month" data-month="1">
+                                Jan
+                            </div>
+                            <div class = "col month" data-month="2">
+                                Feb
+                            </div>
+                            <div class = "col month" data-month="3">
+                                Mar
+                            </div>
+                            <div class = "col month" data-month="4">
+                                Apr
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col month"  data-month="5">
+                                Mai
+                            </div>
+                            <div class = "col month"  data-month="6">
+                                Jun
+                            </div>
+                            <div class = "col month"  data-month="7">
+                                Jul
+                            </div>
+                            <div class = "col month"  data-month="8">
+                                Aug
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col month" data-month="9">
+                                Sep
+                            </div>
+                            <div class = "col month" data-month="10">
+                                Oct
+                            </div>
+                            <div class = "col month" data-month="11">
+                                Nov
+                            </div>
+                            <div class = "col month" data-month="12">
+                                Dec
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
