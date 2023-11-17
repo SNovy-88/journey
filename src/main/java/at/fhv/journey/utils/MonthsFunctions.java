@@ -34,11 +34,11 @@ public class MonthsFunctions {
     }
 
     public static Integer getStartMonthInt(Range recommendedMonths){
-        return ((Integer)recommendedMonths.lower())-1;
+        return ((Integer)recommendedMonths.lower());
     }
 
     public static Integer getEndMonthInt(Range recommendedMonths){
-        return ((Integer) recommendedMonths.upper()-1);
+        return ((Integer) recommendedMonths.upper());
     }
 
 }
