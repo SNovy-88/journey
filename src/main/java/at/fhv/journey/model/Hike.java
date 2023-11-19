@@ -154,7 +154,7 @@ public class Hike {
         _dateCreated = dateCreated;
     }
 
-    @Column(name = "link")
+    @Column(name = "gpx")
     public String getGpxLocation() {
         return _gpxLocation;
     }
