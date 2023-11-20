@@ -9,6 +9,10 @@
 <%@ page import="at.fhv.journey.hibernate.broker.HikeBrokerJPA" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
+<%@ page import="static at.fhv.journey.utils.MonthsFunctions.*" %>
+<!-- Bootstrap css href -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
 <%
 
     int hikeId = Integer.parseInt(request.getParameter("trailId"));
@@ -25,23 +29,77 @@
     </head>
 
     <body>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        // Document ready function
+        $(document).ready(function () {
+
+            // Extract the start and end months from the range
+            var start = <%=getStartMonthInt(hike.getRecommendedMonths())%>;
+            var end = <%=getEndMonthInt(hike.getRecommendedMonths())%>;
+
+            // Iterate over each month element
+            $('.month').each(function () {
+                var month = parseInt($(this).data('month'));
+
+                // Check if the month is within the range
+                if (month >= start && month <= end) {
+                    // Apply the green background color
+                    $(this).css('background-color', '#b1ff2e');
+                }
+            });
+        });
+    </script>
+
     <!--Navigation bar-->
     <jsp:include page="navBar.jsp"/>
     <!--end of Navigation bar-->
 
     <!-- Hike Details -->
-        <div class ="container">
+        <div class ="hike-details-page-container">
 
             <!-- Left Field -->
             <div class = "left-box">
-                <a href="/Journey_war_exploded/searchResultList" class="back-button">  <!-- Back-Button to go back to Result-page -->
-                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                        <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
-                    </svg>
-                    Back
-                </a>
+                <div class = left-box-header>
+                    <a class="back-button" href="/Journey_war_exploded/searchResultList" >  <!-- Back-Button to go back to Result-page -->
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                            <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
+                        </svg>
+                        Back
+                    </a>
+                    <span class = "author"><%=hike.getAuthor() + " | " + hike.getDateCreated()%> </span>
+
+                </div>
                 <div class="image-container">
                     <img class="image" src="pictures/examples/ex02.jpg" alt="Hike picture"/>
+                </div>
+                <div class = hike-details-numbers-container>
+                    <div class="row">
+                        <div class="col"> <!-- fitness level -->
+                            <p class="fitnesslevel"><span class="<%= getFitnessLevelCSSClass(hike) %>"><%= hike.convertFitnessLevelToString() %></span></p>
+                        </div>
+                        <div class="col bo"> <!-- distance with icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-arrows" viewBox="0 0 16 16">
+                                <path d="M1.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L2.707 7.5h10.586l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L13.293 8.5H2.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2Z"/>
+                            </svg>
+                            <%= hike.getDistance() %>km
+                        </div>
+                        <div class="col bo"> <!-- duration with icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-stopwatch" viewBox="0 0 16 16">
+                                <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z"/>
+                                <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z"/>
+                            </svg>
+                            <%= hike.getDurationHour() %>h <%= hike.getDurationMin() %>min
+                        </div>
+                        <div class="col bo"> <!-- height difference with icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-arrows-vertical" viewBox="0 0 16 16">
+                                <path d="M8.354 14.854a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 13.293V2.707L6.354 3.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 2.707v10.586l1.146-1.147a.5.5 0 0 1 .708.708l-2 2Z"/>
+                            </svg>
+                            <%= hike.getHeightDifference() %>m
+                        </div>
+                    </div>
                 </div>
                 <div class="description"> <!-- Name and short descprition -->
                     <h1><%= hike.getName() %></h1>
@@ -57,23 +115,68 @@
                     </svg>
                     Favorite
                 </button>--%> <!-- Button has no functionality yet -->
-                <h1 class="pathdetails_title">Path details</h1>
-                <div class = "pathdetails"> <!-- Container for Path-details -->
+                <h1 class="pathdetails_title">Hike details</h1>
+                <div class = "pathdetails-container"> <!-- Container for Path-details -->
                     <div class="pathdetail">
-                        <span class="pathdetail-label">Distance:</span>
-                        <span class="pathdetail-value"><%= hike.getDistance() %>km</span>
+                        <span class="pathdetail-label">Stamina:</span>
+                        <span class="pathdetail-value"><%= hike.getStamina() %></span>
                     </div>
                     <div class="pathdetail">
-                        <span class="pathdetail-label">Duration:</span>
-                        <span class="pathdetail-value"><%= hike.getDurationHour() %>h <%= hike.getDurationMin() %>min</span>
+                        <span class="pathdetail-label">Experience:</span>
+                        <span class="pathdetail-value"><%= hike.getExperience() %></span>
                     </div>
                     <div class="pathdetail">
-                        <span class="pathdetail-label">Height difference:</span>
-                        <span class="pathdetail-value"><%= hike.getHeightDifference() %>m</span>
+                        <span class="pathdetail-label">Scenery:</span>
+                        <span class="pathdetail-value"><%= hike.getScenery() %></span>
                     </div>
-                    <div class="pathdetail">
-                        <span class="pathdetail-label">Fitness level: </span>
-                        <p class="fitnesslevel"><span class="<%= getFitnessLevelCSSClass(hike) %>"><%= hike.convertFitnessLevelToString() %></span></p>
+                </div>
+                <div class="months-container">
+                    <div class="binder-image-container">
+                        <img src="pictures/binder.png" alt = "Calendar Binder">
+                    </div>
+                    <div class="container text-center">
+                        <div class = "row">
+                            <div class = "col month" data-month="1">
+                                Jan
+                            </div>
+                            <div class = "col month" data-month="2">
+                                Feb
+                            </div>
+                            <div class = "col month" data-month="3">
+                                Mar
+                            </div>
+                            <div class = "col month" data-month="4">
+                                Apr
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col month"  data-month="5">
+                                Mai
+                            </div>
+                            <div class = "col month"  data-month="6">
+                                Jun
+                            </div>
+                            <div class = "col month"  data-month="7">
+                                Jul
+                            </div>
+                            <div class = "col month"  data-month="8">
+                                Aug
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class = "col month" data-month="9">
+                                Sep
+                            </div>
+                            <div class = "col month" data-month="10">
+                                Oct
+                            </div>
+                            <div class = "col month" data-month="11">
+                                Nov
+                            </div>
+                            <div class = "col month" data-month="12">
+                                Dec
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

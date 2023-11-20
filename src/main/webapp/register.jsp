@@ -16,8 +16,8 @@
     <!--Navigation bar-->
     <jsp:include page="navBar.jsp"/>
     <!--end of Navigation bar-->
-    <a href="welcome.jsp">
-        <img src="pictures/anmeldung.png" alt="Stand-In" class="center">
+    <a href="index.jsp">
+        <img src="pictures/wireframes/anmeldung.png" alt="Stand-In" class="center">
     </a>
 </body>
 </html>
