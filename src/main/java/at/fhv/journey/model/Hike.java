@@ -1,11 +1,15 @@
 package at.fhv.journey.model;
 
+import io.hypersistence.utils.hibernate.type.range.PostgreSQLRangeType;
+import io.hypersistence.utils.hibernate.type.range.Range;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "hike", schema = "journey")
@@ -18,21 +22,30 @@ public class Hike {
     private int _durationMin;
     private int _heightDifference;
     private int _fitnessLevel;
+    private String _description;
+    private Range _recommendedMonths;
+
+    private int _stamina;
+    private int _experience;
+    private int _scenery;
+    private String _author;
+    private LocalDate _dateCreated;
+    private String _gpxLocation;
 
     public Hike(){
 
     }
 
-    public Hike(int hike_id, String name, double distance, int durationHour, int durationMin,
+    public Hike(int hike_id, String name, double distance, int durationHour, int durationMin, String description,
                 int heightDifference, int fitnessLevel){
         _hike_id = hike_id;
         _name = name;
-        BigDecimal dist = BigDecimal.valueOf(distance);
-        _distance = dist;
+        _distance = BigDecimal.valueOf(distance);
         _durationHour = durationHour;
         _durationMin = durationMin;
         _heightDifference = heightDifference;
         _fitnessLevel = fitnessLevel;
+        _description = description;
     }
 
     @Id
@@ -90,5 +103,94 @@ public class Hike {
     }
     public void setFitnessLevel(int fitnessLevel) {
         _fitnessLevel = fitnessLevel;
+    }
+
+    @Column(name = "description")
+    public String getDescription() {
+        return _description;
+    }
+    public void setDescription(String description) {
+        _description = description;
+    }
+
+
+    @Column(name = "stamina")
+    public int getStamina() {
+        return _stamina;
+    }
+    public void setStamina(int stamina) {
+        _stamina = stamina;
+    }
+
+    @Column(name = "experience")
+    public int getExperience() {
+        return _experience;
+    }
+    public void setExperience(int experience) {
+        _experience = experience;
+    }
+
+    @Column(name = "scenery")
+    public int getScenery() {
+        return _scenery;
+    }
+    public void setScenery(int scenery) {
+        _scenery = scenery;
+    }
+
+    @Column(name = "author")
+    public String getAuthor() {
+        return _author;
+    }
+    public void setAuthor(String author) {
+        _author = author;
+    }
+
+    @Column(name = "date")
+    public LocalDate getDateCreated() {
+        return _dateCreated;
+    }
+    public void setDateCreated(LocalDate dateCreated) {
+        _dateCreated = dateCreated;
+    }
+
+    @Column(name = "gpx")
+    public String getGpxLocation() {
+        return _gpxLocation;
+    }
+    public void setGpxLocation(String gpxLocation) {
+        _gpxLocation = gpxLocation;
+    }
+
+
+    @Column(name = "suggested_month", columnDefinition = "int4range")
+    @Type(PostgreSQLRangeType.class)
+    public Range getRecommendedMonths() {
+        return _recommendedMonths;
+    }
+
+    public void setRecommendedMonths(Range recommendedMonths) {
+        _recommendedMonths = recommendedMonths;
+    }
+
+
+    //Functions to convert 1-5 Scales into String output
+
+    public String convertFitnessLevelToString() {
+
+        switch (_fitnessLevel) {
+            case 1:
+                return "EASY";
+            case 2:
+                return "MODERATE";
+            case 3:
+                return "INTERMEDIATE";
+            case 4:
+                return "CHALLENGING";
+            case 5:
+                return "EXPERT";
+            default:
+                return "UNKNOWN";
+        }
     }
 }

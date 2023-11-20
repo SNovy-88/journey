@@ -1,5 +1,8 @@
 package at.fhv.journey.servlets;
 
+import io.hypersistence.utils.hibernate.type.range.PostgreSQLRangeType;
+import io.hypersistence.utils.hibernate.type.range.Range;
+import at.fhv.journey.hibernate.facade.DatabaseFacade;
 import at.fhv.journey.model.Hike;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,23 +12,25 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 @WebServlet(name = "createPageServlet", value = "/create_hike")
-public class SaveDataServlet extends HttpServlet {
+public class createPageServlet extends HttpServlet {
     @Transactional
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
 
-        /*
-        String title = request.getParameter("titleInput");
-        String description = request.getParameter("descriptionInput");
-        */
-        String title = "Test";
-        String description = "Description";
-        double durationHour = 1;
-        double durationMinute = 25;
-        double distance = 1.1;
-        int altitude = 1;
+        String name = request.getParameter("nameInput");
+        String description = request.getParameter("descInput");
+        int durationHour = 1;
+        int durationMin = 25;
+        BigDecimal distance = new BigDecimal("1.25");
+        int heightDifference = 950;
+
+        int fitnessLevel = 1;
+        int stamina = 1;
+        int experience = 1;
+        int scenery = 1;
 
         /*
         Start start = new Start();
@@ -41,55 +46,40 @@ public class SaveDataServlet extends HttpServlet {
         destination.setLongitude(10.12);
         */
 
-        int strength = 1;
-        int stamina = 1;
-        int experience = 1;
-        int landscape = 1;
-        boolean january = true;
-        boolean february = false;
-        boolean march = false;
-        boolean april = false;
-        boolean may = false;
-        boolean june = false;
-        boolean july = false;
-        boolean august = false;
-        boolean september = false;
-        boolean october = false;
-        boolean november = false;
-        boolean december = false;
-        String routeDescription = "New Route Description";
-
         Hike hike = new Hike();
 //        hike.setHikeID(hikeId);
-        hike.setName(title);
+        hike.setName(name);
         hike.setDescription(description);
-        hike.setDuration(duration);
         hike.setDistance(distance);
-        hike.setAltitude(altitude);
-        hike.setStart(start);
-        hike.setDestination(destination);
-        hike.setStrength(strength);
+        hike.setDurationHour(durationHour);
+        hike.setDurationMin(durationMin);
+        hike.setHeightDifference(heightDifference);
+        hike.setFitnessLevel(fitnessLevel);
         hike.setStamina(stamina);
         hike.setExperience(experience);
-        hike.setLandscape(landscape);
-        hike.setJanuary(january);
-        hike.setFebruary(february);
-        hike.setMarch(march);
-        hike.setApril(april);
-        hike.setMay(may);
-        hike.setJune(june);
-        hike.setJuly(july);
-        hike.setAugust(august);
-        hike.setSeptember(september);
-        hike.setOctober(october);
-        hike.setNovember(november);
-        hike.setDecember(december);
-        hike.setRouteDescription(routeDescription);
+        hike.setScenery(scenery);
+        hike.setRecommendedMonths(null);
 
-        FacadeJPA facadeJPA = FacadeJPA.getInstance();
-        facadeJPA.save(hike);
+        // Retrieve the GPX data from the request parameter
+        String gpxData = request.getParameter("gpxData");
+        hike.setGpxLocation(gpxData);
 
-        response.sendRedirect("/search_results.jsp");
+        DatabaseFacade db = DatabaseFacade.getInstance();
+        db.saveObject(hike);
+
+        // Simulate success or failure (modify this based on your actual logic)
+        boolean hikeCreationSuccess = true;
+
+        // Set the response type to JSON
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        // Prepare the JSON response
+        String jsonResponse = "{\"success\": " + hikeCreationSuccess + "}";
+
+        // Send the JSON response back to the client
+        response.getWriter().write(jsonResponse);
+        response.sendRedirect("/Journey_war_exploded/createHike.jsp");
     }
 }
 

@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -6,11 +5,12 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/styles.css">
     <title> Journey | Create your own journey! </title>
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="bs-stepper.min.css">
 
     <!-- Include the bs-stepper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+    <link rel="stylesheet" href="bs-stepper.min.css">
 
     <!-- Include the bs-stepper JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
@@ -23,8 +23,9 @@
 
 </head>
 <body>
-
     <jsp:include page="navBar.jsp"/>
+
+    <!-- old code -->
 <!--
     <h1> Create your own journey </h1>
 
@@ -90,13 +91,15 @@
     <br><br>
     <button id="submitBtn">Submit</button>
 -->
+
+    <!-- Stepper element -->
     <form id="createHike" action="create_hike" method="post">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 mt-5">
                     <h2> Create your own journey </h2>
                     <div id="stepper1" class="bs-stepper">
-                        <div class="bs-stepper-header">
+                        <div class="bs-stepper-header"> <!-- Stepper header -->
                             <div class="step" data-target="#test-l-1">
                                 <button type="button" class="btn step-trigger">
                                     <span class="bs-stepper-circle">1</span>
@@ -118,75 +121,79 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="bs-stepper-content">
-                            <div id="test-l-1" class="content">
+                        <div class="bs-stepper-content"> <!-- Stepper content -->
+                            <div id="test-l-1" class="content"> <!-- Content of the 1st stepper part -->
                                 <p class="text-center"> <!-- not necessary? -->
+                                    <!-- Name input -->
                                     <div class="invalid-feedback" id="inputFeedback">
                                         Please choose a title.
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="title" class="form-control" id="floatingInput" placeholder="Name your hike here">
+                                        <input class="form-control" id="floatingInput" name="nameInput" placeholder="Name your hike here">
                                         <label for="floatingInput">Title</label>
                                     </div>
+                                    <!-- Description input -->
                                     <div class="invalid-feedback" id="textareaFeedback">
                                         Please choose a description.
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <textarea class="form-control" placeholder="Leave a description here" id="floatingTextarea2" style="height: 150px" data-mdb-showcounter="true" maxlength="500"></textarea>
+                                        <textarea class="form-control" placeholder="Leave a description here" id="floatingTextarea2" name="descInput" style="height: 150px" data-mdb-showcounter="true" maxlength="500"></textarea>
                                         <label for="floatingTextarea2">Description</label>
                                     </div>
                                     <br>
-                                    <label class="form-label" for="customFileStart">Starting coordinates: Upload .gpx file</label>
-                                    <input type="file" class="form-control" id="customFileStart" />
-                                    <br>
-                                    <label class="form-label" for="customFileEnd">Finishing coordinates: Upload .gpx file</label>
+                                    <!-- GPX Upload input -->
+                                    <label class="form-label" for="customFileEnd">Upload .gpx file</label>
                                     <input type="file" class="form-control" id="customFileEnd" />
                                 </p>
                                 <button class="btn btn-primary" onclick="if (validateStep1()) stepper1.next()">Next</button>
                             </div>
-                            <div id="test-l-2" class="content">
+                            <div id="test-l-2" class="content"> <!-- Content of the 2nd stepper part -->
                                 <p class="text-center"> <!-- not necessary? -->
+                                    <!-- Hour input -->
                                     <div class="form-floating mb-3">
                                         <input type="number" id="typeNumberHour" class="form-control" />
                                         <label class="form-label" for="typeNumberHour"> Duration Hour </label>
                                     </div>
+                                    <!-- Minute input -->
                                     <div class="form-floating mb-3">
                                         <input type="number" id="typeNumberMinute" class="form-control" />
                                         <label class="form-label" for="typeNumberMinute"> Duration Minute </label>
                                     </div>
+                                    <!-- Height difference input -->
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="Height difference" aria-label="Height difference" aria-describedby="basic-addon1">
                                         <div class="input-group-append">
                                             <span class="input-group-text" id="basic-addon1">m</span>
                                         </div>
                                     </div>
+                                    <!-- Distance input -->
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="Distance" aria-label="Distance" aria-describedby="basic-addon2">
                                         <div class="input-group-append">
                                             <span class="input-group-text" id="basic-addon2">km</span>
                                         </div>
                                     </div>
-                                    <label for="customRange1" class="form-label"> Physical Condition </label>
+                                    <!-- Sliders for several option inputs -->
+                                    <label for="customRange1" class="form-label"> Physical Condition </label> <!-- Physical Condition -->
                                     <input type="range" class="form-range" min="0" max="5" id="customRange1">
-                                    <label for="customRange2" class="form-label"> Stamina </label>
+                                    <label for="customRange2" class="form-label"> Stamina </label> <!-- Stamina -->
                                     <input type="range" class="form-range" min="0" max="5" id="customRange2">
-                                    <label for="customRange3" class="form-label"> Experience </label>
+                                    <label for="customRange3" class="form-label"> Experience </label> <!-- Experience -->
                                     <input type="range" class="form-range" min="0" max="5" id="customRange3">
-                                    <label for="customRange4" class="form-label"> Landscape </label>
+                                    <label for="customRange4" class="form-label"> Landscape </label> <!-- Landscape -->
                                     <input type="range" class="form-range" min="0" max="5" id="customRange4">
-                                    <label for="customRange5" class="form-label"> Preferred months </label>
+                                    <label for="customRange5" class="form-label"> Preferred months </label> <!-- Preferred months -->
                                     <input type="range" class="form-range" min="0" max="11" id="customRange5">
                                 </p>
                                 <button class="btn btn-primary" onclick="stepper1.next()">Next</button>
                                 <button class="btn btn-primary" onclick="stepper1.previous()">Previous</button>
                             </div>
-                            <div id="test-l-3" class="content">
+                            <div id="test-l-3" class="content"> <!-- Content of the 3rd stepper part -->
                                 <p class="text-center"> <!-- not necessary? -->
                                     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+                                    <!-- Image input -->
                                     <div class="file-upload">
-
                                         <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
-
                                         <div class="image-upload-wrap">
                                             <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
                                             <div class="drag-text">
@@ -200,6 +207,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Image input JS -->
                                     <script>
                                         function readURL(input) {
                                             if (input.files && input.files[0]) {
@@ -244,6 +252,7 @@
             </div>
         </div>
 
+        <!-- Stepper JS -->
         <script>
             const stepper1Node = document.querySelector('#stepper1');
             const stepper1 = new Stepper(document.querySelector('#stepper1'));
@@ -256,6 +265,7 @@
                 console.warn('shown.bs-stepper', event);
             });
 
+            // Function for validation of Name & Description input
             function validateStep1() {
                 const inputElement = document.getElementById('floatingInput');
                 const inputFeedback = document.getElementById('inputFeedback');
@@ -295,12 +305,15 @@
                 animation: true
             });
 
-            const stepper4 = new Stepper(document.querySelector('#stepper4'));
+            //const stepper4 = new Stepper(document.querySelector('#stepper4'));
         </script>
 
+        <!-- Bootstrap stepper script links -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="bs-stepper.min.js"></script>
         <script src="dist/js/bs-stepper.js"></script>
+
+        <!-- GraphHopper implementation -->
     <!--
         // Include Leaflet CSS
         <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -386,15 +399,11 @@
     -->
 
         <div id="map" style="height: 400px;"></div> <!-- Show Map -->
-
         <button onclick="exportAsGPX()"> Export as GPX </button> <!-- Export button -->
-
-        <!-- Create Hike button -->
-        <button type="submit" onclick="createHike()">Create Hike</button>
-
+        <button type="submit" onclick="createHike()">Create Hike</button> <!-- Create Hike button -->
         <ul id="coordinates-list"></ul> <!-- List of waypoints -->
 
-        <!-- Bootstrap pop-up-modal -->
+        <!-- Bootstrap pop-up-modal for map input -->
         <div class="modal fade" id="waypointModal" tabindex="-1" role="dialog" aria-labelledby="waypointModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -413,6 +422,7 @@
         </div>
     </form>
 
+    <!-- JS for map logic -->
     <script>
         // Initialize the map
         const map = L.map('map').setView([47, 11], 7); // Set the initial view
@@ -425,7 +435,7 @@
         // Initialize an empty array to store waypoints
         const waypoints = [];
 
-        // Initialize a polyline to connect waypoints
+        // Initialize a polyline to connect waypoints with lines
         const polyline = L.polyline([], {color: 'blue'}).addTo(map);
 
         // Get the <ul> element to display coordinates
@@ -525,7 +535,7 @@
             link.click();
         }
 
-        // Function to create waypoints as GPX
+        // Function to create waypoints as GPX single-handedly
         function createGPX() {
             const gpxData = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' +
                 '<gpx version="1.1" creator="Journey">' +
@@ -535,7 +545,7 @@
                 '</gpx>';
         }
 
-        // Attach a beforeunload event to show a warning if there are unsaved changes
+        // Attach a beforeunload event to show a toast-pop-up warning if there are unsaved changes
         window.addEventListener('beforeunload', function (e) {
             if (unsavedChanges) {
                 const confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
@@ -551,7 +561,7 @@
                 waypoints.map(function (waypoint, index) {
                     return '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' + '<name>' + waypoint.name + '</name>' + '</wpt>';
                 }).join('') +
-                '</gpx>'; //change all this to seperate createGPX() method later on!!!!
+                '</gpx>'; //change all this to separate createGPX() method later on!!!!
 
             // Create an XMLHttpRequest object
             const xhr = new XMLHttpRequest();
@@ -559,11 +569,10 @@
             // Specify the request method, URL, and set asynchronous to true
             xhr.open('POST', '/Journey_war_exploded/createHike', true);
 
-
             // Set the request header for the POST request
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-            // Define the callback function to handle the response from the servlet
+            // Define the callback function to handle the response from the servlet as a toast-pop-up
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
