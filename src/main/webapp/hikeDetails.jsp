@@ -45,12 +45,25 @@
                 var month = parseInt($(this).data('month'));
 
                 // Check if the month is within the range
-                if (month >= start && month <= end) {
-                    // Apply the green background color
-                    $(this).css('background-color', '#b1ff2e');
+                if ( end > 12){
+                    var startNew = 1;
+                    var endNew = end -12;
+                    if (month >= startNew && month <= endNew){
+                        highlightRecommendedMonths(this);
+                    }
+                    if (month >= start && month <= end) {
+                        highlightRecommendedMonths(this);
+                    }
+                }else if (month >= start && month <= end){
+                    highlightRecommendedMonths(this);
                 }
             });
         });
+
+    function highlightRecommendedMonths(month){
+        $(month).css('background-color', '#b1ff2e');
+    }
+
     </script>
 
     <!--Navigation bar-->
