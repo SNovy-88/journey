@@ -1,4 +1,4 @@
-.container {
+.hike-details-page-container {
     display: flex;
 
     min-height: 89%;
@@ -17,11 +17,19 @@
 .left-box {
     width: 60%;
 }
+
+.left-box-header {
+    width: 100%;
+    position: relative;
+
+}
+
 .right-box {
     width: 40%;
 }
 
 .image-container {
+
     width: 400px;
     height: 300px;
     overflow: hidden;
@@ -34,6 +42,21 @@
     border-radius: 15px;
 }
 
+.hike-details-numbers-container {
+    margin-top: 10px;
+}
+
+.col {
+    vertical-align: center;
+    height: 30px;
+}
+
+.bo {
+    border-left: 1px solid #ccc;
+    text-align: left;
+
+}
+
 h1 {
     margin-top: 15px;
     margin-bottom: 15px;
@@ -44,7 +67,7 @@ h1 {
     margin-bottom: 10px;
 }
 
-.pathdetails {
+.pathdetails-container{
     border-top: 1px solid #ccc;
     padding: 10px 0;
 }
@@ -84,7 +107,7 @@ h1 {
     display: flex;
     background-color: #ccc;
     color: black;
-    width: 50px;
+    width: 90px;
     justify-content: center;
     align-items: center;
     padding: 10px 20px;
@@ -94,6 +117,7 @@ h1 {
     border-radius: 5px;
     transition: background-color 0.2s;
 
+
 }
 .back-button svg {
     margin-right: 5px;
@@ -101,6 +125,14 @@ h1 {
 
 .back-button:hover {
     background-color: #999;
+}
+
+.author {
+    position: absolute;
+    font-size: 20px ;
+    font-style: italic;
+    top: 0;
+    right: 0;
 }
 
 .fitness-level-easy {
@@ -140,5 +172,38 @@ h1 {
     border-radius: 5px;
 }
 
+.months-container {
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+    margin-top: 10px;
+    alignment: center;
+}
 
+.binder-image-container img {
+    width: 100%;
+}
 
+.months-container .container {
+    width: 100%;
+    background-color: #eaffc7;
+}
+
+.months-container .container.row {
+    width: 100%;
+}
+
+.months-container .container .col{
+    border: 1.5px solid green;
+    border-radius: 5px;
+    margin: 2px;
+    background-color: white;
+}
+
+.months-container .container .col.month{
+    border: 1.5px solid green;
+    border-radius: 5px;
+    margin: 2px;
+    background-color: white;
+
+}

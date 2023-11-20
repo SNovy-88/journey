@@ -21,6 +21,6 @@
 <!--end of Navigation bar-->
 
     <p>todo: formular</p>
-    <img src="pictures/newpath.png" alt="Stand-In" class="center">
+    <img src="pictures/wireframes/newpath.png" alt="Stand-In" class="center">
 </body>
 </html>
