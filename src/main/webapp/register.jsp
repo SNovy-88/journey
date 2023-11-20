@@ -10,7 +10,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/styles.css">
-    <title>Anmeldung</title>
+    <title>Journey | Register</title>
 </head>
 <body>
     <!--Navigation bar-->

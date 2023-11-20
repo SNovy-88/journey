@@ -14,10 +14,10 @@
 <body>
 <div id="navbar">
     <ul>
-        <li><a href="index.jsp"><img class="logo" src="pictures/logo_white.png" alt="Home button" style="width: 180px; height: auto"></a></li>
+        <li><a href="index.jsp"><img class="logo" src="pictures/logo_white.png" alt="Home button"></a></li>
         <li><a class="links" href="search.jsp">DISCOVER</a></li>
         <li><a class="links" href="createHike.jsp">CREATE</a></li>
-        <li id="profile" style="float:right"><a href="account.jsp"><img src="pictures/profile.png" alt="profile-account"></a></li>
+        <li id="profile"><a href="account.jsp"><img class="profile" src="pictures/profile.png" alt="profile-account"></a></li>
     </ul>
 </div>
 </body>
