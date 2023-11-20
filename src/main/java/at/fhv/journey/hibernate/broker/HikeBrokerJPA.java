@@ -19,7 +19,7 @@ public class HikeBrokerJPA extends BrokerBaseJPA<Hike> {
 
     public List<Hike> getHikesByName(String name) {
         EntityManager entityManager = getEntityManager();
-        List<Hike> hikes = entityManager.createQuery("SELECT h FROM Hike h WHERE h.name LIKE :name", Hike.class)
+        List<Hike> hikes = entityManager.createQuery("SELECT h FROM Hike h WHERE h.name ILIKE :name", Hike.class)
                 .setParameter("name", "%" + name + "%")
                 .getResultList();
         entityManager.close();
