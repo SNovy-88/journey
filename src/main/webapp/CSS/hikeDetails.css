@@ -114,13 +114,17 @@ h1 {
 .pathdetail-label {
     flex: 1;
     text-align: left;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .pathdetail-value {
     flex: 1;
     text-align: right;
     font-size: 20px;
+}
+
+.pathdetail-icons svg{
+    margin-left: 10px;
 }
 
 .favorite-button {
