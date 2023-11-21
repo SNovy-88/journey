@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 
@@ -32,20 +33,6 @@ public class createPageServlet extends HttpServlet {
         int experience = 1;
         int scenery = 1;
 
-        /*
-        Start start = new Start();
-        start.setStartID(1);
-        start.setName("Start");
-        start.setLatitude(40.12);
-        start.setLongitude(10.2);
-
-        Destination destination = new Destination();
-        destination.setDestinationID(1);
-        destination.setName("Destination");
-        destination.setLatitude(42.12);
-        destination.setLongitude(10.12);
-        */
-
         Hike hike = new Hike();
 //        hike.setHikeID(hikeId);
         hike.setName(name);
@@ -60,9 +47,18 @@ public class createPageServlet extends HttpServlet {
         hike.setScenery(scenery);
         hike.setRecommendedMonths(null);
 
-        // Retrieve the GPX data from the request parameter
-        String gpxData = request.getParameter("gpxData");
-        hike.setGpxLocation(gpxData);
+        // Retrieve the GPX data from the request body
+        StringBuilder gpxData = new StringBuilder();
+        try (BufferedReader reader = request.getReader()) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                gpxData.append(line);
+            }
+        }
+
+        // Set the GPX data in your Hike object
+        hike.setGpxLocation(gpxData.toString());
+
 
         DatabaseFacade db = DatabaseFacade.getInstance();
         db.saveObject(hike);
@@ -70,15 +66,6 @@ public class createPageServlet extends HttpServlet {
         // Simulate success or failure (modify this based on your actual logic)
         boolean hikeCreationSuccess = true;
 
-        // Set the response type to JSON
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-
-        // Prepare the JSON response
-        String jsonResponse = "{\"success\": " + hikeCreationSuccess + "}";
-
-        // Send the JSON response back to the client
-        response.getWriter().write(jsonResponse);
         response.sendRedirect("/Journey_war_exploded/createHike.jsp");
     }
 }

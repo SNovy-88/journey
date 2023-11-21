@@ -25,73 +25,6 @@
 <body>
     <jsp:include page="navBar.jsp"/>
 
-    <!-- old code -->
-<!--
-    <h1> Create your own journey </h1>
-
-    <div class="container">
-        <div id="stepper2" class="bs-stepper">
-            <div class="bs-stepper-header" role="tablist">
-                <div class="step active" data-target="#test-nl-1">
-                    <button type="button" class="step-trigger" role="tab" id="stepper2trigger1" aria-controls="test-nl-1" aria-selected="true">
-                <span class="bs-stepper-circle">
-                  <span class="fas fa-user" aria-hidden="true"></span>
-                </span>
-                        <span class="bs-stepper-label">Name</span>
-                    </button>
-                </div>
-                <div class="bs-stepper-line"></div>
-                <div class="step" data-target="#test-nl-2">
-                    <button type="button" class="step-trigger" role="tab" id="stepper2trigger2" aria-controls="test-nl-2" aria-selected="false">
-                <span class="bs-stepper-circle">
-                  <span class="fas fa-map-marked" aria-hidden="true"></span>
-                </span>
-                        <span class="bs-stepper-label">Address</span>
-                    </button>
-                </div>
-                <div class="bs-stepper-line"></div>
-                <div class="step" data-target="#test-nl-3">
-                    <button type="button" class="step-trigger" role="tab" id="stepper2trigger3" aria-controls="test-nl-3" aria-selected="false">
-                <span class="bs-stepper-circle">
-                  <span class="fas fa-save" aria-hidden="true"></span>
-                </span>
-                        <span class="bs-stepper-label">Submit</span>
-                    </button>
-                </div>
-            </div>
-            <div class="bs-stepper-content">
-
-                <br><br>
-                <div class="invalid-feedback" id="inputFeedback">
-                    Please choose a title.
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="title" class="form-control" id="floatingInput" placeholder="Name your hike here">
-                    <label for="floatingInput">Title</label>
-                </div>
-                <div class="invalid-feedback" id="textareaFeedback">
-                    Please choose a description.
-                </div>
-                <div class="form-floating mb-3">
-                    <textarea class="form-control" placeholder="Leave a description here" id="floatingTextarea2" style="height: 150px" data-mdb-showcounter="true" maxlength="500"></textarea>
-                    <label for="floatingTextarea2">Description</label>
-                </div>
-
-                <br>
-                <label class="form-label" for="customFile">Starting coordinates: Upload .gpx file</label>
-                <input type="file" class="form-control" id="customFileStart" />
-                <br>
-                <label class="form-label" for="customFile">Finishing coordinates: Upload .gpx file</label>
-                <input type="file" class="form-control" id="customFileEnd" />
-            </div>
-        </div>
-    </div>
-
-
-    <br><br>
-    <button id="submitBtn">Submit</button>
--->
-
     <!-- Stepper element -->
     <form id="createHike" action="create_hike" method="post">
         <div class="container">
@@ -145,7 +78,7 @@
                                     <label class="form-label" for="customFileEnd">Upload .gpx file</label>
                                     <input type="file" class="form-control" id="customFileEnd" />
                                 </p>
-                                <button class="btn btn-primary" onclick="if (validateStep1()) stepper1.next()">Next</button>
+                                <button class="btn btn-primary" type="button" onclick="if (validateStep1()) stepper1.next()">Next</button>
                             </div>
                             <div id="test-l-2" class="content"> <!-- Content of the 2nd stepper part -->
                                 <p class="text-center"> <!-- not necessary? -->
@@ -185,8 +118,8 @@
                                     <label for="customRange5" class="form-label"> Preferred months </label> <!-- Preferred months -->
                                     <input type="range" class="form-range" min="0" max="11" id="customRange5">
                                 </p>
-                                <button class="btn btn-primary" onclick="stepper1.next()">Next</button>
-                                <button class="btn btn-primary" onclick="stepper1.previous()">Previous</button>
+                                <button class="btn btn-primary" type="button" onclick="stepper1.next()">Next</button>
+                                <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
                             </div>
                             <div id="test-l-3" class="content"> <!-- Content of the 3rd stepper part -->
                                 <p class="text-center"> <!-- not necessary? -->
@@ -243,8 +176,8 @@
                                         });
                                     </script>
                                 </p>
-                                <button class="btn btn-primary" onclick="stepper1.next()">Next</button>
-                                <button class="btn btn-primary" onclick="stepper1.previous()">Previous</button>
+                                <button class="btn btn-primary" type="button" onclick="stepper1.next()">Next</button>
+                                <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
                             </div>
                         </div>
                     </div>
@@ -399,7 +332,7 @@
     -->
 
         <div id="map" style="height: 400px;"></div> <!-- Show Map -->
-        <button onclick="exportAsGPX()"> Export as GPX </button> <!-- Export button -->
+        <button type="button" onclick="exportAsGPX()"> Export as GPX </button> <!-- Export button -->
         <button type="submit" onclick="createHike()">Create Hike</button> <!-- Create Hike button -->
         <ul id="coordinates-list"></ul> <!-- List of waypoints -->
 
@@ -420,6 +353,7 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="gpxDataInput" name="gpxData">
     </form>
 
     <!-- JS for map logic -->
@@ -473,6 +407,9 @@
                 waypointNameInput.value = '';
             });
 
+            // Initialize a variable to store GPX data
+            let cachedGPXData = '';
+
             // Function to be called when the "Add Waypoint" button is clicked
             window.addWaypoint = function () {
                 // Get the waypoint name from the input field
@@ -500,6 +437,9 @@
 
                 // Set the flag for unsaved changes
                 unsavedChanges = true;
+
+                // Create GPX data and update the hidden input field
+                cachedGPXData = createGPX();
             };
         });
 
@@ -545,51 +485,58 @@
                 '</gpx>';
         }
 
+        // Function to update the hidden input field with cached GPX data
+        function updateGPXInput() {
+            document.getElementById('gpxDataInput').value = cachedGPXData;
+        }
+
+        // Function to create hike and send GPX data to the servlet
+        function createHike() {
+            updateGPXInput();
+
+            /*
+            const gpxData = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' +
+                '<gpx version="1.1" creator="Journey">' +
+                waypoints.map(function (waypoint, index) {
+                    return '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' + '<name>' + waypoint.name + '</name>' + '</wpt>';
+                }).join('') +
+                '</gpx>';
+
+            // Add the GPX data to a hidden input field inside the form
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'gpxData';
+            hiddenInput.value = gpxData;
+
+            // Append the hidden input to the form
+            document.getElementById('hikeForm').appendChild(hiddenInput);
+
+            // Create an XMLHttpRequest object
+            const xhr = new XMLHttpRequest();
+
+            // Specify the request method, URL, and set asynchronous to true
+            xhr.open('POST', '/create_hike', true);
+
+            // Set the request header for the POST request
+            xhr.setRequestHeader('Content-Type', 'application/xml');
+
+            // Send the form data as the POST body
+            xhr.send(new FormData(document.getElementById('hikeForm')));
+
+            // Remove the hidden input after sending the request
+            document.getElementById('hikeForm').removeChild(hiddenInput);
+            */
+        }
+
         // Attach a beforeunload event to show a toast-pop-up warning if there are unsaved changes
+        /*
         window.addEventListener('beforeunload', function (e) {
             if (unsavedChanges) {
                 const confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
                 (e || window.event).returnValue = confirmationMessage; // Standard
                 return confirmationMessage; // IE and Firefox
             }
-        });
-
-        // Function to create hike and send GPX data to the servlet
-        function createHike() {
-            const gpxData = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' +
-                '<gpx version="1.1" creator="Journey">' +
-                waypoints.map(function (waypoint, index) {
-                    return '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' + '<name>' + waypoint.name + '</name>' + '</wpt>';
-                }).join('') +
-                '</gpx>'; //change all this to separate createGPX() method later on!!!!
-
-            // Create an XMLHttpRequest object
-            const xhr = new XMLHttpRequest();
-
-            // Specify the request method, URL, and set asynchronous to true
-            xhr.open('POST', '/Journey_war_exploded/createHike', true);
-
-            // Set the request header for the POST request
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            // Define the callback function to handle the response from the servlet as a toast-pop-up
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        // Success: Handle the response from the servlet if needed
-                        console.log('Hike created successfully');
-                        alert('Hike created successfully'); // Add this line to display a notification
-                    } else {
-                        // Error: Handle the error if needed
-                        console.error('Error creating hike');
-                        alert('Error creating hike'); // Add this line to display an error notification
-                    }
-                }
-            };
-
-            // Send the GPX data as the POST body
-            xhr.send('gpxData=' + encodeURIComponent(gpxData));
-        }
+        });*/
     </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
