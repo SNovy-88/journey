@@ -463,7 +463,7 @@
                 waypoints.map(function (waypoint, index) {
                     return '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' + '<name>' + waypoint.name + '</name>' + '</wpt>';
                 }).join('') +
-                '</gpx>';
+                '</gpx>'; // function is redundant, use createGPX!!!
 
             // Create a Blob with the GPX data
             const blob = new Blob([gpxData], {type: 'application/gpx+xml'});
@@ -477,7 +477,7 @@
 
         // Function to create waypoints as GPX single-handedly
         function createGPX() {
-            const gpxData = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' +
+            return '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' +
                 '<gpx version="1.1" creator="Journey">' +
                 waypoints.map(function (waypoint, index) {
                     return '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' + '<name>' + waypoint.name + '</name>' + '</wpt>';
