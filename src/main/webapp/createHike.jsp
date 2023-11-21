@@ -353,7 +353,7 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" id="gpxDataInput" name="gpxData">
+        <input type="hidden" id="gpxDataInput" name="gpxData"> <!-- hidden input element for transferring gpxData from JS into JSP form element -->
     </form>
 
     <!-- JS for map logic -->
@@ -382,6 +382,9 @@
         // Flag to track unsaved changes
         let unsavedChanges = false;
 
+        // Initialize a variable to store GPX data
+        let cachedGPXData = '';
+
         // Add a click event listener to the map
         map.on('click', function (e) {
             // Open the modal when the map is clicked
@@ -406,9 +409,6 @@
                 // Clear the input field when the modal is closed
                 waypointNameInput.value = '';
             });
-
-            // Initialize a variable to store GPX data
-            let cachedGPXData = '';
 
             // Function to be called when the "Add Waypoint" button is clicked
             window.addWaypoint = function () {
@@ -458,15 +458,8 @@
 
         // Function to export waypoints as GPX
         function exportAsGPX() {
-            const gpxData = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' +
-                '<gpx version="1.1" creator="Journey">' +
-                waypoints.map(function (waypoint, index) {
-                    return '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' + '<name>' + waypoint.name + '</name>' + '</wpt>';
-                }).join('') +
-                '</gpx>'; // function is redundant, use createGPX!!!
-
             // Create a Blob with the GPX data
-            const blob = new Blob([gpxData], {type: 'application/gpx+xml'});
+            const blob = new Blob([cachedGPXData], {type: 'application/gpx+xml'});
 
             // Create a link for downloading the GPX file
             const link = document.createElement('a');
@@ -529,14 +522,13 @@
         }
 
         // Attach a beforeunload event to show a toast-pop-up warning if there are unsaved changes
-        /*
         window.addEventListener('beforeunload', function (e) {
             if (unsavedChanges) {
                 const confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
                 (e || window.event).returnValue = confirmationMessage; // Standard
                 return confirmationMessage; // IE and Firefox
             }
-        });*/
+        });
     </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -47,24 +47,12 @@ public class createPageServlet extends HttpServlet {
         hike.setScenery(scenery);
         hike.setRecommendedMonths(null);
 
-        // Retrieve the GPX data from the request body
-        StringBuilder gpxData = new StringBuilder();
-        try (BufferedReader reader = request.getReader()) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                gpxData.append(line);
-            }
-        }
-
         // Set the GPX data in your Hike object
-        hike.setGpxLocation(gpxData.toString());
-
+        String gpxData = request.getParameter("gpxData");
+        hike.setGpxLocation(gpxData);
 
         DatabaseFacade db = DatabaseFacade.getInstance();
         db.saveObject(hike);
-
-        // Simulate success or failure (modify this based on your actual logic)
-        boolean hikeCreationSuccess = true;
 
         response.sendRedirect("/Journey_war_exploded/createHike.jsp");
     }
