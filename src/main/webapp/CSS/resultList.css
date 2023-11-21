@@ -2,6 +2,7 @@ h1 {
     text-align: center;
     margin-top: 10px;
     margin-bottom: 15px;
+    padding-top: 5vh;
 }
 
 /* hike-box-container contains every hike element from the search results*/
@@ -184,3 +185,35 @@ h1 {
     padding: 5px;
     border-radius: 5px;
 }
+
+.search-container-rlist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    place-items: center;
+    padding-bottom: 5vh;
+}
+
+.search-button-rlist {
+    margin-left: 10px;
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: #b1ff2e;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.search-button-rlist:hover {
+    background-color: #8ddb1f;
+    transform: scale(1.2);
+}
+
+.search-input {
+    color: #999999;
+    font-style: italic;
+}
+

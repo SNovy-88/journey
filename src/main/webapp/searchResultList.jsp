@@ -9,6 +9,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/resultList.css">
+    <link rel="stylesheet" href="CSS/search.css">
     <title>Journey | Results</title>
 
     <!-- Bootstrap css href -->
@@ -22,7 +23,19 @@
 <%-- Retrieve the search string from the request --%>
 <% String searchString = request.getParameter("searchString"); %>
 
-<h1>List of Hikes for "<%= searchString %>"</h1>
+
+<div class="search-container-rlist">
+    <h1>Search Results</h1>
+    <form action="/Journey_war_exploded/searchResultList">
+        <%
+            if (searchString == null || searchString.isEmpty()) {
+                searchString = "All Hikes";
+            }
+        %>
+        <input type="text" class="search-input" name="searchString" value="<%= searchString %>" onfocus="if (this.value=='All Hikes') this.value='';" onblur="if (this.value=='') this.value='All Hikes';">
+        <button class="search-button-rlist">Search</button>
+    </form>
+</div>
 
 <div class="hike-box-container"> <!-- hike-box-container contains every hike element from the search results -->
 
