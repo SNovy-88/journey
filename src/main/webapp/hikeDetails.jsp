@@ -37,17 +37,21 @@
         $(document).ready(function () {
 
             // Extract the start and end months from the range
-            var start = <%=getStartMonthInt(hike.getRecommendedMonths())%>;
-            var end = <%=getEndMonthInt(hike.getRecommendedMonths())%>;
+            let start = <%=getStartMonthInt(hike.getRecommendedMonths())%>;
+            let end = <%=getEndMonthInt(hike.getRecommendedMonths())%>;
 
             // Iterate over each month element
             $('.month').each(function () {
-                var month = parseInt($(this).data('month'));
+                let month = parseInt($(this).data('month'));
 
                 // Check if the month is within the range
-                if (month >= start && month <= end) {
-                    // Apply the green background color
-                    $(this).css('background-color', '#b1ff2e');
+                if (end > 12) {
+                    let startNew = 1;
+                    let endNew = end - 12;
+                    checkRangeAndHighlightRecommendedMonths($(this), month, startNew, endNew);
+                    checkRangeAndHighlightRecommendedMonths($(this), month, start, end);
+                } else if (end <= 12) {
+                    checkRangeAndHighlightRecommendedMonths($(this), month, start, end);
                 }
             });
         });
@@ -63,6 +67,11 @@
                     svgHTML += empty;
                 }
                 document.getElementById(container_id).innerHTML = svgHTML;
+        }
+
+        function checkRangeAndHighlightRecommendedMonths(element, month, start, end){
+            if (month >= start && month <= end) {
+                element.css('background-color', '#b1ff2e');
             }
         }
 
