@@ -3,15 +3,18 @@
     color: #ffffff;
 }
 
-.search-container1 {
+.search {
     background-image: url("../pictures/background_search.jpg");
     background-size: cover;
     background-position: center;
-    height: 800px;
+}
+.search-container1 {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-top: 25vh;
+    place-items: center;
 }
 
 .search-container {
