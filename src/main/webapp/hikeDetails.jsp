@@ -63,11 +63,13 @@
                 for (var i = 0; i < value; i++) {
                     svgHTML += full;
                 }
-                for(var j = 0; j < 5-value;j++){
+                for (var j = 0; j < 5 - value; j++) {
                     svgHTML += empty;
                 }
                 document.getElementById(container_id).innerHTML = svgHTML;
+            }
         }
+
 
         function checkRangeAndHighlightRecommendedMonths(element, month, start, end){
             if (month >= start && month <= end) {
