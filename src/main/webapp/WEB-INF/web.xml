@@ -3,18 +3,4 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
-   <!-- servlet always needs to be configured with servlet-name and servlet-class and then mapped.
-       Multiple servlets can be configured / mapped in servlet and servlet-mapping. No need to always open
-       a new servlet / servlet-mapping tag -->
-
-    <servlet>
-        <servlet-name>searchResultList</servlet-name>
-        /* class needs the location of the actual servlet java class */
-        <servlet-class>at.fhv.journey.servlets.searchResultListServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>searchResultList</servlet-name>
-        /* the url-pattern needs to be the same as the value in the annotation of the servlet class */
-        <url-pattern>/searchResultList</url-pattern>
-    </servlet-mapping>
 </web-app>

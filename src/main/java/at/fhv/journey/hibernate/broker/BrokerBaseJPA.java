@@ -1,54 +1,39 @@
 package at.fhv.journey.hibernate.broker;
 
+import at.fhv.journey.model.Hike;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 import java.util.List;
 
-public class BrokerBaseJPA<T> implements AutoCloseable {
-
-    private EntityManager entityManager;
-
-    public BrokerBaseJPA() {
-        EntityManagerFactory fact = Persistence.createEntityManagerFactory("journey");
-        entityManager = fact.createEntityManager();
-    }
+public abstract class BrokerBaseJPA<T> {
 
     public EntityManager getEntityManager() {
-        return entityManager;
+        EntityManagerFactory fact = Persistence.createEntityManagerFactory("journey");
+        return fact.createEntityManager();
     }
 
-    public void insert(T value) {
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-        entityManager.merge(value); // merge macht update oder insert je nachdem ob es den Eintrag gibt
-        tx.commit();
+    public void save(T value) {
+        delete(value);
+        EntityManager entityManager = getEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.merge(value);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     public void delete(T value) {
+        EntityManager entityManager = getEntityManager();
         entityManager.getTransaction().begin();
         entityManager.remove(entityManager.contains(value) ? value : entityManager.merge(value));
         entityManager.getTransaction().commit();
-    }
-
-    public T getById(Class<T> entityClass, int id) {
-        T entity = entityManager.find(entityClass, id);
-        return entity;
-    }
-
-    public List<T> getAll(Class<T> entityClass) {
-        List<T> entities = entityManager.createQuery("select e from " + entityClass.getSimpleName() + " e", entityClass).getResultList();
-        return entities;
+        entityManager.close();
     }
 
 
+    public abstract T get(int value);
 
-    @Override
-    public void close() {
-        if (entityManager != null && entityManager.isOpen()) {
-            entityManager.close();
-        }
-    }
+
+    public abstract List<Hike> getAll();
 }
