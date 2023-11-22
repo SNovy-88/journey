@@ -1,8 +1,16 @@
-* {
-    margin:0;
-    padding:0;
-    font-family: "Berlin Sans FB", serif;
+@font-face {
+    font-family: 'Berlin Sans FB';
+    src: url('fonts/Berlin Sans FB Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Berlin Sans FB', sans-serif;
+}
+
 
 h1 {
     font-weight: normal;

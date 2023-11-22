@@ -19,7 +19,9 @@ public class HikeBrokerJPA extends BrokerBaseJPA<Hike> {
     @Override
     public List<Hike> getAll() {
         EntityManager entityManager = getEntityManager();
-        List<Hike> hikes = entityManager.createQuery("select h from Hike h", Hike.class).getResultList();
+        List<Hike> hikes = entityManager.createQuery("SELECT h FROM Hike h WHERE h.name ILIKE :name", Hike.class)
+          .setParameter("name", "%" + name + "%")
+          .getResultList();
         entityManager.close();
         return hikes;
     }
