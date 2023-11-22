@@ -27,11 +27,6 @@
 
     <div class="search-container-rlist">
         <form action="/Journey_war_exploded/searchResultList">
-            <%
-                if (searchString == null || searchString.isEmpty()) {
-                    searchString = "";
-                }
-            %>
             <input type="text" class="search-input" name="searchString" placeholder="All Hikes" value="<%= searchString %>">
             <button class="search-button-rlist">Search</button>
         </form>
