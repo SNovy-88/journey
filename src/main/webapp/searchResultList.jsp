@@ -91,6 +91,13 @@
             </div>
         </div>
     <% } %>
+    <% if (hikeList.isEmpty()) {
+        %> <h1 class="noHikeText"> No matching results found
+        <br>
+        <br>
+        Try another search?
+        </h1> <%
+    } %>
 </div>
 
 <!-- Bootstrap js implementation -->
