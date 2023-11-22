@@ -26,87 +26,56 @@ h1 {
                         text is too long */
 }
 
-/* hike-box-information contains all the information related to one search result
+/* hike-box-image contains the image for the search result */
+.hike-box-image img {
+    width: 150px;
+    height: auto;
+    float: left;
+    /*this float and the overflow:hidden option in hike-box-information allows image
+     to be on the left instead of the two div elements being underneath each other*/
+}
+
+/* hike-box-information contains all the information related to one search result */
 .hike-box-information {
     margin-left: 160px;
     overflow: hidden;
 }
-*/
 
 /* h2 is the hike name */
 .hike-box h2 {
-    font-size: 26px;
+    font-size: 22px;
     font-weight: normal;
-    margin-bottom: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 95%; /* Allow text to wrap */
+    margin-bottom: 0px;
+    white-space: nowrap; /* this prevents the text from wrapping */
+    overflow: hidden; /* this hides overflow content if its too long */
+    text-overflow: ellipsis; /* this adds 3 dots when the text is too long */
+    max-width: 90%; /* this makes sure text is only 90% width of the available space*/
+
 }
 
-/* tooltip */
-.hike-box h2::after {
-    content: "";
-}
-.hike-box h2:hover::after {
-    content: attr(title);
-    display: none;
-    white-space: normal;
+.fitnesslevel {
+    font-size: 14px;
+    margin-top: 7px;
+    margin-bottom: 13px;
 }
 
-/* href of the header */
-.hike-details-link-header {
-    color: black;
-    text-decoration: none;
-}
-.hike-details-link-header:hover {
-    text-decoration: revert;
-}
-
-/* image resizing and aspect ratio */
-.image-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-.image {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    width: 100%;
-    height: 100%;
-    border-radius: 15px;
-}
-
-/* additional formatting for the grid system: vertical lines */
-.row-cols-auto .col-md-3 {
-    position: relative;
-}
-.row-cols-auto .col-md-3:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 1px;
-    background-color: #ccc;
-}
-
-/* container for distance, duration and height difference
+/* container for distance, duration and height difference */
 .description {
     font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
-*/
 
-/* link-container contains link to details page of the hike result */
+/* link-container contains link to details page of the hike result*/
 .link-container {
     font-size: 16px;
+    text-align: left;
     position: relative;
 }
 
-/* this is not working yet, is a future feature */
-.safe-trail-link {
+/* this is not working yet*/
+/*.safe-trail-link {
+    margin-top: 10px;
     float: left;
     color: green;
     text-decoration: none;
@@ -114,15 +83,11 @@ h1 {
     padding: 5px 10px;
     border: 1px solid green;
     border-radius: 5px;
-}
-.safe-trail-link:hover {
-    transition-duration: 300ms;
-    background-color: green;
-    color: #f5f5f5;
-}
+}*/
 
 /* Link to the details page of the hike result */
 .hike-details-link {
+    margin-top: 10px;
     float: right;
     color: blue;
     text-decoration: none; /* Remove underline */
@@ -131,54 +96,48 @@ h1 {
     border: 1px solid blue;
     border-radius: 5px;
 }
-.hike-details-link:hover {
-    transition-duration: 300ms;
-    background-color: blue;
-    color: #f5f5f5;
-}
 
-/* placeholder for the white space between distance, duration, height difference details
+/* placeholder for the white space between distance, duration, height difference details*/
 .output-margin {
     margin-right: 40px;
 }
-*/
 
-/* fitness level tags */
-.fitnesslevel {
-    font-size: 14px;
-    margin-top: 7px;
-    margin-bottom: 13px;
-}
+
 .fitness-level-easy {
     background-color: green;
     color: white;
     padding: 5px;
     border-radius: 5px;
 }
+
 .fitness-level-moderate {
     background-color: yellow;
     color: black;
     padding: 5px;
     border-radius: 5px;
 }
+
 .fitness-level-intermediate {
     background-color: orange;
     color: black;
     padding: 5px;
     border-radius: 5px;
 }
+
 .fitness-level-challenging {
     background-color: red;
     color: white;
     padding: 5px;
     border-radius: 5px;
 }
+
 .fitness-level-expert {
     background-color: purple;
     color: white;
     padding: 5px;
     border-radius: 5px;
 }
+
 .fitness-level-unknown {
     background-color: darkgrey;
     color: white;
