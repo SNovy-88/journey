@@ -485,42 +485,10 @@
 
         // Function to create hike and send GPX data to the servlet
         function createHike() {
+            // Update the hidden input field with cached GPX data
             updateGPXInput();
-
-            /*
-            const gpxData = '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' +
-                '<gpx version="1.1" creator="Journey">' +
-                waypoints.map(function (waypoint, index) {
-                    return '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' + '<name>' + waypoint.name + '</name>' + '</wpt>';
-                }).join('') +
-                '</gpx>';
-
-            // Add the GPX data to a hidden input field inside the form
-            const hiddenInput = document.createElement('input');
-            hiddenInput.type = 'hidden';
-            hiddenInput.name = 'gpxData';
-            hiddenInput.value = gpxData;
-
-            // Append the hidden input to the form
-            document.getElementById('hikeForm').appendChild(hiddenInput);
-
-            // Create an XMLHttpRequest object
-            const xhr = new XMLHttpRequest();
-
-            // Specify the request method, URL, and set asynchronous to true
-            xhr.open('POST', '/create_hike', true);
-
-            // Set the request header for the POST request
-            xhr.setRequestHeader('Content-Type', 'application/xml');
-
-            // Send the form data as the POST body
-            xhr.send(new FormData(document.getElementById('hikeForm')));
-
-            // Remove the hidden input after sending the request
-            document.getElementById('hikeForm').removeChild(hiddenInput);
-            */
         }
-
+/*
         // Attach a beforeunload event to show a toast-pop-up warning if there are unsaved changes
         window.addEventListener('beforeunload', function (e) {
             if (unsavedChanges) {
@@ -528,7 +496,7 @@
                 (e || window.event).returnValue = confirmationMessage; // Standard
                 return confirmationMessage; // IE and Firefox
             }
-        });
+        });*/
     </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
