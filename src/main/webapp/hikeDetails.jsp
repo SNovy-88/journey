@@ -6,20 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page import="at.fhv.journey.model.Hike" %>
-<%@ page import="at.fhv.journey.hibernate.broker.HikeBrokerJPA" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
 <%@ page import="static at.fhv.journey.utils.MonthsFunctions.*" %>
 <!-- Bootstrap css href -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-<%
-
-    int hikeId = Integer.parseInt(request.getParameter("trailId"));
-    HikeBrokerJPA hikeBroker = new HikeBrokerJPA();
-    Hike hike = hikeBroker.getById(Hike.class, hikeId);
-
-%>
 <html>
     <head lang="en">
         <meta charset="UTF-8">
@@ -29,7 +21,7 @@
     </head>
 
     <body>
-
+    <% Hike hike = (Hike) request.getAttribute("hike"); %>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
