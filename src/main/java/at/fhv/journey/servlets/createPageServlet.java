@@ -1,6 +1,5 @@
 package at.fhv.journey.servlets;
 
-import io.hypersistence.utils.hibernate.type.range.PostgreSQLRangeType;
 import io.hypersistence.utils.hibernate.type.range.Range;
 import at.fhv.journey.hibernate.facade.DatabaseFacade;
 import at.fhv.journey.model.Hike;
@@ -14,6 +13,7 @@ import jakarta.transaction.Transactional;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @WebServlet(name = "createPageServlet", value = "/create_hike")
 public class createPageServlet extends HttpServlet {
@@ -33,6 +33,10 @@ public class createPageServlet extends HttpServlet {
         int experience = 1;
         int scenery = 1;
 
+        Range<Integer> recommendedMonths = Range.closed(2, 5);
+        String author = "testAuthor";
+        LocalDate date = LocalDate.now();
+
         Hike hike = new Hike();
 //        hike.setHikeID(hikeId);
         hike.setName(name);
@@ -45,7 +49,9 @@ public class createPageServlet extends HttpServlet {
         hike.setStamina(stamina);
         hike.setExperience(experience);
         hike.setScenery(scenery);
-        hike.setRecommendedMonths(null);
+        hike.setRecommendedMonths(recommendedMonths);
+        hike.setAuthor(author);
+        hike.setDateCreated(date);
 
         // Set the GPX data in your Hike object
         String gpxData = request.getParameter("gpxData");
