@@ -54,13 +54,14 @@ h1 {
     white-space: normal;
 }
 
-/* href of the header */
-.hike-details-link-header {
-    color: black;
+/* Hike name */
+.hike-name {
     text-decoration: none;
 }
-.hike-details-link-header:hover {
-    text-decoration: revert;
+
+.hike-name:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 /* image resizing and aspect ratio */

@@ -53,7 +53,14 @@
                 <div class="col-md-8"> <!-- column for the header and description -->
                     <p class="fitnesslevel"><span class="<%= getFitnessLevelCSSClass(hike) %>"><%= hike.convertFitnessLevelToString() %></span></p>
 
-                    <a class="hike-details-link-header" href="hikeDetails.jsp?trailId=<%= hike.getHike_id() %>"> <h2 title="<%=hike.getName()%>"><%= hike.getName() %></h2> </a>
+                    <h2 class="hike-name" title="<%=hike.getName()%>" id="<%=hike.getHike_id()%>"><%= hike.getName() %></h2>
+                    <script>
+                        document.getElementById("<%=hike.getHike_id()%>").addEventListener('click', function(){
+                            var form = document.getElementById('moreDetailsForm');
+                            form.querySelector('[name="hike-id"]').value = '<%=hike.getHike_id()%>';
+                            form.submit();
+                        });
+                    </script>
 
                     <div class="container text-center">
                         <div class="row row-cols-auto"> <!-- table inside the grid for the description -->
@@ -88,7 +95,7 @@
                                 <input type="submit" value="detailsPage">
                             </form>
                             -->
-                            <form action ="/Journey_war_exploded/detailPage">
+                            <form action ="/Journey_war_exploded/detailPage" id="moreDetailsForm">
                                 <input type="hidden" value = "<%=hike.getHike_id()%>" name = hike-id>
                                 <button type="submit" value = "hikeDetails" id = "hikeDetailsButton" class = "hike-details-link">More Details</button>
                             </form>
