@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -60,7 +59,6 @@ public class createPageServlet extends HttpServlet {
         DatabaseFacade db = DatabaseFacade.getInstance();
         db.saveObject(hike);
 
-        response.sendRedirect("/Journey_war_exploded/createHike.jsp");
+        response.sendRedirect("/Journey_war_exploded/createHike.jsp?success=true");
     }
 }
-

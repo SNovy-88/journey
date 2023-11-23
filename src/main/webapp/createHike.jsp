@@ -354,6 +354,22 @@
             </div>
         </div>
         <input type="hidden" id="gpxDataInput" name="gpxData"> <!-- hidden input element for transferring gpxData from JS into JSP form element -->
+        <!-- Bootstrap pop-up-modal for the success popup -->
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Success</h5>
+                    </div>
+                    <div class="modal-body">
+                        Hike successfully created!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 
     <!-- JS for map logic -->
@@ -485,10 +501,13 @@
 
         // Function to create hike and send GPX data to the servlet
         function createHike() {
+            // Reset the flag
+            unsavedChanges = false;
+
             // Update the hidden input field with cached GPX data
             updateGPXInput();
         }
-/*
+
         // Attach a beforeunload event to show a toast-pop-up warning if there are unsaved changes
         window.addEventListener('beforeunload', function (e) {
             if (unsavedChanges) {
@@ -496,7 +515,18 @@
                 (e || window.event).returnValue = confirmationMessage; // Standard
                 return confirmationMessage; // IE and Firefox
             }
-        });*/
+        });
+
+        // Check if the URL contains a success parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const successParam = urlParams.get('success');
+
+        // If the success parameter is present, show the success modal
+        if (successParam === 'true') {
+            $(document).ready(function () {
+                $('#successModal').modal('show');
+            });
+        }
     </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
