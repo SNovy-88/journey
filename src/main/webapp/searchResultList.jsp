@@ -18,23 +18,19 @@
 </head>
 <body>
 
-<jsp:include page="navBar.jsp"/>
+<div class="scroll">
+    <jsp:include page="navBar.jsp"/>
 
-<%-- Retrieve the search string from the request --%>
-<% String searchString = request.getParameter("searchString"); %>
+    <%-- Retrieve the search string from the request --%>
+    <% String searchString = request.getParameter("searchString"); %>
 
 
-<div class="search-container-rlist">
-    <h1>Search Results</h1>
-    <form action="/Journey_war_exploded/searchResultList">
-        <%
-            if (searchString == null || searchString.isEmpty()) {
-                searchString = "All Hikes";
-            }
-        %>
-        <input type="text" class="search-input" name="searchString" value="<%= searchString %>" onfocus="if (this.value=='All Hikes') this.value='';" onblur="if (this.value=='') this.value='All Hikes';">
-        <button class="search-button-rlist">Search</button>
-    </form>
+    <div class="search-container-rlist">
+        <form action="/Journey_war_exploded/searchResultList">
+            <input type="text" class="search-input" name="searchString" placeholder="All Hikes" value="<%= searchString %>">
+            <button class="search-button-rlist">Search</button>
+        </form>
+    </div>
 </div>
 
 <div class="hike-box-container"> <!-- hike-box-container contains every hike element from the search results -->
@@ -104,10 +100,16 @@
             </div>
         </div>
     <% } %>
+    <% if (hikeList.isEmpty()) {
+        %> <h1 class="noHikeText"> No matching results found
+        <br>
+        <br>
+        Try another search?
+        </h1> <%
+    } %>
 </div>
 
 <!-- Bootstrap js implementation -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
 </body>
 </html>
