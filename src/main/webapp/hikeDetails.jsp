@@ -200,7 +200,7 @@
                     </div>
 
                     <div class="pathdetail">
-                        <span class="pathdetail-label"> Suggested:</span>
+                        <span class="pathdetail-label">Recommended:</span>
                     </div>
                 </div>
                 <div class="months-container">
