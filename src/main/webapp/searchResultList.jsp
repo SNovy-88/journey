@@ -18,23 +18,19 @@
 </head>
 <body>
 
-<jsp:include page="navBar.jsp"/>
+<div class="scroll">
+    <jsp:include page="navBar.jsp"/>
 
-<%-- Retrieve the search string from the request --%>
-<% String searchString = request.getParameter("searchString"); %>
+    <%-- Retrieve the search string from the request --%>
+    <% String searchString = request.getParameter("searchString"); %>
 
 
-<div class="search-container-rlist">
-    <h1>Search Results</h1>
-    <form action="/Journey_war_exploded/searchResultList">
-        <%
-            if (searchString == null || searchString.isEmpty()) {
-                searchString = "All Hikes";
-            }
-        %>
-        <input type="text" class="search-input" name="searchString" value="<%= searchString %>" onfocus="if (this.value=='All Hikes') this.value='';" onblur="if (this.value=='') this.value='All Hikes';">
-        <button class="search-button-rlist">Search</button>
-    </form>
+    <div class="search-container-rlist">
+        <form action="/Journey_war_exploded/searchResultList">
+            <input type="text" class="search-input" name="searchString" placeholder="All Hikes" value="<%= searchString %>">
+            <button class="search-button-rlist">Search</button>
+        </form>
+    </div>
 </div>
 
 <div class="hike-box-container"> <!-- hike-box-container contains every hike element from the search results -->
@@ -53,7 +49,14 @@
                 <div class="col-md-8"> <!-- column for the header and description -->
                     <p class="fitnesslevel"><span class="<%= getFitnessLevelCSSClass(hike) %>"><%= hike.convertFitnessLevelToString() %></span></p>
 
-                    <a class="hike-details-link-header" href="hikeDetails.jsp?trailId=<%= hike.getHike_id() %>"> <h2 title="<%=hike.getName()%>"><%= hike.getName() %></h2> </a>
+                    <h2 class="hike-name" title="<%=hike.getName()%>" id="<%=hike.getHike_id()%>"><%= hike.getName() %></h2>
+                    <script>
+                        document.getElementById("<%=hike.getHike_id()%>").addEventListener('click', function(){
+                            var form = document.getElementById('moreDetailsForm');
+                            form.querySelector('[name="hike-id"]').value = '<%=hike.getHike_id()%>';
+                            form.submit();
+                        });
+                    </script>
 
                     <div class="container text-center">
                         <div class="row row-cols-auto"> <!-- table inside the grid for the description -->
@@ -88,7 +91,7 @@
                                 <input type="submit" value="detailsPage">
                             </form>
                             -->
-                            <form action ="/Journey_war_exploded/detailPage">
+                            <form action ="/Journey_war_exploded/detailPage" id="moreDetailsForm">
                                 <input type="hidden" value = "<%=hike.getHike_id()%>" name = hike-id>
                                 <button type="submit" value = "hikeDetails" id = "hikeDetailsButton" class = "hike-details-link">More Details</button>
                             </form>
@@ -97,10 +100,16 @@
             </div>
         </div>
     <% } %>
+    <% if (hikeList.isEmpty()) {
+        %> <h1 class="noHikeText"> No matching results found
+        <br>
+        <br>
+        Try another search?
+        </h1> <%
+    } %>
 </div>
 
 <!-- Bootstrap js implementation -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
 </body>
 </html>
