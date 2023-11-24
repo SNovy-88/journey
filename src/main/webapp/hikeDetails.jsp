@@ -156,7 +156,6 @@
                                     insertIcons(stamina, svgHTMLfull, svgHTMLempty,'stamina');
                                 </script>
                             </div>
-
                     </div>
                     <div class="pathdetail">
                         <span class="pathdetail-label">Experience:</span>
