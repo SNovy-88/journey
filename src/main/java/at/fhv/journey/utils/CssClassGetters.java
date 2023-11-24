@@ -5,7 +5,7 @@
  * Description:
  *
  * Date of Creation/
- * Last Update:          07/11/2023
+ * Last Update:          22/11/2023
  */
 
 package at.fhv.journey.utils;
@@ -30,5 +30,4 @@ public class CssClassGetters {
                 return "fitness-level-unknown";
         }
     }
-
 }
