@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/styles.css">
-    <title> Journey | Create</title>
+    <title> Journey | Create your hike </title>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -26,7 +26,7 @@
     <jsp:include page="navBar.jsp"/>
 
     <!-- Stepper element -->
-    <form id="createHike" action="create_hike" method="post">
+    <form id="createHike" action="create_hike" method="post" enctype="multipart/form-data">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 mt-5">
@@ -74,11 +74,32 @@
                                         <label for="floatingTextarea2">Description</label>
                                     </div>
                                     <br>
-                                    <!-- GPX Upload input -->
-                                    <label class="form-label" for="customFileEnd">Upload .gpx file</label>
-                                    <input type="file" class="form-control" id="customFileEnd" />
+                                    <!-- Bootstrap On/Off switch to enable/disable features -->
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="featureSwitch">
+                                        <label class="form-check-label" for="featureSwitch">Enable to upload a .gpx file</label>
+                                    </div>
+                                    <!-- Hidden input to store the switch state -->
+                                    <input type="hidden" id="switchState" name="switchState" value="map">
+                                    <!-- GPX Upload input (initially hidden) -->
+                                    <div id="fileUploadFeature" style="display: none;">
+                                        <br>
+                                        <label class="form-label" for="customFileEnd">Upload .gpx file</label>
+                                        <input type="file" class="form-control" id="customFileEnd" name="gpxDataUpload"/>
+                                        <br>
+                                    </div>
+                                    <!-- Show Map -->
+                                    <div id="mapFeature">
+                                        <br>
+                                        <div id="map" style="height: 400px;"></div>
+                                        <input type="hidden" id="gpxDataInput" name="gpxDataInput"> <!-- hidden input element for transferring gpxData from JS into JSP form element -->
+                                        <br>
+                                        <button class="btn btn-secondary" type="button" onclick="exportAsGPX()"> Export as GPX </button> <!-- Export button -->
+                                    </div>
+                                    <ul id="coordinates-list"></ul> <!-- List of waypoints -->
                                 </p>
                                 <button class="btn btn-primary" type="button" onclick="if (validateStep1()) stepper1.next()">Next</button>
+                                <button class="btn btn-success" type="submit" onclick="createHike()">Create Hike</button> <!-- Create Hike button -->
                             </div>
                             <div id="test-l-2" class="content"> <!-- Content of the 2nd stepper part -->
                                 <p class="text-center"> <!-- not necessary? -->
@@ -246,96 +267,6 @@
         <script src="bs-stepper.min.js"></script>
         <script src="dist/js/bs-stepper.js"></script>
 
-        <!-- GraphHopper implementation -->
-    <!--
-        // Include Leaflet CSS
-        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
-        // Include Leaflet JavaScript
-        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-        // Add a div for the map
-        <div id="map" style="height: 400px;"></div>
-
-        // Add a button to trigger route calculation
-        <button onclick="calculateRoute()">Calculate Route</button>
-
-        <script>
-            // Initialize the map
-            var map = L.map('map').setView([47.366260, 9.746780], 13);
-
-            // Add a base map layer (you can choose other tile providers)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-            L.marker([47.366260, 9.746780]).addTo(map)
-                .bindPopup('A pretty CSS popup.<br> Easily customizable.')
-                .openPopup();
-
-            // Initialize GraphHopper
-            var gh = new GraphHopper();
-
-            // Function to calculate route
-            function calculateRoute() {
-                // Get waypoints or use predefined waypoints
-                var waypoints = [
-                    { lat: 47.366260, lon: 9.746780 },  // Example waypoint 1
-                    { lat: 47.387800, lon: 9.750780 }   // Example waypoint 2
-                ];
-
-                // Call GraphHopper API to calculate the route
-                gh.calculateRoute({
-                    points: waypoints,
-                    vehicle: 'foot',  // Specify the vehicle type (foot for hiking)
-                    callback: async function (json) {
-                        const query = new URLSearchParams({
-                            key: '493c4835-011d-4938-a7cb-ec0ce63b6940'
-                        }).toString();
-
-                        const resp = await fetch(
-                            `https://graphhopper.com/api/1/route?${query}`,
-                            {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    points: [
-                                        [9.746780, 47.366260],
-                                        [9.750780, 47.387800]
-                                    ],
-                                    point_hints: [
-                                        'Lindenschmitstraße',
-                                        'Thalkirchener Str.'
-                                    ],
-                                    snap_preventions: [
-                                        'motorway',
-                                        'ferry',
-                                        'tunnel'
-                                    ],
-                                    details: ['road_class', 'surface'],
-                                    vehicle: 'bike',
-                                    locale: 'en',
-                                    instructions: true,
-                                    calc_points: true,
-                                    points_encoded: false
-                                })
-                            }
-                        );
-
-                        const data = await resp.json();
-                        console.log(data);
-                        console.log(json);
-                    }
-                });
-            }
-        </script>
-    -->
-
-        <div id="map" style="height: 400px;"></div> <!-- Show Map -->
-        <button type="button" onclick="exportAsGPX()"> Export as GPX </button> <!-- Export button -->
-        <button type="submit" onclick="createHike()">Create Hike</button> <!-- Create Hike button -->
-        <ul id="coordinates-list"></ul> <!-- List of waypoints -->
-
         <!-- Bootstrap pop-up-modal for map input -->
         <div class="modal fade" id="waypointModal" tabindex="-1" role="dialog" aria-labelledby="waypointModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -353,7 +284,6 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" id="gpxDataInput" name="gpxData"> <!-- hidden input element for transferring gpxData from JS into JSP form element -->
         <!-- Bootstrap pop-up-modal for the success popup -->
         <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -374,6 +304,22 @@
 
     <!-- JS for map logic -->
     <script>
+        // Get the switch, feature elements, and switch state input
+        const featureSwitch = document.getElementById('featureSwitch');
+        const fileUploadFeature = document.getElementById('fileUploadFeature');
+        const mapFeature = document.getElementById('mapFeature');
+        const switchStateInput = document.getElementById('switchState');
+
+        // Add event listener to the switch
+        featureSwitch.addEventListener('change', function() {
+            // Toggle the visibility of features based on the switch state
+            fileUploadFeature.style.display = featureSwitch.checked ? 'block' : 'none';
+            mapFeature.style.display = featureSwitch.checked ? 'none' : 'block';
+
+            // Update the switch state input value
+            switchStateInput.value = featureSwitch.checked ? 'upload' : 'map';
+        });
+
         // Initialize the map
         const map = L.map('map').setView([47, 11], 7); // Set the initial view
 
@@ -532,9 +478,5 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js" integrity="sha384-cwmrdGZwrLYKw8X6zXkDo3MeqYTgVMiP+GxBSzLz3l2DE6/72UnZVJ8E+biqU1Kb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-    <!-- Include GraphHopper JavaScript
-    <script src="https://graphhopper.com/api/1/client/js/graphhopper-client.js?key=493c4835-011d-4938-a7cb-ec0ce63b6940"></script>
-    -->
 </body>
 </html>

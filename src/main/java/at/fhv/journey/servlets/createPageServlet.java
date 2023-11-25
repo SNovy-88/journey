@@ -4,17 +4,24 @@ import io.hypersistence.utils.hibernate.type.range.Range;
 import at.fhv.journey.hibernate.facade.DatabaseFacade;
 import at.fhv.journey.model.Hike;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import jakarta.transaction.Transactional;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 @WebServlet(name = "createPageServlet", value = "/create_hike")
+@MultipartConfig
 public class createPageServlet extends HttpServlet {
     @Transactional
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -52,9 +59,24 @@ public class createPageServlet extends HttpServlet {
         hike.setAuthor(author);
         hike.setDateCreated(date);
 
-        // Set the GPX data in your Hike object
-        String gpxData = request.getParameter("gpxData");
-        hike.setGpxLocation(gpxData);
+        // Check the switch state
+        String switchState = request.getParameter("switchState");
+
+        if ("upload".equals(switchState)) {
+            // File Upload feature is active
+            Part gpxDataUploadPart = request.getPart("gpxDataUpload");
+            if (gpxDataUploadPart != null) {
+                // Process the fileContent as needed and save it to the database
+                InputStream fileContent = gpxDataUploadPart.getInputStream();
+                String gpxDataUpload = new BufferedReader(new InputStreamReader(fileContent))
+                        .lines().collect(Collectors.joining("\n"));
+                hike.setGpxLocation(gpxDataUpload);
+            }
+        } else {
+            // Map feature is active
+            String gpxDataInput = request.getParameter("gpxDataInput");
+            hike.setGpxLocation(gpxDataInput);
+        }
 
         DatabaseFacade db = DatabaseFacade.getInstance();
         db.saveObject(hike);
