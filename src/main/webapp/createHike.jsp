@@ -85,7 +85,10 @@
                                     <div id="fileUploadFeature" style="display: none;">
                                         <br>
                                         <label class="form-label" for="customFileEnd">Upload .gpx file</label>
-                                        <input type="file" class="form-control" id="customFileEnd" name="gpxDataUpload"/>
+                                        <div class="input-group custom-file-upload-container" style="width: 65%;">
+                                            <input type="file" class="form-control" id="customFileEnd" name="gpxDataUpload"/>
+                                            <button type="button" class="btn btn-secondary" onclick="resetFileInput()">Reset</button>
+                                        </div>
                                         <br>
                                     </div>
                                     <!-- Show Map -->
@@ -319,6 +322,12 @@
             // Update the switch state input value
             switchStateInput.value = featureSwitch.checked ? 'upload' : 'map';
         });
+
+        function resetFileInput() {
+            // Reset the file input by clearing its value
+            const fileInput = document.getElementById('customFileEnd');
+            fileInput.value = ''; // This clears the selected file
+        }
 
         // Initialize the map
         const map = L.map('map').setView([47, 11], 7); // Set the initial view
