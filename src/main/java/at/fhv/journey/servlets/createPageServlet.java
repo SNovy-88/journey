@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 @WebServlet(name = "createPageServlet", value = "/create_hike")
@@ -27,6 +28,7 @@ public class createPageServlet extends HttpServlet {
         int durationHour = Integer.parseInt(request.getParameter("duration-hr"));
         int durationMin = Integer.parseInt(request.getParameter("duration-min"));
         BigDecimal distance = BigDecimal.valueOf(Double.parseDouble(request.getParameter("distance")));
+        distance = distance.setScale(2, RoundingMode.HALF_UP);
         int heightDifference = Integer.parseInt(request.getParameter("height-difference"));
 
         int fitnessLevel = Integer.parseInt(request.getParameter("fitness-level"));
