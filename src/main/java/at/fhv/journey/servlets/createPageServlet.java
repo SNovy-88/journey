@@ -27,10 +27,9 @@ public class createPageServlet extends HttpServlet {
         int durationHour = Integer.parseInt(request.getParameter("duration-hr"));
         int durationMin = Integer.parseInt(request.getParameter("duration-min"));
         BigDecimal distance = BigDecimal.valueOf(Double.parseDouble(request.getParameter("distance")));
-        System.out.println(distance);
         int heightDifference = Integer.parseInt(request.getParameter("height-difference"));
 
-        int fitnessLevel = Integer.parseInt(request.getParameter("physical-cond"));
+        int fitnessLevel = Integer.parseInt(request.getParameter("fitness-level"));
         int stamina = Integer.parseInt(request.getParameter("stamina"));
         int experience = Integer.parseInt(request.getParameter("experience"));
         int scenery = Integer.parseInt(request.getParameter("scenery"));
