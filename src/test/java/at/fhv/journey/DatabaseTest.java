@@ -57,14 +57,6 @@ public class DatabaseTest {
             System.out.println(h.getHike_id() + " " + h.getName());
         }
 
-        //df.deleteObject(newHike);
-        BrokerBaseJPA bb = new BrokerBaseJPA<>();
-        bb.delete(newHike);
-
-        for (Hike h: testlist) {
-            System.out.println(h.getHike_id() + " " + h.getName());
-        }
-
 
     }
 }

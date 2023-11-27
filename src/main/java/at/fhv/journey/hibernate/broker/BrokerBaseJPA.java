@@ -45,7 +45,6 @@ public class BrokerBaseJPA<T> implements AutoCloseable {
     }
 
 
-
     @Override
     public void close() {
         if (entityManager != null && entityManager.isOpen()) {
