@@ -6,6 +6,7 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 import java.util.List;
+import java.util.UUID;
 
 public class BrokerBaseJPA<T> implements AutoCloseable {
 
@@ -33,7 +34,7 @@ public class BrokerBaseJPA<T> implements AutoCloseable {
         entityManager.getTransaction().commit();
     }
 
-    public T getById(Class<T> entityClass, int id) {
+    public T getById(Class<T> entityClass, UUID id) {
         T entity = entityManager.find(entityClass, id);
         return entity;
     }

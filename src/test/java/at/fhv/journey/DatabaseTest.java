@@ -8,8 +8,10 @@ package at.fhv.journey;/*
  * Last Update:          13/11/2023
  */
 
+import at.fhv.journey.hibernate.broker.BrokerBaseJPA;
 import at.fhv.journey.hibernate.facade.DatabaseFacade;
 import at.fhv.journey.model.Hike;
+import io.hypersistence.utils.hibernate.type.range.Range;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -33,10 +35,18 @@ public class DatabaseTest {
 
 
         //Facade Tests
-        //DatabaseFacade df = new DatabaseFacade();
 
-        /*Hike newHike = new Hike(1, "Alplochschlucht - Kirchle loop from Kehlegg", 8.66, 2, 50, "This is test description",390, 3);
-        Hike newHike1 = new Hike(2, "TEST", 8.66, 2, 50, "This is test description", 390, 3);
+        DatabaseFacade df = new DatabaseFacade();
+
+        /*( String name, double distance, int durationHour, int durationMin, String description,
+        int heightDifference, int fitnessLevel, int stamina, int experience, int scenery,
+        Range recommendedMonths, String author, String gpx)*/
+
+        Hike newHike = new Hike("Alplochschlucht - Kirchle loop from Kehlegg", 8.66, 2, 50, "This is test description",
+                390, 3, 1, 1, 3,
+                Range.integerRange("[2,5]"),"John","local");
+        Hike newHike1 = new Hike("TEST", 8.66, 2, 50, "This is test description", 390, 3, 1, 1, 3,
+                Range.integerRange("[2,5]"),"John","local");
 
         df.saveObject(newHike);
         df.saveObject(newHike1);
@@ -45,7 +55,15 @@ public class DatabaseTest {
 
         for (Hike h: testlist) {
             System.out.println(h.getHike_id() + " " + h.getName());
-        }*/
+        }
+
+        //df.deleteObject(newHike);
+        BrokerBaseJPA bb = new BrokerBaseJPA<>();
+        bb.delete(newHike);
+
+        for (Hike h: testlist) {
+            System.out.println(h.getHike_id() + " " + h.getName());
+        }
 
 
     }

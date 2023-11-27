@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @WebServlet(name = "detailPage", value = "/detailPage")
 public class detailPageServlet extends HttpServlet {
@@ -26,7 +27,7 @@ public class detailPageServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
 
-        int hikeId = Integer.parseInt(request.getParameter("hike-id"));
+        UUID hikeId = UUID.fromString(request.getParameter("hike-id"));
 
         DatabaseFacade df = new DatabaseFacade();
         Hike chosenhike = df.getHikeByID(hikeId);

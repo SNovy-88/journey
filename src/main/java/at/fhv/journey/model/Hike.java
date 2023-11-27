@@ -2,20 +2,18 @@ package at.fhv.journey.model;
 
 import io.hypersistence.utils.hibernate.type.range.PostgreSQLRangeType;
 import io.hypersistence.utils.hibernate.type.range.Range;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
-@Table(name = "hike", schema = "journey")
+@Table(name = "hiketest", schema = "journey")
 public class Hike {
 
-    private int _hike_id;
+    private UUID _hike_id;
     private String _name;
     private BigDecimal _distance;
     private int _durationHour;
@@ -36,9 +34,9 @@ public class Hike {
 
     }
 
-    public Hike(int hike_id, String name, double distance, int durationHour, int durationMin, String description,
-                int heightDifference, int fitnessLevel){
-        _hike_id = hike_id;
+    public Hike( String name, double distance, int durationHour, int durationMin, String description,
+                int heightDifference, int fitnessLevel, int stamina, int experience, int scenery, Range recommendedMonths,
+                String author, String gpx){
         _name = name;
         _distance = BigDecimal.valueOf(distance);
         _durationHour = durationHour;
@@ -46,15 +44,23 @@ public class Hike {
         _heightDifference = heightDifference;
         _fitnessLevel = fitnessLevel;
         _description = description;
+        _stamina = stamina;
+        _experience = experience;
+        _scenery = scenery;
+        _recommendedMonths = recommendedMonths; //for TESTING: Range.integerRange("[2,5]")
+        _author = author;
+        _dateCreated = LocalDate.now();
+        _gpxLocation = gpx;
     }
 
     @Id
     @Column(name = "hike_id")
-    public int getHike_id() {
+    @GeneratedValue(generator = "uuid2")
+    public UUID getHike_id() {
         return _hike_id;
     }
-    public void setHike_id(int hike_id) {
-        _hike_id = hike_id;
+    public void setHike_id(UUID id) {
+        _hike_id = id;
     }
 
     @Column(name = "name")

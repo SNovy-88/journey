@@ -3,6 +3,7 @@ package at.fhv.journey.hibernate.facade;
 import at.fhv.journey.model.Hike;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface IdbFacadeJPA {
 
@@ -14,6 +15,6 @@ public interface IdbFacadeJPA {
 
     // READ
     List<Hike> getAllHikes();
-    Hike getHikeByID(int id);
+    Hike getHikeByID(UUID id);
     List<Hike> getHikesByName(String name);
 }

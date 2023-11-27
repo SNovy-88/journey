@@ -4,6 +4,7 @@ import at.fhv.journey.hibernate.broker.HikeBrokerJPA;
 import at.fhv.journey.model.Hike;
 
 import java.util.List;
+import java.util.UUID;
 
 public class DatabaseFacade implements IdbFacadeJPA {
 
@@ -42,7 +43,7 @@ public class DatabaseFacade implements IdbFacadeJPA {
     }
 
 
-    public Hike getHikeByID(int id) {
+    public Hike getHikeByID(UUID id) {
         try (HikeBrokerJPA hb = new HikeBrokerJPA()) {
             return hb.getById(Hike.class, id);
         }

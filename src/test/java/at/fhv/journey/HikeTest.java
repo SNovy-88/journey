@@ -14,7 +14,7 @@ import at.fhv.journey.hibernate.facade.DatabaseFacade;
 import at.fhv.journey.model.Hike;
 
 public class HikeTest {
-
+    /*
     public static void main(String[] args) {
         DatabaseFacade df = new DatabaseFacade();
         Hike testHike = df.getHikeByID(1);
@@ -28,4 +28,6 @@ public class HikeTest {
         System.out.println("Author: "+testHike.getAuthor());
         System.out.println("Date Created: "+testHike.getDateCreated());
     }
+
+     */
 }
