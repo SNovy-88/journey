@@ -9,6 +9,8 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
 <%@ page import="static at.fhv.journey.utils.MonthsFunctions.*" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
 <!-- Bootstrap css href -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -21,7 +23,7 @@
     </head>
 
     <body>
-    <% Hike hike = (Hike) request.getAttribute("hike"); %>
+    <% Hike hike = (Hike) request.getAttribute("hike");%>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
@@ -122,6 +124,22 @@
                 <div class="description"> <!-- Name and short descprition -->
                     <h1><%= hike.getName() %></h1>
                     <p><%= hike.getDescription()%></p>
+                </div>
+                <div>
+                    <h2>Waypoints</h2>
+
+                    <%
+                        List<Map<String, String>> waypointsList = (List<Map<String, String>>) request.getAttribute("waypointsList");
+
+                        if (waypointsList != null) {
+                            for (Map<String, String> waypoint : waypointsList) {
+                    %>
+                    <p>Name: <%= waypoint.get("name")%>, Latitude: <%= waypoint.get("latitude") %>, Longitude: <%= waypoint.get("longitude") %></p>
+                    <%
+                            }
+                        }
+                    %>
+
                 </div>
 
 
