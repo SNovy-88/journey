@@ -81,43 +81,68 @@
                                 <button class="btn btn-primary" type="button" onclick="if (validateStep1()) stepper1.next()">Next</button>
                             </div>
                             <div id="test-l-2" class="content"> <!-- Content of the 2nd stepper part -->
-                                <p class="text-center"> <!-- not necessary? -->
-                                    <!-- Hour input -->
-                                    <div class="form-floating mb-3">
-                                        <input type="number" id="typeNumberHour" class="form-control" />
-                                        <label class="form-label" for="typeNumberHour"> Duration Hour </label>
-                                    </div>
-                                    <!-- Minute input -->
-                                    <div class="form-floating mb-3">
-                                        <input type="number" id="typeNumberMinute" class="form-control" />
-                                        <label class="form-label" for="typeNumberMinute"> Duration Minute </label>
-                                    </div>
-                                    <!-- Height difference input -->
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Height difference" aria-label="Height difference" aria-describedby="basic-addon1">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon1">m</span>
+
+                                <div class="row g-2">
+                                    <div class="col-md-3">
+                                        <div class="form-floating mb-3"> <!-- Hour input -->
+                                            <input type="number" id="typeNumberHour" class="form-control"
+                                                    />
+                                            <label class="form-label" for="typeNumberHour"> Duration Hour </label>
                                         </div>
                                     </div>
-                                    <!-- Distance input -->
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Distance" aria-label="Distance" aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2">km</span>
+                                    <div class="col-md-3">
+                                        <div class="form-floating mb-3"> <!-- Minute input -->
+                                            <input type="number" id="typeNumberMinute" class="form-control"
+                                                   style=""/>
+                                            <label class="form-label" for="typeNumberMinute"> Duration Minute </label>
                                         </div>
                                     </div>
-                                    <!-- Sliders for several option inputs -->
-                                    <label for="customRange1" class="form-label"> Physical Condition </label> <!-- Physical Condition -->
-                                    <input type="range" class="form-range" min="0" max="5" id="customRange1">
-                                    <label for="customRange2" class="form-label"> Stamina </label> <!-- Stamina -->
-                                    <input type="range" class="form-range" min="0" max="5" id="customRange2">
-                                    <label for="customRange3" class="form-label"> Experience </label> <!-- Experience -->
-                                    <input type="range" class="form-range" min="0" max="5" id="customRange3">
-                                    <label for="customRange4" class="form-label"> Landscape </label> <!-- Landscape -->
-                                    <input type="range" class="form-range" min="0" max="5" id="customRange4">
-                                    <label for="customRange5" class="form-label"> Preferred months </label> <!-- Preferred months -->
-                                    <input type="range" class="form-range" min="0" max="11" id="customRange5">
-                                </p>
+                                </div>
+
+                                <div class="row g-2">
+                                    <div class="col-md-3">
+                                        <div class="input-group mb-3"> <!-- Height difference input -->
+                                            <input type="number" class="form-control" placeholder="Height difference" aria-label="Height difference" aria-describedby="basic-addon1"
+                                                   style="">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon1">m</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group mb-3"> <!-- Distance input -->
+                                            <input type="text" class="form-control" placeholder="Distance" aria-label="Distance" aria-describedby="basic-addon2"
+                                                   style="">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2">km</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Sliders for several option inputs -->
+                                <label for="customRange1" class="form-label"> Physical Condition </label> <!-- Physical Condition -->
+                                <br>
+                                <input type="range" class="form-range" min="1" max="5" step="1" id="customRange1" style="width: 600px">
+                                <br>
+
+                                <label for="customRange2" class="form-label"> Stamina </label> <!-- Stamina -->
+                                <br>
+                                <input type="range" class="form-range" min="1" max="5" id="customRange2" style="width: 600px">
+                                <br>
+
+                                <label for="customRange3" class="form-label"> Experience </label> <!-- Experience -->
+                                <br>
+                                <input type="range" class="form-range" min="1" max="5" id="customRange3" style="width: 600px">
+                                <br>
+
+                                <label for="customRange4" class="form-label"> Scenery </label> <!-- Scenery -->
+                                <br>
+                                <input type="range" class="form-range" min="1" max="5" id="customRange4" style="width: 600px">
+                                <br><br>
+                                <%--<label for="customRange5" class="form-label"> Preferred months </label> <!-- Preferred months -->
+                                <input type="range" class="form-range" min="1" max="11" id="customRange5" style="width: 600px">--%>
+
                                 <button class="btn btn-primary" type="button" onclick="stepper1.next()">Next</button>
                                 <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
                             </div>
