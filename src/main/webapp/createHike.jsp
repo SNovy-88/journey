@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/createHike.css">
     <title> Journey | Create</title>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -80,14 +81,15 @@
                                 </p>
                                 <button class="btn btn-primary" type="button" onclick="if (validateStep1()) stepper1.next()">Next</button>
                             </div>
+                            <!-- STEPPER 2 -->
                             <div id="test-l-2" class="content"> <!-- Content of the 2nd stepper part -->
 
                                 <div class="row g-2">
                                     <div class="col-md-3">
                                         <div class="form-floating mb-3"> <!-- Hour input -->
                                             <input type="number" id="typeNumberHour" class="form-control"
-                                                    />
-                                            <label class="form-label" for="typeNumberHour"> Duration Hour </label>
+                                                    inputmode="numeric"/>
+                                            <label for="typeNumberHour"> Duration Hour </label>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -101,7 +103,7 @@
 
                                 <div class="row g-2">
                                     <div class="col-md-3">
-                                        <div class="input-group mb-3"> <!-- Height difference input -->
+                                        <div class="form-floating mb-3"> <!-- Height difference input -->
                                             <input type="number" class="form-control" placeholder="Height difference" aria-label="Height difference" aria-describedby="basic-addon1"
                                                    style="">
                                             <div class="input-group-append">
@@ -123,7 +125,7 @@
                                 <!-- Sliders for several option inputs -->
                                 <label for="customRange1" class="form-label"> Physical Condition </label> <!-- Physical Condition -->
                                 <br>
-                                <input type="range" class="form-range" min="1" max="5" step="1" id="customRange1" style="width: 600px">
+                                <input type="range" class="form-range" min="1" max="5" step="1" id="customRange1" >
                                 <br>
 
                                 <label for="customRange2" class="form-label"> Stamina </label> <!-- Stamina -->
