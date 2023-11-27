@@ -21,13 +21,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
+
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
-import java.io.StringReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,16 +60,11 @@ public class detailPageServlet extends HttpServlet {
             // Extrahiere Waypoints und setze sie im Request
             extractWaypoints(xmlText, request);
 
-            try {
-                request.getRequestDispatcher("/hikeDetails.jsp").forward(request, response);
-            } catch (ServletException e) {
-                throw new RuntimeException(e);
-            }
+         
         } else {
-            // Handle case when xmlText is null
             response.getWriter().println("GpxLocation is null");
         }
-        // Extrahiere Waypoints und setze sie im Request
+
 
 
 
@@ -87,14 +85,14 @@ public class detailPageServlet extends HttpServlet {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
 
-            InputSource is = new InputSource(new StringReader(xmlText));
-            Document document = builder.parse(is);
+            InputStream stream = new ByteArrayInputStream(xmlText.getBytes(StandardCharsets.UTF_8));
+            Document document = builder.parse(stream);
 
             NodeList waypointNodes = document.getElementsByTagName("wpt");
 
             List<Map<String, String>> waypointsList = new ArrayList<>();
 
-            // Iteriere durch die Waypoints und füge sie zur Liste hinzu
+            // Iterate through Waypoints and add them to the list
             for (int i = 0; i < waypointNodes.getLength(); i++) {
                 Element waypoint = (Element) waypointNodes.item(i);
                 String latitude = waypoint.getAttribute("lat");
@@ -109,7 +107,7 @@ public class detailPageServlet extends HttpServlet {
                 waypointsList.add(waypointMap);
             }
 
-            // Setze die Waypoints-Liste im Request
+            // Add Waypoint-List to the request
             request.setAttribute("waypointsList", waypointsList);
 
         } catch (Exception e) {

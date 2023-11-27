@@ -9,8 +9,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
 <%@ page import="static at.fhv.journey.utils.MonthsFunctions.*" %>
-<%@ page import="org.w3c.dom.NodeList" %>
-<%@ page import="org.w3c.dom.Node" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
 <!-- Bootstrap css href -->
