@@ -8,7 +8,7 @@
 
     <!-- Slider API -->
     <link rel="stylesheet" href="CSS/bootstrap-slider.css">
-    <script src="JavaScript/bootstrap-slider.js"></script>
+    <script src="JS/bootstrap-slider.js"></script>
 
     <title> Journey | Create</title>
 
@@ -31,15 +31,7 @@
 </head>
 <body>
     <jsp:include page="navBar.jsp"/>
-    <script>
-        document.addEventListener("DOMContentLoaded", function (){
-            var slider = new Slider("#ex13", {
-                ticks: [1, 2, 3, 4, 5],
-                ticks_labels: ['1', '2', '3', '4', '5'],
-                ticks_snap_bounds: 49
-            });
-        });
-    </script>
+
 
 
 
@@ -139,7 +131,7 @@
                                             The hour field is mandatory. If duration is under 1 hour please input 0.
                                         </div>
                                         <div class="invalid-feedback" id="duration-min-feedback">
-                                            Min value needs to be under 60.
+                                            Minute value needs to be under 60.
                                         </div>
                                         <div class="input-group">
                                             <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d*" inputmode="numeric">
@@ -175,7 +167,7 @@
                                         </div>
                                         <label for="distance" class="form-text">Input decimals with a dot, ie. 12.4 or 4.67</label>
                                     </div>
-
+                                </div>
                                     <!-- Sliders for several option inputs -->
                                     <label for="customRange1" class="form-label"> Fitness Level </label> <!-- Fitness Level -->
                                     <input type="range" class="form-range" min="1" max="5" id="customRange1" name="fitness-level">
@@ -214,7 +206,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </p>
                                 <button class="btn btn-primary" type="button" onclick="stepper1.next()">Next</button>
                                 <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
                             </div>
@@ -270,5 +261,43 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="bs-stepper.min.js"></script>
     <script src="dist/js/bs-stepper.js"></script>
+
+    <script>
+        function validateStep2() {
+            const inputHrElement = document.getElementById('duration-hr');
+            const inputHrFeedback = document.getElementById('duration-hr-feedback');
+
+            const inputMinElement = document.getElementById('duration-min');
+            const inputMinFeedback = document.getElementById('duration-min-feedback');
+
+            const inputHeightDiffElement = document.getElementById('height-difference');
+            const inputHeightDiffFeedback = document.getElementById('height-difference-feedback');
+
+            const inputDistanceElement = document.getElementById('distance');
+            const inputDistanceFeedback = document.getElementById('distance-feedback');
+
+            const isInputHrValid = inputHrElement.value.trim() !== '';
+            const isInputMinValid = inputMinElement.value.trim() !== '';
+            const isInputHeightDiffValid = inputHeightDiffElement.value.trim() !== '';
+            const isDistanceValid = inputDistanceElement.value.trim() !== '';
+
+            validation(isInputHrValid, inputHrElement, inputHrFeedback);
+            validation(isInputMinValid, inputMinElement, inputMinFeedback);
+            validation(isInputHeightDiffValid, inputHeightDiffElement, inputHeightDiffFeedback);
+            validation(isDistanceValid, inputDistanceElement, inputDistanceFeedback);
+
+            return isInputHrValid && isInputMinValid && isInputHeightDiffValid && isDistanceValid;
+        }
+
+        function validation(valid, input, feedback){
+            if(!valid){
+                input.classList.add('is-invalid');
+                feedback.style.display = 'block';
+            } else {
+                input.classList.remove('is-invalid');
+                feedback.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
