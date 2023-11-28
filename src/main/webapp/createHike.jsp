@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/createHike.css">
+
+    <!-- Slider API -->
+    <link rel="stylesheet" href="CSS/bootstrap-slider.css">
+    <script src="JavaScript/bootstrap-slider.js"></script>
+
     <title> Journey | Create</title>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -25,6 +30,17 @@
 </head>
 <body>
     <jsp:include page="navBar.jsp"/>
+    <script>
+        document.addEventListener("DOMContentLoaded", function (){
+            var slider = new Slider("#ex13", {
+                ticks: [1, 2, 3, 4, 5],
+                ticks_labels: ['1', '2', '3', '4', '5'],
+                ticks_snap_bounds: 49
+            });
+        });
+    </script>
+
+
 
     <!-- Stepper element -->
     <form id="createHike" action="create_hike" method="post">
@@ -81,49 +97,59 @@
                                 </p>
                                 <button class="btn btn-primary" type="button" onclick="if (validateStep1()) stepper1.next()">Next</button>
                             </div>
+
                             <!-- STEPPER 2 -->
                             <div id="test-l-2" class="content"> <!-- Content of the 2nd stepper part -->
 
                                 <div class="row g-2">
-                                    <div class="col-md-3">
-                                        <div class="form-floating mb-3"> <!-- Hour input -->
-                                            <input type="number" id="typeNumberHour" class="form-control"
-                                                    inputmode="numeric"/>
-                                            <label for="typeNumberHour"> Duration Hour </label>
+
+                                    <div class="col-md-3" style="margin-top: 30px"> <!-- Group for Duration hr and min -->
+                                        <label for="duration-hr" class="form-label">Duration<sup>*</sup></label>
+                                        <div class="invalid-feedback" id="duration-hr-feedback">
+                                            The hour field is mandatory. If duration is under 1 hour please input 0.
                                         </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-floating mb-3"> <!-- Minute input -->
-                                            <input type="number" id="typeNumberMinute" class="form-control"
-                                                   style=""/>
-                                            <label class="form-label" for="typeNumberMinute"> Duration Minute </label>
+                                        <div class="invalid-feedback" id="duration-min-feedback">
+                                            Min value needs to be under 60.
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d*" inputmode="numeric">
+                                            <span class="input-group-text">hr</span>
+                                            <input type="number" aria-label="duration-min" class="form-control" id="duration-min" inputmode="numeric" max="59">
+                                            <span class="input-group-text">min</span>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="row g-2">
-                                    <div class="col-md-3">
-                                        <div class="form-floating mb-3"> <!-- Height difference input -->
-                                            <input type="number" class="form-control" placeholder="Height difference" aria-label="Height difference" aria-describedby="basic-addon1"
-                                                   style="">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="basic-addon1">m</span>
-                                            </div>
+                                <div class="row g-1">
+                                    <div class="col-md-3" style="margin-top: 30px"> <!-- Height difference input -->
+                                        <label for="height-difference" class="form-label">Height Difference<sup>*</sup></label>
+                                        <div class="invalid-feedback" id="height-difference-feedback">
+                                            This is a mandatory field. Please input a number.
                                         </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="input-group mb-3"> <!-- Distance input -->
-                                            <input type="text" class="form-control" placeholder="Distance" aria-label="Distance" aria-describedby="basic-addon2"
-                                                   style="">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="basic-addon2">km</span>
-                                            </div>
+                                        <div class="input-group">
+                                            <input type="number" aria-label="duration-hour" class="form-control" id="height-difference">
+                                            <span class="input-group-text">m</span>
+
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row g-1">
+                                    <div class="col-md-3" style="margin-top: 30px"> <!-- Distance input -->
+                                        <label for="distance" class="form-label">Distance<sup>*</sup></label>
+                                        <div class="invalid-feedback" id="distance-feedback">
+                                            This is a mandatory field. Please input a number.
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="number" aria-label="duration-hour" class="form-control" id="distance">
+                                            <span class="input-group-text">km</span>
+                                        </div>
+                                        <label for="distance" class="form-text">Input decimals with a dot, ie. 12.4 or 4.67</label>
+                                    </div>
+                                </div>
+                                <br>
 
                                 <!-- Sliders for several option inputs -->
-                                <label for="customRange1" class="form-label"> Physical Condition </label> <!-- Physical Condition -->
+                                <label class="form-label"> Physical Condition </label> <!-- Physical Condition -->
                                 <br>
                                 <input type="range" class="form-range" min="1" max="5" step="1" id="customRange1" >
                                 <br>
@@ -144,10 +170,12 @@
                                 <br><br>
                                 <%--<label for="customRange5" class="form-label"> Preferred months </label> <!-- Preferred months -->
                                 <input type="range" class="form-range" min="1" max="11" id="customRange5" style="width: 600px">--%>
-
-                                <button class="btn btn-primary" type="button" onclick="stepper1.next()">Next</button>
+                                <p>Fields marked with a <sup>*</sup> have to be filled in!</p>
+                                <button class="btn btn-primary" type="button" onclick="if (validateStep2()) stepper1.next()">Next</button>
                                 <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
                             </div>
+
+                            <!-- STEPPER 3 -->
                             <div id="test-l-3" class="content"> <!-- Content of the 3rd stepper part -->
                                 <p class="text-center"> <!-- not necessary? -->
                                     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -260,6 +288,44 @@
                 linear: false,
                 animation: true
             });
+            <!-- TODO -->
+             function validateStep2() {
+                 const inputHrElement = document.getElementById('duration-hr');
+                 const inputHrFeedback = document.getElementById('duration-hr-feedback');
+
+                 const inputMinElement = document.getElementById('duration-min');
+                 const inputMinFeedback = document.getElementById('duration-min-feedback');
+
+                 const inputHeightDiffElement = document.getElementById('height-difference');
+                 const inputHeightDiffFeedback = document.getElementById('height-difference-feedback');
+
+                 const inputDistanceElement = document.getElementById('distance');
+                 const inputDistanceFeedback = document.getElementById('distance-feedback');
+
+                 const isInputHrValid = inputHrElement.value.trim() !== '';
+                 const isInputMinValid = inputMinElement.value.trim() !== '';
+                 const isInputHeightDiffValid = inputHeightDiffElement.value.trim() !== '';
+                 const isDistanceValid = inputDistanceElement.value.trim() !== '';
+
+                 validation(isInputHrValid, inputHrElement, inputHrFeedback);
+                 validation(isInputMinValid, inputMinElement, inputMinFeedback);
+                 validation(isInputHeightDiffValid, inputHeightDiffElement, inputHeightDiffFeedback);
+                 validation(isDistanceValid, inputDistanceElement, inputDistanceFeedback);
+
+                return isInputHrValid && isInputMinValid && isInputHeightDiffValid && isDistanceValid;
+            }
+
+
+            function validation(valid, input, feedback){
+                if(!valid){
+                    input.classList.add('is-invalid');
+                    feedback.style.display = 'block';
+                } else {
+                    input.classList.remove('is-invalid');
+                    feedback.style.display = 'none';
+                }
+            }
+
 
             const stepper3 = new Stepper(document.querySelector('#stepper3'), {
                 animation: true
