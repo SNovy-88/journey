@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Table(name = "hiketest", schema = "journey")
+@Table(name = "hike", schema = "journey")
 public class Hike {
 
     private UUID _hike_id;
