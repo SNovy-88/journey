@@ -183,15 +183,14 @@
                                     </ul>
                                 </div>
                                 <br>
+                                <!-- Stamina -->
+                                <label class="form-label"> Stamina </label>
 
-                                    <!-- Sliders for several option inputs -->
+                                <!-- Experience -->
+                                <label class="form-label"> Experience </label>
 
-
-                                    <label class="form-label"> Stamina </label> <!-- Stamina -->
-
-                                    <label class="form-label"> Experience </label> <!-- Experience -->
-
-                                    <label class="form-label"> Landscape </label> <!-- Landscape -->
+                                <!-- Landscape -->
+                                <label class="form-label"> Landscape </label>
 
 
                                     <%--<label for="customRange5" class="form-label"> Preferred months </label> <!-- Preferred months -->
