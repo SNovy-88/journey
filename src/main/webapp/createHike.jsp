@@ -4,7 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/styles.css">
-    <title> Journey | Create your hike </title>
+    <link rel="stylesheet" href="CSS/createHike.css">
+
+    <!-- Slider API -->
+    <link rel="stylesheet" href="CSS/bootstrap-slider.css">
+    <script src="JavaScript/bootstrap-slider.js"></script>
+
+    <title> Journey | Create</title>
+
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -24,6 +31,17 @@
 </head>
 <body>
     <jsp:include page="navBar.jsp"/>
+    <script>
+        document.addEventListener("DOMContentLoaded", function (){
+            var slider = new Slider("#ex13", {
+                ticks: [1, 2, 3, 4, 5],
+                ticks_labels: ['1', '2', '3', '4', '5'],
+                ticks_snap_bounds: 49
+            });
+        });
+    </script>
+
+
 
     <!-- Stepper element -->
     <form id="createHike" action="create_hike" method="post" enctype="multipart/form-data">
@@ -110,32 +128,54 @@
                                 <button class="btn btn-primary" type="button" onclick="if (validateStep1()) stepper1.next()">Next</button>
                                 <button class="btn btn-success" type="submit" onclick="createHike()">Create Hike</button> <!-- Create Hike button -->
                             </div>
+
+                            <!-- STEPPER 2 -->
                             <div id="test-l-2" class="content"> <!-- Content of the 2nd stepper part -->
 
-                                    <!-- Hour input -->
-                                    <div class="form-floating mb-3">
-                                        <input type="number" id="typeNumberHour" class="form-control" name="duration-hr"/>
-                                        <label class="form-label" for="typeNumberHour"> Duration Hour </label>
-                                    </div>
-                                    <!-- Minute input -->
-                                    <div class="form-floating mb-3">
-                                        <input type="number" id="typeNumberMinute" class="form-control" max="59" name="duration-min"/>
-                                        <label class="form-label" for="typeNumberMinute"> Duration Minute </label>
-                                    </div>
-                                    <!-- Height difference input -->
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Height difference" aria-label="Height difference" aria-describedby="basic-addon1" name="height-difference">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon1">m</span>
+                                <div class="row g-2">
+                                    <div class="col-md-3" style="margin-top: 30px"> <!-- Group for Duration hr and min -->
+                                        <label for="duration-hr" class="form-label">Duration<sup>*</sup></label>
+                                        <div class="invalid-feedback" id="duration-hr-feedback">
+                                            The hour field is mandatory. If duration is under 1 hour please input 0.
+                                        </div>
+                                        <div class="invalid-feedback" id="duration-min-feedback">
+                                            Min value needs to be under 60.
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d*" inputmode="numeric">
+                                            <span class="input-group-text">hr</span>
+                                            <input type="number" aria-label="duration-min" class="form-control" id="duration-min" inputmode="numeric" max="59">
+                                            <span class="input-group-text">min</span>
                                         </div>
                                     </div>
-                                    <!-- Distance input -->
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Distance" aria-label="Distance" aria-describedby="basic-addon2" step=".1" name="distance">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2">km</span>
+                                </div>
+
+                                <div class="row g-1">
+                                    <div class="col-md-3" style="margin-top: 30px"> <!-- Height difference input -->
+                                        <label for="height-difference" class="form-label">Height Difference<sup>*</sup></label>
+                                        <div class="invalid-feedback" id="height-difference-feedback">
+                                            This is a mandatory field. Please input a number.
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="number" aria-label="duration-hour" class="form-control" id="height-difference">
+                                            <span class="input-group-text">m</span>
+
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row g-1">
+                                    <div class="col-md-3" style="margin-top: 30px"> <!-- Distance input -->
+                                        <label for="distance" class="form-label">Distance<sup>*</sup></label>
+                                        <div class="invalid-feedback" id="distance-feedback">
+                                            This is a mandatory field. Please input a number.
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="number" aria-label="duration-hour" class="form-control" id="distance">
+                                            <span class="input-group-text">km</span>
+                                        </div>
+                                        <label for="distance" class="form-text">Input decimals with a dot, ie. 12.4 or 4.67</label>
+                                    </div>
+
                                     <!-- Sliders for several option inputs -->
                                     <label for="customRange1" class="form-label"> Fitness Level </label> <!-- Fitness Level -->
                                     <input type="range" class="form-range" min="1" max="5" id="customRange1" name="fitness-level">
@@ -149,9 +189,12 @@
                                     <%--<label for="customRange5" class="form-label"> Preferred months </label> <!-- Preferred months -->
                                     <input type="range" class="form-range" min="1" max="11" id="customRange5">--%>
 
-                                <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
-                                <button class="btn btn-primary" type="button" onclick="stepper1.next()">Next</button>
+                                <p>Fields marked with a <sup>*</sup> have to be filled in!</p>
+                                <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>     
+                                <button class="btn btn-primary" type="button" onclick="if (validateStep2()) stepper1.next()">Next</button>
                             </div>
+
+                            <!-- STEPPER 3 -->
                             <div id="test-l-3" class="content"> <!-- Content of the 3rd stepper part -->
 
                                     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -180,6 +223,8 @@
                 </div>
             </div>
         </div>
+
+
         <!-- Bootstrap pop-up-modal for map input -->
         <div class="modal fade" id="waypointModal" tabindex="-1" role="dialog" aria-labelledby="waypointModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
