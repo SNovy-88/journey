@@ -111,48 +111,49 @@
                                 <button class="btn btn-success" type="submit" onclick="createHike()">Create Hike</button> <!-- Create Hike button -->
                             </div>
                             <div id="test-l-2" class="content"> <!-- Content of the 2nd stepper part -->
-                                <p class="text-center"> <!-- not necessary? -->
+
                                     <!-- Hour input -->
                                     <div class="form-floating mb-3">
-                                        <input type="number" id="typeNumberHour" class="form-control" />
+                                        <input type="number" id="typeNumberHour" class="form-control" name="duration-hr"/>
                                         <label class="form-label" for="typeNumberHour"> Duration Hour </label>
                                     </div>
                                     <!-- Minute input -->
                                     <div class="form-floating mb-3">
-                                        <input type="number" id="typeNumberMinute" class="form-control" />
+                                        <input type="number" id="typeNumberMinute" class="form-control" max="59" name="duration-min"/>
                                         <label class="form-label" for="typeNumberMinute"> Duration Minute </label>
                                     </div>
                                     <!-- Height difference input -->
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Height difference" aria-label="Height difference" aria-describedby="basic-addon1">
+                                        <input type="text" class="form-control" placeholder="Height difference" aria-label="Height difference" aria-describedby="basic-addon1" name="height-difference">
                                         <div class="input-group-append">
                                             <span class="input-group-text" id="basic-addon1">m</span>
                                         </div>
                                     </div>
                                     <!-- Distance input -->
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Distance" aria-label="Distance" aria-describedby="basic-addon2">
+                                        <input type="text" class="form-control" placeholder="Distance" aria-label="Distance" aria-describedby="basic-addon2" step=".1" name="distance">
                                         <div class="input-group-append">
                                             <span class="input-group-text" id="basic-addon2">km</span>
                                         </div>
                                     </div>
                                     <!-- Sliders for several option inputs -->
-                                    <label for="customRange1" class="form-label"> Physical Condition </label> <!-- Physical Condition -->
-                                    <input type="range" class="form-range" min="0" max="5" id="customRange1">
+                                    <label for="customRange1" class="form-label"> Fitness Level </label> <!-- Fitness Level -->
+                                    <input type="range" class="form-range" min="1" max="5" id="customRange1" name="fitness-level">
                                     <label for="customRange2" class="form-label"> Stamina </label> <!-- Stamina -->
-                                    <input type="range" class="form-range" min="0" max="5" id="customRange2">
+                                    <input type="range" class="form-range" min="1" max="5" id="customRange2" name="stamina">
                                     <label for="customRange3" class="form-label"> Experience </label> <!-- Experience -->
-                                    <input type="range" class="form-range" min="0" max="5" id="customRange3">
+                                    <input type="range" class="form-range" min="1" max="5" id="customRange3" name="experience">
                                     <label for="customRange4" class="form-label"> Landscape </label> <!-- Landscape -->
-                                    <input type="range" class="form-range" min="0" max="5" id="customRange4">
-                                    <label for="customRange5" class="form-label"> Preferred months </label> <!-- Preferred months -->
-                                    <input type="range" class="form-range" min="0" max="11" id="customRange5">
-                                </p>
-                                <button class="btn btn-primary" type="button" onclick="stepper1.next()">Next</button>
+                                    <input type="range" class="form-range" min="1" max="5" id="customRange4" name="scenery">
+
+                                    <%--<label for="customRange5" class="form-label"> Preferred months </label> <!-- Preferred months -->
+                                    <input type="range" class="form-range" min="1" max="11" id="customRange5">--%>
+
                                 <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
+                                <button class="btn btn-primary" type="button" onclick="stepper1.next()">Next</button>
                             </div>
                             <div id="test-l-3" class="content"> <!-- Content of the 3rd stepper part -->
-                                <p class="text-center"> <!-- not necessary? -->
+
                                     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
                                     <!-- Image input -->
                                     <div class="file-upload">
