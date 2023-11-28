@@ -1,3 +1,13 @@
+/*
+ * Copyright (c) 2023 Sarah N
+ *
+ * Project Name:         Journey
+ * Description:
+ *
+ * Date of Creation/
+ * Last Update:          24/11/2023
+ */
+
 package at.fhv.journey.hibernate;
 
 import at.fhv.journey.hibernate.broker.BrokerBaseJPA;

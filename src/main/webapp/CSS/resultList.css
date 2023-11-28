@@ -212,6 +212,7 @@ h1 {
     transition: background-color 0.3s, transform 0.3s;
 }
 
+
 .search-button-rlist:hover {
     background-color: #8ddb1f;
     transform: scale(1.2);
@@ -233,4 +234,3 @@ h1 {
     width: 100%;
     text-align: center;
 }
-

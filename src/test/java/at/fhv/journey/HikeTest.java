@@ -5,7 +5,7 @@
  * Description:
  *
  * Date of Creation/
- * Last Update:          15/11/2023
+ * Last Update:          24/11/2023
  */
 
 package at.fhv.journey;
@@ -28,6 +28,7 @@ public class HikeTest {
         System.out.println("Author: "+testHike.getAuthor());
         System.out.println("Date Created: "+testHike.getDateCreated());
     }
+
 
      */
 }

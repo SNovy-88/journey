@@ -5,7 +5,7 @@
  * Description:
  *
  * Date of Creation/
- * Last Update:          15/11/2023
+ * Last Update:          24/11/2023
  */
 
 package at.fhv.journey;
@@ -21,8 +21,9 @@ public class IntegerRangeTest {
         Hike testhike = df.getHikeByID(1);
         System.out.println("Recommended Months for Hike ID 1: ");
         System.out.println("from: "+testhike.getRecommendedMonths().lower()+"\n"+"to: "
-        +testhike.getRecommendedMonths().upper());
+                +testhike.getRecommendedMonths().upper());
     }
+
 
      */
 }
