@@ -6,10 +6,6 @@
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/createHike.css">
 
-    <!-- Slider API -->
-    <link rel="stylesheet" href="CSS/bootstrap-slider.css">
-    <script src="JS/bootstrap-slider.js"></script>
-
     <title> Journey | Create</title>
 
     <!-- Bootstrap -->
@@ -122,6 +118,7 @@
                             </div>
 
                             <!-- STEPPER 2 -->
+                            <!-- TODO -->
                             <div id="test-l-2" class="content"> <!-- Content of the 2nd stepper part -->
 
                                 <div class="row g-2">
@@ -168,15 +165,34 @@
                                         <label for="distance" class="form-text">Input decimals with a dot, ie. 12.4 or 4.67</label>
                                     </div>
                                 </div>
+                                <hr>
+                                <!-- Drop Down Elements -->
+                                <!-- Fitness Level -->
+                                <label class="form-label"> Fitness Level </label> <!-- Fitness Level -->
+                                <br>
+                                <div class="btn-group dropend">
+                                    <button id="drop-down-btn" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Select an option
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownTitle(this, 'Easy')" data-id="1">Easy</a></li>
+                                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownTitle(this, 'Moderate')" data-id="2">Moderate</a></li>
+                                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownTitle(this, 'Intermediate')" data-id="3">Intermediate</a></li>
+                                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownTitle(this, 'Expert')" data-id="4">Expert</a></li>
+                                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownTitle(this, 'Challenging')" data-id="5">Challenging</a></li>
+                                    </ul>
+                                </div>
+                                <br>
+
                                     <!-- Sliders for several option inputs -->
-                                    <label for="customRange1" class="form-label"> Fitness Level </label> <!-- Fitness Level -->
-                                    <input type="range" class="form-range" min="1" max="5" id="customRange1" name="fitness-level">
-                                    <label for="customRange2" class="form-label"> Stamina </label> <!-- Stamina -->
-                                    <input type="range" class="form-range" min="1" max="5" id="customRange2" name="stamina">
-                                    <label for="customRange3" class="form-label"> Experience </label> <!-- Experience -->
-                                    <input type="range" class="form-range" min="1" max="5" id="customRange3" name="experience">
-                                    <label for="customRange4" class="form-label"> Landscape </label> <!-- Landscape -->
-                                    <input type="range" class="form-range" min="1" max="5" id="customRange4" name="scenery">
+
+
+                                    <label class="form-label"> Stamina </label> <!-- Stamina -->
+
+                                    <label class="form-label"> Experience </label> <!-- Experience -->
+
+                                    <label class="form-label"> Landscape </label> <!-- Landscape -->
+
 
                                     <%--<label for="customRange5" class="form-label"> Preferred months </label> <!-- Preferred months -->
                                     <input type="range" class="form-range" min="1" max="11" id="customRange5">--%>
@@ -298,6 +314,17 @@
                 feedback.style.display = 'none';
             }
         }
+        function updateDropdownTitle(element, option) {
+            document.getElementById("drop-down-btn").innerHTML = option;
+            var dropdownItem = document.querySelector("a.dropdown-item.active");
+            if (dropdownItem) {
+                dropdownItem.classList.remove("active");
+            }
+            element.classList.add("active");
+            let selectedValue = element.getAttribute("data-id");
+            console.log(selectedValue);
+        }
+
     </script>
 </body>
 </html>
