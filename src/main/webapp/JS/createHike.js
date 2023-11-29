@@ -57,15 +57,28 @@ function validateStep1() {
         const fileUploadInput = document.getElementById('customFileEnd');
         const fileUploadFeedback = document.getElementById('fileUploadFeedback');
         const isFileUploadValid = fileUploadInput.files.length > 0;
+
         if (!isFileUploadValid) {
             fileUploadInput.classList.add('is-invalid');
+            fileUploadFeedback.textContent = 'Please select a GPX file.';
             fileUploadFeedback.style.display = 'block';
         } else {
-            fileUploadInput.classList.remove('is-invalid');
-            fileUploadFeedback.style.display = 'none';
+            const uploadedFileName = fileUploadInput.files[0].name;
+            const isFileExtensionValid = uploadedFileName.toLowerCase().endsWith('.gpx');
+
+            if (!isFileExtensionValid) {
+                fileUploadInput.classList.add('is-invalid');
+                fileUploadFeedback.textContent = 'Please upload a file with the ".gpx" extension.';
+                fileUploadFeedback.style.display = 'block';
+            } else {
+                fileUploadInput.classList.remove('is-invalid');
+                fileUploadFeedback.style.display = 'none';
+            }
         }
+
         return isInputValid && isTextareaValid && isFileUploadValid;
     }
+
     // Default case (should not reach here)
     return false;
 }

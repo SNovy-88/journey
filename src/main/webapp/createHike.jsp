@@ -74,26 +74,31 @@
                                         <label for="floatingTextarea2">Description</label>
                                     </div>
                                     <br>
-                                    <!-- Bootstrap On/Off switch to enable/disable features -->
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="featureSwitch">
-                                        <label class="form-check-label" for="featureSwitch">Enable to upload a .gpx file</label>
-                                    </div>
-                                    <!-- Hidden input to store the switch state -->
-                                    <input type="hidden" id="switchState" name="switchState" value="map">
-                                    <!-- GPX Upload input (initially hidden) -->
-                                    <div class="invalid-feedback" id="fileUploadFeedback">
-                                        Please choose a file.
-                                    </div>
-                                    <div id="fileUploadFeature" style="display: none;">
-                                        <br>
-                                        <label class="form-label" for="customFileEnd">Upload .gpx file</label>
-                                        <div class="input-group custom-file-upload-container" style="width: 65%;">
-                                            <input type="file" class="form-control" id="customFileEnd" name="gpxDataUpload"/>
-                                            <button type="button" class="btn btn-secondary" onclick="resetFileInput()">Reset</button>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <!-- Bootstrap On/Off switch to enable/disable features -->
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch" id="featureSwitch">
+                                                <label class="form-check-label" for="featureSwitch">Enable to upload a .gpx file</label>
+                                            </div>
                                         </div>
-                                        <br>
+                                        <div class="col-md-9">
+                                            <!-- Hidden input to store the switch state -->
+                                            <input type="hidden" id="switchState" name="switchState" value="map">
+                                            <!-- GPX Upload input (initially hidden) -->
+                                            <div class="invalid-feedback" id="fileUploadFeedback">
+                                                Please choose a file.
+                                            </div>
+                                            <div id="fileUploadFeature" style="display: none;">
+                                                <div class="input-group custom-file-upload-container" style="width: 75%;">
+                                                    <input type="file" class="form-control" id="customFileEnd" name="gpxDataUpload"/>
+                                                    <button type="button" class="btn btn-secondary" onclick="resetFileInput()">Reset</button>
+                                                </div>
+                                                <br>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <br>
                                     <!-- Show Map -->
                                     <div class="invalid-feedback" id="mapFeedback">
                                         Route needs at least one waypoint.
@@ -225,5 +230,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="bs-stepper.min.js"></script>
     <script src="dist/js/bs-stepper.js"></script>
+    <!-- GeoJSON -->
+    <script src="https://unpkg.com/togeojson@0.15.1/togeojson.js"></script>
 </body>
 </html>
