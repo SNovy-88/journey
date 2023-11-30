@@ -206,7 +206,7 @@
                                 <div class="row g-2" id="stamina-container">
                                     <div class="col-md-3">
                                         <div class="btn-group dropend">
-                                            <button id="drop-down-btn-stamina" data-id="stamina" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <button id="drop-down-btn-stamina" data-id="stamina" chosen-value-id="" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Select an option
                                             </button>
                                             <ul class="dropdown-menu">
@@ -420,8 +420,8 @@
             const isInputMinValid = inputMinElement.value.trim() !== '';
             const isInputHeightDiffValid = inputHeightDiffElement.value.trim() !== '';
             const isDistanceValid = inputDistanceElement.value.trim() !== '';
-            const isStaminaValid = inputStaminaElement.getAttribute('data-id') !== '';
-            console.log(inputStaminaElement.getAttribute('data-id'));
+            const isStaminaValid = inputStaminaElement.getAttribute('chosen-value-id') !== '';
+            console.log(inputStaminaElement.getAttribute('chosen-value-id'));
 
             validation(isInputHrValid, inputHrElement, inputHrFeedback);
             validation(isInputMinValid, inputMinElement, inputMinFeedback);
@@ -450,6 +450,7 @@
             let dropdownButton = document.getElementById(dropdown);
             let selectedValue = element.getAttribute("data-id");
             dropdownButton.innerHTML = element.innerHTML;
+            dropdownButton.setAttribute("chosen-value-id", selectedValue);
 
             // Highlighting the selected option so this is visible when opening dropdown again
             let dropdownItem = document.querySelector("a.dropdown-item.active");
