@@ -287,7 +287,7 @@
                                 </div>
                                 <br>
 
-                                <p>Fields marked with a <sup>*</sup> have to be filled in!</p>
+                                <p>Fields marked with an <sup>*</sup> have to be filled in!</p>
                                 <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>     
                                 <button class="btn btn-primary" type="button" onclick="if (validateStep2()) stepper1.next()">Next</button>
                             </div>
@@ -330,7 +330,7 @@
                         <h5 class="modal-title" id="waypointModalLabel"> Enter Waypoint Name </h5>
                     </div>
                     <div class="modal-body">
-                        <input type="text" id="waypointNameInput" class="form-control" placeholder="Enter name (optional)"> <!-- evtl. make it non-optional -->
+                        <input type="text" id="waypointNameInput" class="form-control" placeholder="Enter name (optional)"/> <!-- evtl. make it non-optional -->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
