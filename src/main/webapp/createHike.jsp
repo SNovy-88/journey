@@ -15,8 +15,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
     <link rel="stylesheet" href="bs-stepper.min.css">
 
+    <!-- Include jQuery JavaScript -->
+    <script
+            src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+            integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+            crossorigin="anonymous"></script>
+
     <!-- Include the bs-stepper JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js">
+    </script>
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -193,6 +200,9 @@
                                 <!-- Stamina -->
                                 <label class="form-label"> Stamina </label>
                                 <br>
+                                <div class="invalid-feedback" id="stamina-feedback">
+                                    Please choose an option.
+                                </div>
                                 <div class="row g-2" id="stamina-container">
                                     <div class="col-md-3">
                                         <div class="btn-group dropend">
@@ -210,6 +220,11 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3" id="stamina-icons">
+                                        <script>
+                                            $(document).ready(function() {
+                                                insertIcons(0, staminaFullIcon, staminaEmptyIcon, 'stamina-icons');
+                                            });
+                                        </script>
                                     </div>
                                 </div>
                                 <br>
@@ -220,7 +235,7 @@
                                 <div class="row g-2" id="experience-container">
                                     <div class="col-md-3">
                                         <div class="btn-group dropend">
-                                            <button id="drop-down-btn-experience" data-id="experience" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-id="experience">
+                                            <button id="drop-down-btn-experience" data-id="experience" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
                                                 Select an option
                                             </button>
                                             <ul class="dropdown-menu">
@@ -234,6 +249,11 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3" id="experience-icons">
+                                        <script>
+                                            $(document).ready(function() {
+                                                insertIcons(0, experienceFullIcon, experienceEmptyIcon, 'experience-icons');
+                                            });
+                                        </script>
                                     </div>
                                 </div>
                                 <br>
@@ -244,7 +264,7 @@
                                 <div class="row g-2" id="scenery-container">
                                     <div class="col-md-3">
                                         <div class="btn-group dropend">
-                                            <button id="drop-down-btn-scenery" data-id="scenery" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-id="experience">
+                                            <button id="drop-down-btn-scenery" data-id="scenery" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Select an option
                                             </button>
                                             <ul class="dropdown-menu">
@@ -258,6 +278,11 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3" id="scenery-icons">
+                                        <script>
+                                            $(document).ready(function() {
+                                                insertIcons(0, sceneryFullIcon, sceneryEmptyIcon, 'scenery-icons');
+                                            });
+                                        </script>
                                     </div>
                                 </div>
                                 <br>
@@ -344,6 +369,37 @@
     <script src="dist/js/bs-stepper.js"></script>
 
     <script>
+        //setting up variables for the rating icons
+
+        var staminaEmptyIcon = '<svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-pulse" viewBox="0 0 16 16">' +
+            '<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053.918 3.995.78 5.323 1.508 7H.43c-2.128-5.697 4.165-8.83 7.394-5.857.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17c3.23-2.974 9.522.159 7.394 5.856h-1.078c.728-1.677.59-3.005.108-3.947C13.486.878 10.4.28 8.717 2.01L8 2.748ZM2.212 10h1.315C4.593 11.183 6.05 12.458 8 13.795c1.949-1.337 3.407-2.612 4.473-3.795h1.315c-1.265 1.566-3.14 3.25-5.788 5-2.648-1.75-4.523-3.434-5.788-5Z"/>' +
+            '<path d="M10.464 3.314a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.5a.5.5 0 0 0 0 1H4a.5.5 0 0 0 .416-.223l1.473-2.209 1.647 4.118a.5.5 0 0 0 .945-.049l1.598-5.593 1.457 3.642A.5.5 0 0 0 12 9h3.5a.5.5 0 0 0 0-1h-3.162l-1.874-4.686Z"/>' +
+            '</svg>';
+        var staminaFullIcon = '<svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#EC3737" class="bi bi-heart-pulse-fill" viewBox="0 0 16 16">' +
+            '<path d="M1.475 9C2.702 10.84 4.779 12.871 8 15c3.221-2.129 5.298-4.16 6.525-6H12a.5.5 0 0 1-.464-.314l-1.457-3.642-1.598 5.593a.5.5 0 0 1-.945.049L5.889 6.568l-1.473 2.21A.5.5 0 0 1 4 9H1.475Z"/>' +
+            '<path d="M.88 8C-2.427 1.68 4.41-2 7.823 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C11.59-2 18.426 1.68 15.12 8h-2.783l-1.874-4.686a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.88Z"/>' +
+            '</svg>';
+
+        var experienceEmptyIcon = '<svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-mortarboard" viewBox="0 0 16 16">' +
+            '<path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5ZM8 8.46 1.758 5.965 8 3.052l6.242 2.913L8 8.46Z"/>' +
+            '<path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Zm-.068 1.873.22-.748 3.496 1.311a.5.5 0 0 0 .352 0l3.496-1.311.22.748L8 12.46l-3.892-1.556Z"/>' +
+            '</svg>';
+        var experienceFullIcon = '<svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#804E0D" class="bi bi-mortarboard-fill" viewBox="0 0 16 16">' +
+            '<path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z"/>' +
+            '<path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Z"/>' +
+            '</svg>';
+
+        var sceneryEmptyIcon = '<svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-sun" viewBox="0 0 16 16">' +
+            '<path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 ' +
+            '8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 ' +
+            '2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z">' +
+            '</path></svg>';
+        var sceneryFullIcon = '<svg style="margin-right: 5px" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FFC230" class="bi bi-sun-fill" viewBox="0 0 16 16">' +
+            '<path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 ' +
+            '8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 ' +
+            '.707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>' +
+            '</path></svg>';
+
         function validateStep2() {
             const inputHrElement = document.getElementById('duration-hr');
             const inputHrFeedback = document.getElementById('duration-hr-feedback');
@@ -357,17 +413,27 @@
             const inputDistanceElement = document.getElementById('distance');
             const inputDistanceFeedback = document.getElementById('distance-feedback');
 
+            const inputStaminaElement = document.getElementById('drop-down-btn-stamina');
+            const inputStaminaFeedback = document.getElementById('stamina-feedback');
+
             const isInputHrValid = inputHrElement.value.trim() !== '';
             const isInputMinValid = inputMinElement.value.trim() !== '';
             const isInputHeightDiffValid = inputHeightDiffElement.value.trim() !== '';
             const isDistanceValid = inputDistanceElement.value.trim() !== '';
+            const isStaminaValid = inputStaminaElement.getAttribute('data-id') !== '';
+            console.log(inputStaminaElement.getAttribute('data-id'));
 
             validation(isInputHrValid, inputHrElement, inputHrFeedback);
             validation(isInputMinValid, inputMinElement, inputMinFeedback);
             validation(isInputHeightDiffValid, inputHeightDiffElement, inputHeightDiffFeedback);
             validation(isDistanceValid, inputDistanceElement, inputDistanceFeedback);
+            validation(isStaminaValid, inputStaminaElement, inputStaminaFeedback);
 
-            return isInputHrValid && isInputMinValid && isInputHeightDiffValid && isDistanceValid;
+            return  isInputHrValid &&
+                    isInputMinValid &&
+                    isInputHeightDiffValid &&
+                    isDistanceValid &&
+                    isStaminaValid;
         }
 
         function validation(valid, input, feedback){
@@ -383,8 +449,7 @@
             // Setting the Text of the button to the selected option
             let dropdownButton = document.getElementById(dropdown);
             let selectedValue = element.getAttribute("data-id");
-            let valueText = element.innerHTML;
-            dropdownButton.innerHTML = valueText;
+            dropdownButton.innerHTML = element.innerHTML;
 
             // Highlighting the selected option so this is visible when opening dropdown again
             let dropdownItem = document.querySelector("a.dropdown-item.active");
@@ -399,63 +464,38 @@
             let attribute = dropdownButton.getAttribute("data-id");
             switch (attribute){
                 case "stamina":
-                    var svgHTMLfull ='';
-                    svgHTMLfull += '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#EC3737" class="bi bi-heart-pulse-fill" viewBox="0 0 16 16">' +
-                        '<path d="M1.475 9C2.702 10.84 4.779 12.871 8 15c3.221-2.129 5.298-4.16 6.525-6H12a.5.5 0 0 1-.464-.314l-1.457-3.642-1.598 5.593a.5.5 0 0 1-.945.049L5.889 6.568l-1.473 2.21A.5.5 0 0 1 4 9H1.475Z"/>' +
-                        '<path d="M.88 8C-2.427 1.68 4.41-2 7.823 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C11.59-2 18.426 1.68 15.12 8h-2.783l-1.874-4.686a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.88Z"/>' +
-                        '</svg>';
-                    var svgHTMLempty ='';
-                    svgHTMLempty += '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-pulse" viewBox="0 0 16 16">' +
-                        '<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053.918 3.995.78 5.323 1.508 7H.43c-2.128-5.697 4.165-8.83 7.394-5.857.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17c3.23-2.974 9.522.159 7.394 5.856h-1.078c.728-1.677.59-3.005.108-3.947C13.486.878 10.4.28 8.717 2.01L8 2.748ZM2.212 10h1.315C4.593 11.183 6.05 12.458 8 13.795c1.949-1.337 3.407-2.612 4.473-3.795h1.315c-1.265 1.566-3.14 3.25-5.788 5-2.648-1.75-4.523-3.434-5.788-5Z"/>' +
-                        '<path d="M10.464 3.314a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.5a.5.5 0 0 0 0 1H4a.5.5 0 0 0 .416-.223l1.473-2.209 1.647 4.118a.5.5 0 0 0 .945-.049l1.598-5.593 1.457 3.642A.5.5 0 0 0 12 9h3.5a.5.5 0 0 0 0-1h-3.162l-1.874-4.686Z"/>' +
-                        '</svg>';
-                    insertIcons(selectedValue, svgHTMLfull, svgHTMLempty, 'stamina-icons');
+                    insertIcons(selectedValue, staminaFullIcon, staminaEmptyIcon, 'stamina-icons');
                     break;
 
                 case "experience":
-                    var svgHTMLfull='';
-                    svgHTMLfull += '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#804E0D" class="bi bi-mortarboard-fill" viewBox="0 0 16 16">' +
-                        '<path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z"/>' +
-                        '<path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Z"/>' +
-                        '</svg>'
-                    var svgHTMLempty='';
-                    svgHTMLempty += '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-mortarboard" viewBox="0 0 16 16">' +
-                        '<path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5ZM8 8.46 1.758 5.965 8 3.052l6.242 2.913L8 8.46Z"/>' +
-                        '<path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Zm-.068 1.873.22-.748 3.496 1.311a.5.5 0 0 0 .352 0l3.496-1.311.22.748L8 12.46l-3.892-1.556Z"/>' +
-                        '</svg>';
-                    insertIcons(selectedValue, svgHTMLfull, svgHTMLempty, 'experience-icons');
+                    insertIcons(selectedValue, experienceFullIcon, experienceEmptyIcon, 'experience-icons');
                     break;
 
                 case "scenery":
-                    var svgHTMLfull = '';
-                    svgHTMLfull += '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FFC230" class="bi bi-sun-fill" viewBox="0 0 16 16">';
-                    svgHTMLfull += '<path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>';
-                    svgHTMLfull += '</path></svg>';
-                    var svgHTMLempty = '';
-                    svgHTMLempty += '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-sun" viewBox="0 0 16 16">';
-                    svgHTMLempty += '<path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z">';
-                    svgHTMLempty += '</path></svg>';
-                    insertIcons(selectedValue, svgHTMLfull, svgHTMLempty, 'scenery-icons');
+                    insertIcons(selectedValue, sceneryFullIcon, sceneryEmptyIcon, 'scenery-icons');
                     break;
             }
-
         }
 
         //TODO
         //this function is from hike Details and needs to be put in separate JS file
         function insertIcons(value, full, empty, container_id) {
             console.log('insertIcons called with value:', value);
+            let svgHTML = '';
+            let container = document.getElementById(container_id)
             if (value >= 1 && value <= 5) {
-                var svgHTML = '';
-                for (var i = 0; i < value; i++) {
+                for (let i = 0; i < value; i++) {
                     svgHTML += full;
                 }
-                for (var j = 0; j < 5 - value; j++) {
+                for (let j = 0; j < 5 - value; j++) {
                     svgHTML += empty;
                 }
-                let container = document.getElementById(container_id)
                 container.innerHTML = svgHTML;
-
+            }else {
+                for (let i = 0; i < 5; i++){
+                    svgHTML += empty;
+                    container.innerHTML = svgHTML;
+                }
             }
         }
 
