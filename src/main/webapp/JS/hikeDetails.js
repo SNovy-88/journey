@@ -18,15 +18,21 @@ $(document).ready(function () {
 
 function insertIcons(value, full, empty, container_id) {
     console.log('insertIcons called with value:', value);
+    let svgHTML = '';
+    let container = document.getElementById(container_id)
     if (value >= 1 && value <= 5) {
-        var svgHTML = '';
-        for (var i = 0; i < value; i++) {
+        for (let i = 0; i < value; i++) {
             svgHTML += full;
         }
-        for (var j = 0; j < 5 - value; j++) {
+        for (let j = 0; j < 5 - value; j++) {
             svgHTML += empty;
         }
-        document.getElementById(container_id).innerHTML = svgHTML;
+        container.innerHTML = svgHTML;
+    }else {
+        for (let i = 0; i < 5; i++){
+            svgHTML += empty;
+            container.innerHTML = svgHTML;
+        }
     }
 }
 
