@@ -22,8 +22,7 @@
             crossorigin="anonymous"></script>
 
     <!-- Include the bs-stepper JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -83,26 +82,31 @@
                                         <label for="floatingTextarea2">Description</label>
                                     </div>
                                     <br>
-                                    <!-- Bootstrap On/Off switch to enable/disable features -->
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="featureSwitch">
-                                        <label class="form-check-label" for="featureSwitch">Enable to upload a .gpx file</label>
-                                    </div>
-                                    <!-- Hidden input to store the switch state -->
-                                    <input type="hidden" id="switchState" name="switchState" value="map">
-                                    <!-- GPX Upload input (initially hidden) -->
-                                    <div class="invalid-feedback" id="fileUploadFeedback">
-                                        Please choose a file.
-                                    </div>
-                                    <div id="fileUploadFeature" style="display: none;">
-                                        <br>
-                                        <label class="form-label" for="customFileEnd">Upload .gpx file</label>
-                                        <div class="input-group custom-file-upload-container" style="width: 65%;">
-                                            <input type="file" class="form-control" id="customFileEnd" name="gpxDataUpload"/>
-                                            <button type="button" class="btn btn-secondary" onclick="resetFileInput()">Reset</button>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <!-- Bootstrap On/Off switch to enable/disable features -->
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch" id="featureSwitch">
+                                                <label class="form-check-label" for="featureSwitch">Enable to upload a .gpx file</label>
+                                            </div>
                                         </div>
-                                        <br>
+                                        <div class="col-md-9">
+                                            <!-- Hidden input to store the switch state -->
+                                            <input type="hidden" id="switchState" name="switchState" value="map">
+                                            <!-- GPX Upload input (initially hidden) -->
+                                            <div class="invalid-feedback" id="fileUploadFeedback">
+                                                Please choose a file.
+                                            </div>
+                                            <div id="fileUploadFeature" style="display: none;">
+                                                <div class="input-group custom-file-upload-container" style="width: 75%;">
+                                                    <input type="file" class="form-control" id="customFileEnd" name="gpxDataUpload"/>
+                                                    <button type="button" class="btn btn-secondary" onclick="resetFileInput()">Reset</button>
+                                                </div>
+                                                <br>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <br>
                                     <!-- Show Map -->
                                     <div class="invalid-feedback" id="mapFeedback">
                                         Route needs at least one waypoint.
@@ -120,7 +124,6 @@
                             </div>
 
                             <!-- STEPPER 2 -->
-                            <!-- TODO -->
                             <div id="test-l-2" class="content"> <!-- Content of the 2nd stepper part -->
 
                                 <div class="row g-2">
@@ -292,7 +295,7 @@
                                 <br>
 
                                 <p>Fields marked with an <sup>*</sup> have to be filled in!</p>
-                                <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>     
+                                <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
                                 <button class="btn btn-primary" type="button" onclick="if (validateStep2()) stepper1.next()">Next</button>
                             </div>
 
@@ -324,7 +327,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- Bootstrap pop-up-modal for map input -->
         <div class="modal fade" id="waypointModal" tabindex="-1" role="dialog" aria-labelledby="waypointModalLabel" aria-hidden="true">
@@ -362,7 +364,6 @@
     </form>
 
     <script src="JS/createHike.js"></script>
-    <script src="JS/hikeDetails.js"></script>
     <script src="JS/createHikeMap.js"></script>
     <script src="JS/createHikeImage.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -372,6 +373,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="bs-stepper.min.js"></script>
     <script src="dist/js/bs-stepper.js"></script>
-
+    <!-- GeoJSON -->
+    <script src="https://unpkg.com/togeojson@0.15.1/togeojson.js"></script>
 </body>
 </html>
