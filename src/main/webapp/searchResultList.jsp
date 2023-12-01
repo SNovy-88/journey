@@ -49,11 +49,11 @@
                 <div class="col-md-8"> <!-- column for the header and description -->
                     <p class="fitnesslevel"><span class="<%= getFitnessLevelCSSClass(hike) %>"><%= hike.convertFitnessLevelToString() %></span></p>
 
-                    <h2 class="hike-name" title="<%=hike.getName()%>" id="<%=hike.getHike_id()%>"><%= hike.getName() %></h2>
+                    <h2 class="hike-name" title="<%=hike.getName()%>" id="<%=hike.getHikeId()%>"><%= hike.getName() %></h2>
                     <script>
-                        document.getElementById("<%=hike.getHike_id()%>").addEventListener('click', function(){
+                        document.getElementById("<%=hike.getHikeId()%>").addEventListener('click', function(){
                             var form = document.getElementById('moreDetailsForm');
-                            form.querySelector('[name="hike-id"]').value = '<%=hike.getHike_id()%>';
+                            form.querySelector('[name="hike-id"]').value = '<%=hike.getHikeId()%>';
                             form.submit();
                         });
                     </script>
@@ -92,7 +92,7 @@
                             </form>
                             -->
                             <form action ="/Journey_war_exploded/detailPage" id="moreDetailsForm">
-                                <input type="hidden" value = "<%=hike.getHike_id()%>" name = hike-id>
+                                <input type="hidden" value = "<%=hike.getHikeId()%>" name = hike-id>
                                 <button type="submit" value = "hikeDetails" id = "hikeDetailsButton" class = "hike-details-link">More Details</button>
                             </form>
                     </div>

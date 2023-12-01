@@ -15,12 +15,16 @@ import at.fhv.journey.model.Hike;
 
 public class IntegerRangeTest {
 
+/*
     public static void main(String[] args) {
-        DatabaseFacade df = new DatabaseFacade();
+    */
+/*    DatabaseFacade df = new DatabaseFacade();
 
         Hike testhike = df.getHikeByID(1);
         System.out.println("Recommended Months for Hike ID 1: ");
         System.out.println("from: "+testhike.getRecommendedMonths().lower()+"\n"+"to: "
                 +testhike.getRecommendedMonths().upper());
-    }
+    }*//*
+
+}*/
 }

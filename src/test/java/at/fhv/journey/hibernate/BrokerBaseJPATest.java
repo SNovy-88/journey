@@ -29,7 +29,7 @@ class BrokerBaseJPATest {
 
         DatabaseFacade df = new DatabaseFacade();
         Hike testHike2 = df.getHikeByID(9999);
-        assertEquals(9999, testHike2.getHike_id());
+        assertEquals(9999, testHike2.getHikeId());
 
         Hike testHikevs2 = new Hike(9999, "TestingInsert with same ID", 9, 2, 45, "This is to test if the insert works and updates the values", 143, 3);
         bbh.insert(testHikevs2);

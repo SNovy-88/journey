@@ -32,23 +32,23 @@ public class createPageServlet extends HttpServlet {
         String description = request.getParameter("descInput");
 
         //Stepper 2
-        int durationHour = Integer.parseInt(request.getParameter("duration-hr"));
-        int durationMin = Integer.parseInt(request.getParameter("duration-min"));
-        BigDecimal distance = BigDecimal.valueOf(Double.parseDouble(request.getParameter("distance")));
+        int durationHour = 12;
+        int durationMin = 12;
+        BigDecimal distance = BigDecimal.valueOf(12.56);
         distance = distance.setScale(2, RoundingMode.HALF_UP);
-        int heightDifference = Integer.parseInt(request.getParameter("height-difference"));
+        int heightDifference = 23;
 
-        int fitnessLevel = Integer.parseInt(request.getParameter("fitness-level"));
-        int stamina = Integer.parseInt(request.getParameter("stamina"));
-        int experience = Integer.parseInt(request.getParameter("experience"));
-        int scenery = Integer.parseInt(request.getParameter("scenery"));
+        int fitnessLevel = 3;
+        int stamina = 1;
+        int experience = 4;
+        int scenery = 5;
 
-        Range<Integer> recommendedMonths = Range.closed(2, 5);
+        int recommendedMonths = 101010101;
         String author = "testAuthor";
         LocalDate date = LocalDate.now();
 
         Hike hike = new Hike();
-//      hike.setHikeID(hikeId);
+        hike.setHikeId(99);
         hike.setName(name);
         hike.setDescription(description);
         hike.setDistance(distance);

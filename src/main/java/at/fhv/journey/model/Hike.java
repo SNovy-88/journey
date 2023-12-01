@@ -12,10 +12,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "hike", schema = "journey")
+@Table(name = "hikebitmask", schema = "journey")
 public class Hike {
 
-    private int _hike_id;
+    private int _hikeId;
     private String _name;
     private BigDecimal _distance;
     private int _durationHour;
@@ -23,7 +23,7 @@ public class Hike {
     private int _heightDifference;
     private int _fitnessLevel;
     private String _description;
-    private Range _recommendedMonths;
+    private int _recommendedMonths;
 
     private int _stamina;
     private int _experience;
@@ -38,7 +38,7 @@ public class Hike {
 
     public Hike(int hike_id, String name, double distance, int durationHour, int durationMin, String description,
                 int heightDifference, int fitnessLevel){
-        _hike_id = hike_id;
+        _hikeId = hike_id;
         _name = name;
         _distance = BigDecimal.valueOf(distance);
         _durationHour = durationHour;
@@ -50,11 +50,11 @@ public class Hike {
 
     @Id
     @Column(name = "hike_id")
-    public int getHike_id() {
-        return _hike_id;
+    public int getHikeId() {
+        return _hikeId;
     }
-    public void setHike_id(int hike_id) {
-        _hike_id = hike_id;
+    public void setHikeId(int hikeId) {
+        _hikeId = hikeId;
     }
 
     @Column(name = "name")
@@ -163,13 +163,12 @@ public class Hike {
     }
 
 
-    @Column(name = "suggested_month", columnDefinition = "int4range")
-    @Type(PostgreSQLRangeType.class)
-    public Range getRecommendedMonths() {
+    @Column(name = "bitmask_month")
+    public int getRecommendedMonths() {
         return _recommendedMonths;
     }
 
-    public void setRecommendedMonths(Range recommendedMonths) {
+    public void setRecommendedMonths(int recommendedMonths) {
         _recommendedMonths = recommendedMonths;
     }
 
