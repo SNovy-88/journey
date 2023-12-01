@@ -86,6 +86,7 @@ function validateStep1() {
 // Get the switch, feature elements, and switch state input
 const featureSwitch = document.getElementById('featureSwitch');
 const fileUploadFeature = document.getElementById('fileUploadFeature');
+const uploadMapFeature = document.getElementById('uploadMap') /* TODO: doesn't work correctly */
 const mapFeature = document.getElementById('mapFeature');
 const switchStateInput = document.getElementById('switchState');
 
@@ -93,6 +94,7 @@ const switchStateInput = document.getElementById('switchState');
 featureSwitch.addEventListener('change', function() {
     // Toggle the visibility of features based on the switch state
     fileUploadFeature.style.display = featureSwitch.checked ? 'block' : 'none';
+    uploadMapFeature.style.display = featureSwitch.checked ? 'block' : 'none'; /* TODO: doesn't work correctly */
     mapFeature.style.display = featureSwitch.checked ? 'none' : 'block';
 
     // Update the switch state input value
@@ -142,4 +144,82 @@ if (successParam === 'true') {
     $(document).ready(function () {
         $('#successModal').modal('show');
     });
+}
+
+
+
+
+
+
+
+function initializeUploadMap() {
+    /* TODO: doesn't work correctly */
+    /*
+    const uploadMapFeature = document.getElementById('uploadMap')
+    uploadMapFeature.style.display = featureSwitch.checked ? 'block' : 'none';
+    */
+
+    // Create a new map instance
+    uploadMap = L.map('uploadMap').setView([47, 11], 7); // Adjust the initial view as needed
+
+    // Ensure the map is properly sized after loading waypoints
+    uploadMap.invalidateSize();
+
+    // Add a tile layer to the map (you can choose a different tile provider)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(uploadMap);
+
+    return uploadMap;
+}
+
+// Function to show route on the map
+function showRoute() {
+    const fileUploadInput = document.getElementById('customFileEnd');
+    const fileUploadFeedback = document.getElementById('fileUploadFeedback');
+    const isFileUploadValid = fileUploadInput.files.length > 0;
+
+    if (!isFileUploadValid) {
+        fileUploadInput.classList.add('is-invalid');
+        fileUploadFeedback.textContent = 'Please select a GPX file.';
+        fileUploadFeedback.style.display = 'block';
+        return;
+    }
+
+
+    // Initialize a new Leaflet map for file upload if not already initialized
+    window.uploadMap = initializeUploadMap();
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const gpxData = e.target.result;
+
+        /*
+        // Clear existing layers on the map
+        uploadMap.eachLayer(layer => {
+            if (layer !== undefined && layer !== uploadMap) {
+                uploadMap.removeLayer(layer);
+            }
+        });*/
+
+        // Add GPX data as a layer to the map
+        new L.GPX(gpxData, {
+            async: true,
+            marker_options: {
+                startIconUrl: null,
+                endIconUrl: null,
+                shadowUrl: null,
+                wptIconUrls: {
+                    '': 'pictures/Leaflet/pin-icon-wpt.png',  // Adjust the path accordingly
+                },
+            },
+            polyline_options: {
+                color: 'blue',
+            },
+        }).on('loaded', function (e) {
+            // Fit the map to the bounds of the GPX track
+            uploadMap.fitBounds(e.target.getBounds());
+        }).addTo(uploadMap);
+    };
+    reader.readAsText(fileUploadInput.files[0]);
 }
