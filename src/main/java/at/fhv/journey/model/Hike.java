@@ -2,10 +2,7 @@ package at.fhv.journey.model;
 
 import io.hypersistence.utils.hibernate.type.range.PostgreSQLRangeType;
 import io.hypersistence.utils.hibernate.type.range.Range;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
@@ -50,6 +47,7 @@ public class Hike {
 
     @Id
     @Column(name = "hike_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getHike_id() {
         return _hike_id;
     }
