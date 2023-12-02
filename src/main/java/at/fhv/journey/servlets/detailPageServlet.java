@@ -12,6 +12,7 @@ package at.fhv.journey.servlets;
 
 import at.fhv.journey.hibernate.facade.DatabaseFacade;
 import at.fhv.journey.model.Hike;
+import at.fhv.journey.model.RecommendedMonthsHandler;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -65,9 +66,6 @@ public class detailPageServlet extends HttpServlet {
             response.getWriter().println("GpxLocation is null");
         }
 
-
-
-
         try {
             request.getRequestDispatcher("/hikeDetails.jsp").forward(request, response);
         } catch (ServletException e){
@@ -77,6 +75,21 @@ public class detailPageServlet extends HttpServlet {
 
     public void destroy(){
 
+    }
+
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/plain");
+
+        int month = Integer.parseInt(request.getParameter("month"));
+        int bitmaskFromClient = Integer.parseInt(request.getParameter("bitmask"));
+
+        // Check if the month is set in the bitmask
+        RecommendedMonthsHandler handler = new RecommendedMonthsHandler(bitmaskFromClient);
+        boolean isMonthSet = handler.checkMonthInt(month);
+
+        // Send the result back to the client
+        response.getWriter().print(isMonthSet);
     }
 
 

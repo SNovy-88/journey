@@ -39,6 +39,12 @@ public class RecommendedMonthsHandler {
         return false;
     }
 
+    public boolean checkMonthInt(int value){
+        if((_bitmask & value) == 1){
+            return true;
+        }
+        return false;
+    }
 
 
     public int getBitmask() {

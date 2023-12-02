@@ -11,6 +11,7 @@
 <%@ page import="static at.fhv.journey.utils.MonthsFunctions.*" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
+<%@ page import="at.fhv.journey.model.RecommendedMonthsHandler" %>
 <!-- Bootstrap css href -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -30,23 +31,26 @@
         // Document ready function
         $(document).ready(function () {
 
-            // Extract the start and end months from the range
-            let start = <%=getStartMonthInt(hike.getRecommendedMonths())%>;
-            let end = <%=getEndMonthInt(hike.getRecommendedMonths())%>;
+
+            let recommendedMonths = <%= hike.getRecommendedMonths()%>;
 
             // Iterate over each month element
             $('.month').each(function () {
-                let month = parseInt($(this).data('month'));
-
-                // Check if the month is within the range
-                if (end > 12) {
-                    let startNew = 1;
-                    let endNew = end - 12;
-                    checkRangeAndHighlightRecommendedMonths($(this), month, startNew, endNew);
-                    checkRangeAndHighlightRecommendedMonths($(this), month, start, end);
-                } else if (end <= 12) {
-                    checkRangeAndHighlightRecommendedMonths($(this), month, start, end);
-                }
+                let month = parseInt($(this).data('month')); // month is value 1 to 2048
+                let monthElement = $(this);
+                $.ajax({
+                    type: 'POST',
+                    url: './servlets/detailPage', // Replace with the actual URL of your servlet
+                    data: {
+                        month: month,
+                        bitmask: recommendedMonths
+                    },
+                    success: function(response) {
+                        if (response) {
+                            monthElement.css('background-color', '#b1ff2e');
+                        }
+                    }
+                });
             });
         });
 
@@ -65,11 +69,7 @@
         }
 
 
-        function checkRangeAndHighlightRecommendedMonths(element, month, start, end){
-            if (month >= start && month <= end) {
-                element.css('background-color', '#b1ff2e');
-            }
-        }
+
 
     </script>
 
@@ -233,38 +233,38 @@
                             <div class = "col month" data-month="2">
                                 Feb
                             </div>
-                            <div class = "col month" data-month="3">
+                            <div class = "col month" data-month="4">
                                 Mar
                             </div>
-                            <div class = "col month" data-month="4">
+                            <div class = "col month" data-month="8">
                                 Apr
                             </div>
                         </div>
                         <div class = "row">
-                            <div class = "col month"  data-month="5">
+                            <div class = "col month"  data-month="16">
                                 Mai
                             </div>
-                            <div class = "col month"  data-month="6">
+                            <div class = "col month"  data-month="32">
                                 Jun
                             </div>
-                            <div class = "col month"  data-month="7">
+                            <div class = "col month"  data-month="64">
                                 Jul
                             </div>
-                            <div class = "col month"  data-month="8">
+                            <div class = "col month"  data-month="128">
                                 Aug
                             </div>
                         </div>
                         <div class = "row">
-                            <div class = "col month" data-month="9">
+                            <div class = "col month" data-month="256">
                                 Sep
                             </div>
-                            <div class = "col month" data-month="10">
+                            <div class = "col month" data-month="512">
                                 Oct
                             </div>
-                            <div class = "col month" data-month="11">
+                            <div class = "col month" data-month="1024">
                                 Nov
                             </div>
-                            <div class = "col month" data-month="12">
+                            <div class = "col month" data-month="2048">
                                 Dec
                             </div>
                         </div>
