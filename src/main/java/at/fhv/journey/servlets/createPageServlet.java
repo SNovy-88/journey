@@ -1,6 +1,6 @@
 package at.fhv.journey.servlets;
 
-import io.hypersistence.utils.hibernate.type.range.Range;
+import at.fhv.journey.model.RecommendedMonthsHandler;
 import at.fhv.journey.hibernate.facade.DatabaseFacade;
 import at.fhv.journey.model.Hike;
 import jakarta.servlet.ServletException;
@@ -18,6 +18,8 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "createPageServlet", value = "/create_hike")
@@ -43,7 +45,19 @@ public class createPageServlet extends HttpServlet {
         int experience = 4;
         int scenery = 5;
 
-        int recommendedMonths = 101010101;
+        //add list of months, iterate over it and check each element if not null add value
+        LinkedList<String> checkedMonthsList = new LinkedList<>(List.of("Jan","Feb","Dec"));
+
+        int checkedMonths  = 0;
+        for(String m:checkedMonthsList){
+            if(request.getParameter(m) != null){
+                checkedMonths += Integer.parseInt(request.getParameter(m));
+            }
+        }
+        RecommendedMonthsHandler recommendedMonths = new RecommendedMonthsHandler(checkedMonths);
+
+
+        int months = recommendedMonths.getBitmask();
         String author = "testAuthor";
         LocalDate date = LocalDate.now();
 
@@ -59,7 +73,7 @@ public class createPageServlet extends HttpServlet {
         hike.setStamina(stamina);
         hike.setExperience(experience);
         hike.setScenery(scenery);
-        hike.setRecommendedMonths(recommendedMonths);
+        hike.setRecommendedMonths(months);
         hike.setAuthor(author);
         hike.setDateCreated(date);
 

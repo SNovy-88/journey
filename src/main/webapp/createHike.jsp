@@ -151,8 +151,25 @@
                                     <label for="customRange4" class="form-label"> Landscape </label> <!-- Landscape -->
                                     <input type="range" class="form-range" min="1" max="5" id="customRange4" name="scenery">
 
-                                    <%--<label for="customRange5" class="form-label"> Preferred months </label> <!-- Preferred months -->
-                                    <input type="range" class="form-range" min="1" max="11" id="customRange5">--%>
+                                <div class="form-check" id="check-box">
+                                    <input class="form-check-input" type="checkbox" name="Jan" value="1" id="Jan">
+                                    <label class="form-check-label" for="Jan">
+                                        Jan checkbox
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="Feb" value="2" id="Feb">
+                                    <label class="form-check-label" for="Feb">
+                                        Feb checkbox
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="Dec" value="2048" id="Dec">
+                                    <label class="form-check-label" for="Dec">
+                                        Dec checkbox
+                                    </label>
+                                </div>
+
 
                                 <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
                                 <button class="btn btn-primary" type="button" onclick="stepper1.next()">Next</button>
