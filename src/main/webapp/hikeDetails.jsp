@@ -31,28 +31,19 @@
         // Document ready function
         $(document).ready(function () {
 
-
             let recommendedMonths = <%= hike.getRecommendedMonths()%>;
 
             // Iterate over each month element
             $('.month').each(function () {
                 let month = parseInt($(this).data('month')); // month is value 1 to 2048
                 let monthElement = $(this);
-                $.ajax({
-                    type: 'POST',
-                    url: './servlets/detailPage', // Replace with the actual URL of your servlet
-                    data: {
-                        month: month,
-                        bitmask: recommendedMonths
-                    },
-                    success: function(response) {
-                        if (response) {
-                            monthElement.css('background-color', '#b1ff2e');
-                        }
-                    }
-                });
+
+                if ((recommendedMonths & month) !== 0) {
+                    monthElement.css('background-color', '#b1ff2e');
+                }
             });
         });
+
 
         function insertIcons(value, full, empty, container_id) {
             console.log('insertIcons called with value:', value);

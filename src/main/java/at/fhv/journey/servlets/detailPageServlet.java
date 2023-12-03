@@ -77,22 +77,6 @@ public class detailPageServlet extends HttpServlet {
 
     }
 
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/plain");
-
-        int month = Integer.parseInt(request.getParameter("month"));
-        int bitmaskFromClient = Integer.parseInt(request.getParameter("bitmask"));
-
-        // Check if the month is set in the bitmask
-        RecommendedMonthsHandler handler = new RecommendedMonthsHandler(bitmaskFromClient);
-        boolean isMonthSet = handler.checkMonthInt(month);
-
-        // Send the result back to the client
-        response.getWriter().print(isMonthSet);
-    }
-
-
     public void extractWaypoints(String xmlText, HttpServletRequest request) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
