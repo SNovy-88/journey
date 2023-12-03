@@ -22,6 +22,9 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-gpx@1.4.0/gpx.js"></script>
 
+    <!-- OpenRouteService JavaScript -->
+    <script src="https://maps.openrouteservice.org/assets/js/openrouteservice-leaflet.js"></script>
+
     <style>
         #mapContainer {
             position: relative;

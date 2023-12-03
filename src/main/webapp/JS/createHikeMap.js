@@ -1,3 +1,6 @@
+const ORS_API_KEY = '5b3ce3597851110001cf6248e11f847fc0db4d8eb62bc09dcf82494f';
+
+
 // Initialize the map
 const map = L.map('map').setView([47, 11], 7); // Set the initial view
 
@@ -10,7 +13,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 const waypoints = [];
 
 // Initialize a polyline to connect waypoints with lines
-const polyline = L.polyline([], {color: 'blue'}).addTo(map);
+const polyline = L.polyline([], {color: 'none'}).addTo(map);
 
 // Get the <ul> element to display coordinates
 const coordinatesList = document.getElementById('coordinates-list');
@@ -48,7 +51,7 @@ map.on('click', function (e) {
     });
 
     // Function to be called when the "Add Waypoint" button is clicked
-    window.addWaypoint = function () {
+    window.addWaypoint = async function () {
         // Get the waypoint name from the input field
         const waypointName = waypointNameInput.value;
 
@@ -59,13 +62,15 @@ map.on('click', function (e) {
         const marker = L.marker(clickedLatLng).addTo(map);
 
         // Store the waypoint in the array with name
-        waypoints.push({ name: waypointName, latlng: clickedLatLng });
+        waypoints.push({name: waypointName, latlng: clickedLatLng});
 
         // Update the polyline with the new waypoint
         polyline.setLatLngs(waypoints.map(wp => wp.latlng));
 
-        // If there are at least two waypoints, zoom the map to fit all waypoints
-        if (waypoints.length === 2) {
+        // If there are at least two waypoints, fetch route and zoom the map
+        if (waypoints.length >= 2) {
+            const prevWaypoint = waypoints[waypoints.length - 2].latlng;
+            await fetchRoute(prevWaypoint, clickedLatLng);
             map.fitBounds(polyline.getBounds());
         }
 
@@ -76,6 +81,29 @@ map.on('click', function (e) {
         cachedGPXData = createGPX();
     };
 });
+
+async function fetchRoute(startLatLng, endLatLng) {
+    const profile = 'foot-hiking'; // Specify the hiking profile
+    const url = `https://api.openrouteservice.org/v2/directions/${profile}?api_key=${ORS_API_KEY}&start=${startLatLng.lng},${startLatLng.lat}&end=${endLatLng.lng},${endLatLng.lat}`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const routeCoordinates = data.features[0].geometry.coordinates.map(coord => L.latLng(coord[1], coord[0]));
+
+        // Clear the existing polyline
+        polyline.setLatLngs([]);
+
+        // Add the route polyline to the map
+        const routePolyline = L.polyline(routeCoordinates, { color: 'red' }).addTo(map);
+
+        // Append the route coordinates to the existing polyline
+        polyline.setLatLngs(polyline.getLatLngs().concat(routeCoordinates));
+    } catch (error) {
+        console.error('Error fetching route:', error);
+    }
+}
 
 // Function to update the coordinates list
 function updateCoordinatesList() {
