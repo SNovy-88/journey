@@ -12,7 +12,6 @@ package at.fhv.journey.servlets;
 
 import at.fhv.journey.hibernate.facade.DatabaseFacade;
 import at.fhv.journey.model.Hike;
-import at.fhv.journey.model.RecommendedMonthsHandler;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
