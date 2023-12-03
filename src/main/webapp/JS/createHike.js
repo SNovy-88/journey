@@ -25,22 +25,8 @@ function validateStep1() {
 
     // Validation: Name input
     validation(isInputValid, inputElement, inputFeedback);
-    /*if (!isInputValid) {
-        inputElement.classList.add('is-invalid');
-        inputFeedback.style.display = 'block';
-    } else {
-        inputElement.classList.remove('is-invalid');
-        inputFeedback.style.display = 'none';
-    }*/
     // Validation: Description input
     validation(isTextareaValid, textareaElement, textareaFeedback);
-    /*if (!isTextareaValid) {
-        textareaElement.classList.add('is-invalid');
-        textareaFeedback.style.display = 'block';
-    } else {
-        textareaElement.classList.remove('is-invalid');
-        textareaFeedback.style.display = 'none';
-    }*/
     // Additional validation based on the switch state
     // Validation: Map vs. file-upload input
     if (switchState === 'map') {
@@ -48,26 +34,12 @@ function validateStep1() {
         const mapFeedback = document.getElementById('mapFeedback');
         const isMapValid = waypoints.length > 0;
         validation(isMapValid, mapInput, mapFeedback);
-        /*if (!isMapValid) {
-            mapInput.classList.add('is-invalid');
-            mapFeedback.style.display = 'block';
-        } else {
-            mapInput.classList.remove('is-invalid');
-            mapFeedback.style.display = 'none';
-        }*/
         return isInputValid && isTextareaValid && isMapValid;
     } else if (switchState === 'upload') {
         const fileUploadInput = document.getElementById('customFileEnd');
         const fileUploadFeedback = document.getElementById('fileUploadFeedback');
         const isFileUploadValid = fileUploadInput.files.length > 0;
         validation(isFileUploadValid, fileUploadInput, fileUploadFeedback);
-        /*if (!isFileUploadValid) {
-            fileUploadInput.classList.add('is-invalid');
-            fileUploadFeedback.style.display = 'block';
-        } else {
-            fileUploadInput.classList.remove('is-invalid');
-            fileUploadFeedback.style.display = 'none';
-        }*/
         return isInputValid && isTextareaValid && isFileUploadValid;
     }
     // Default case (should not reach here)
