@@ -18,7 +18,7 @@
             <div class="search-container">
                 <form action="/Journey_war_exploded/searchResultList">
                     <input type="text" class="search-input" name="searchString" placeholder="Enter hike name, city, or region">
-                    <button class="search-button">Search</button>
+                    <button class="search-button" id="btn-search">Search</button>
                 </form>
             </div>
         </div>

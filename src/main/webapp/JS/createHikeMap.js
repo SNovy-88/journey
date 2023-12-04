@@ -102,13 +102,23 @@ function exportAsGPX() {
     link.click();
 }
 
-// Function to create waypoints as GPX single-handedly
+// Function to create GPX with track and waypoints
 function createGPX() {
     return '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' +
         '<gpx version="1.1" creator="Journey">' +
-        waypoints.map(function (waypoint, index) {
-            return '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' + '<name>' + waypoint.name + '</name>' + '</wpt>';
+        '<trk>' +
+        '<name>A hike created with Journey!</name>' +
+        '<trkseg>' +
+        waypoints.map(function (waypoint) {
+            return '<trkpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' +
+                '<name>' + waypoint.name + '</name>' +
+                '</trkpt>' +
+                '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' +
+                '<name>' + waypoint.name + '</name>' +
+                '</wpt>';
         }).join('') +
+        '</trkseg>' +
+        '</trk>' +
         '</gpx>';
 }
 
