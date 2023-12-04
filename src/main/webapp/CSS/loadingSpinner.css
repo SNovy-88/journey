@@ -12,6 +12,13 @@
     background-position: center;
     align-items: center;
     align-content: center;
+    background-color: rgba(0,0,0,40%);
+    flex: 1;
+}
+
+.wrapper {
+    background-color: rgba(0,0,0,40%);
+    flex: 1;
 }
 
 

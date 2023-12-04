@@ -13,10 +13,12 @@
 
 </head>
 <body class="background">
+<div class="wrapper">
     <jsp:include page="navBar.jsp"/>
     <div class="loading-container">
         <div class="loader"></div>
     </div>
+</div>
 
 
 
