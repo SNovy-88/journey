@@ -192,7 +192,7 @@
                                             Please input a number i.e. 2.34 or 5.7
                                         </div>
                                         <div class="input-group">
-                                            <input type="number" pattern="\d+(\.\d{1,2})?" aria-label="distance" class="form-control" id="distance" name="distance">
+                                            <input type="number" aria-label="distance" class="form-control" id="distance" name="distance">
                                             <span class="input-group-text">km</span>
                                         </div>
                                         <label for="distance" class="form-text">Input decimals with a dot, ie. 12.4 or 4.67</label>
