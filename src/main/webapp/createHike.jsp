@@ -15,11 +15,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
     <link rel="stylesheet" href="bs-stepper.min.css">
 
-    <!-- Include jQuery JavaScript -->
+    <%--<!-- Include jQuery JavaScript -->
     <script
             src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
             integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous"></script>--%>
 
     <!-- Include the bs-stepper JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
