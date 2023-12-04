@@ -1,5 +1,5 @@
 // Document ready function
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
     // Iterate over each month element
     $('.month').each(function () {
         let month = parseInt($(this).data('month'));
