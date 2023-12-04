@@ -39,7 +39,24 @@ function validateStep1() {
         const fileUploadInput = document.getElementById('customFileEnd');
         const fileUploadFeedback = document.getElementById('fileUploadFeedback');
         const isFileUploadValid = fileUploadInput.files.length > 0;
-        validation(isFileUploadValid, fileUploadInput, fileUploadFeedback);
+
+        if (!isFileUploadValid) {
+            fileUploadInput.classList.add('is-invalid');
+            fileUploadFeedback.textContent = 'Please select a GPX file.';
+            fileUploadFeedback.style.display = 'block';
+        } else {
+            const uploadedFileName = fileUploadInput.files[0].name;
+            const isFileExtensionValid = uploadedFileName.toLowerCase().endsWith('.gpx');
+
+            if (!isFileExtensionValid) {
+                fileUploadInput.classList.add('is-invalid');
+                fileUploadFeedback.textContent = 'Please upload a file with the ".gpx" extension.';
+                fileUploadFeedback.style.display = 'block';
+            } else {
+                fileUploadInput.classList.remove('is-invalid');
+                fileUploadFeedback.style.display = 'none';
+            }
+        }
         return isInputValid && isTextareaValid && isFileUploadValid;
     }
     // Default case (should not reach here)
@@ -131,6 +148,7 @@ function updateDropdown(dropdown, element) {
     let selectedValue = element.getAttribute("data-id");
     dropdownButton.innerHTML = element.innerHTML;
     dropdownButton.setAttribute("chosen-value-id", selectedValue);
+    document.getElementById(dropdown+"-hidden").value = selectedValue;
 
     // Highlighting the selected option so this is visible when opening dropdown again
     let dropdownItem = document.querySelector("a.dropdown-item.active");
