@@ -20,7 +20,33 @@
 
     <!-- Leaflet JavaScript -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-gpx@1.4.0/gpx.js"></script>
 
+    <style>
+        #mapContainer {
+            position: relative;
+            height: 400px; /* Set an initial height for the map container */
+        }
+
+        #messageContainer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #eaffc7; /* Set the background color of the message container to grey */
+            border: 2px solid grey; /* Set the border color and width */
+            box-sizing: border-box; /* Include the border width in the total height of the container */
+        }
+
+        /* Add styles for the text inside the message container */
+        #messageContainer p {
+            color: black; /* Set the text color */
+            margin: 0; /* Remove default margin */
+            padding: 20px; /* Add padding to the text */
+            font-size: 24px; /* Set the font size */
+        }
+    </style>
 </head>
 <body>
     <jsp:include page="navBar.jsp"/>
@@ -93,12 +119,20 @@
                                                 <div class="input-group custom-file-upload-container" style="width: 75%;">
                                                     <input type="file" class="form-control" id="customFileEnd" name="gpxDataUpload"/>
                                                     <button type="button" class="btn btn-secondary" onclick="resetFileInput()">Reset</button>
+                                                    <button type="button" class="btn btn-primary" onclick="showRoute()">Show Route</button>
                                                 </div>
                                                 <br>
+
                                             </div>
                                         </div>
                                     </div>
-                                    <br>
+                                <div id="mapContainer" style="display: none;">
+                                    <div id="messageContainer" class="d-flex align-items-center justify-content-center">
+                                        <p> Insert a .gpx file and click on 'Show route' to make the map appear.</p>
+                                    </div>
+                                    <div id="uploadMap" style="height: 400px;"></div>
+                                </div>
+                                <br>
                                     <!-- Show Map -->
                                     <div class="invalid-feedback" id="mapFeedback">
                                         Route needs at least one waypoint.
@@ -222,6 +256,7 @@
 
     <script src="JS/createHike.js"></script>
     <script src="JS/createHikeMap.js"></script>
+    <script src="JS/createHikeUploadMap.js"></script>
     <script src="JS/createHikeImage.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js" integrity="sha384-cwmrdGZwrLYKw8X6zXkDo3MeqYTgVMiP+GxBSzLz3l2DE6/72UnZVJ8E+biqU1Kb" crossorigin="anonymous"></script>
@@ -230,7 +265,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="bs-stepper.min.js"></script>
     <script src="dist/js/bs-stepper.js"></script>
-    <!-- GeoJSON -->
-    <script src="https://unpkg.com/togeojson@0.15.1/togeojson.js"></script>
 </body>
 </html>

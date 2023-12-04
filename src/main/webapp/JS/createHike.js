@@ -86,6 +86,7 @@ function validateStep1() {
 // Get the switch, feature elements, and switch state input
 const featureSwitch = document.getElementById('featureSwitch');
 const fileUploadFeature = document.getElementById('fileUploadFeature');
+const uploadMapFeature = document.getElementById('uploadMap');
 const mapFeature = document.getElementById('mapFeature');
 const switchStateInput = document.getElementById('switchState');
 
@@ -93,6 +94,7 @@ const switchStateInput = document.getElementById('switchState');
 featureSwitch.addEventListener('change', function() {
     // Toggle the visibility of features based on the switch state
     fileUploadFeature.style.display = featureSwitch.checked ? 'block' : 'none';
+    uploadMapFeature.style.display = featureSwitch.checked ? 'block' : 'none';
     mapFeature.style.display = featureSwitch.checked ? 'none' : 'block';
 
     // Update the switch state input value
@@ -107,13 +109,11 @@ featureSwitch.addEventListener('change', function() {
     mapFeedback.style.display = 'none';
     fileUploadInput.classList.remove('is-invalid');
     fileUploadFeedback.style.display = 'none';
-});
 
-// Reset the file input by clearing its value
-function resetFileInput() {
-    const fileInput = document.getElementById('customFileEnd');
-    fileInput.value = ''; // This clears the selected file
-}
+    // Show or hide the message container based on the switch state
+    const mapContainer = document.getElementById('mapContainer');
+    mapContainer.style.display = featureSwitch.checked ? 'block' : 'none';
+});
 
 // Function to create hike and send GPX data to the servlet
 function createHike() {
