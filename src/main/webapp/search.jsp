@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/search.css">
-
+    <script src="JS/search.js"></script>
     <title>Journey | Discover</title>
 </head>
 <body class="search">
