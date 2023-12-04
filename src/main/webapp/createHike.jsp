@@ -33,6 +33,7 @@
 </head>
 <body>
     <jsp:include page="navBar.jsp"/>
+    <script src="JS/hikeDetails.js"></script>
 
     <!-- Stepper element -->
     <form id="createHike" action="create_hike" method="post" enctype="multipart/form-data">
@@ -65,6 +66,7 @@
                         </div>
                         <div class="bs-stepper-content"> <!-- Stepper content -->
                             <div id="test-l-1" class="content"> <!-- Content of the 1st stepper part -->
+                                <p class="text-center"> <!-- not necessary? -->
                                     <!-- Name input -->
                                     <div class="invalid-feedback" id="inputFeedback">
                                         Please choose a title.
@@ -119,6 +121,7 @@
                                         <button class="btn btn-secondary" type="button" onclick="exportAsGPX()"> Export as GPX </button> <!-- Export button -->
                                     </div>
                                     <ul id="coordinates-list"></ul> <!-- List of waypoints -->
+                                </p>
                                 <button class="btn btn-primary" type="button" onclick="if (validateStep1()) stepper1.next()">Next</button>
                                 <button class="btn btn-success" type="submit" onclick="createHike()">Create Hike</button> <!-- Create Hike button -->
                             </div>
@@ -136,9 +139,9 @@
                                             Minute value needs to be under 60.
                                         </div>
                                         <div class="input-group">
-                                            <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d+" inputmode="numeric" step="1" min="0">
+                                            <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d+" inputmode="numeric" step="1" min="0" name="duration-hr">
                                             <span class="input-group-text">hr</span>
-                                            <input type="number" aria-label="duration-min" class="form-control" id="duration-min" pattern="\d+" inputmode="numeric" step="1" min="0" max="59">
+                                            <input type="number" aria-label="duration-min" class="form-control" id="duration-min" pattern="\d+" inputmode="numeric" step="1" min="0" max="59" name="duration-min">
                                             <span class="input-group-text">min</span>
                                         </div>
                                     </div>
@@ -151,7 +154,7 @@
                                             Please input a whole number.
                                         </div>
                                         <div class="input-group">
-                                            <input type="number" pattern="\d+" aria-label="duration-hour" class="form-control" id="height-difference">
+                                            <input type="number" pattern="\d+" aria-label="height-difference" class="form-control" id="height-difference" name="height-difference">
                                             <span class="input-group-text">m</span>
 
                                         </div>
@@ -164,7 +167,7 @@
                                             Please input a number i.e. 2.34 or 5.7
                                         </div>
                                         <div class="input-group">
-                                            <input type="number" pattern="\d+(\.\d{1,2})?" aria-label="duration-hour" class="form-control" id="distance">
+                                            <input type="number" pattern="\d+(\.\d{1,2})?" aria-label="distance" class="form-control" id="distance" name="distance">
                                             <span class="input-group-text">km</span>
                                         </div>
                                         <label for="distance" class="form-text">Input decimals with a dot, ie. 12.4 or 4.67</label>
@@ -179,6 +182,7 @@
                                     Please choose an option.
                                 </div>
                                 <div class="row g-2" id="fitness-container">
+                                    <input type="hidden" id="drop-down-btn-fitness-hidden" name ="fitness-level" value="0"> <!-- hidden input element for transferring fitness level from JS into JSP form element -->
                                     <div class="col-md-3">
                                         <div class="btn-group dropend">
                                             <button id="drop-down-btn-fitness" data-id="fitness" chosen-value-id="" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -205,6 +209,7 @@
                                     Please choose an option.
                                 </div>
                                 <div class="row g-2" id="stamina-container">
+                                    <input type="hidden" id="drop-down-btn-stamina-hidden" name ="stamina" value="0">
                                     <div class="col-md-3">
                                         <div class="btn-group dropend">
                                             <button id="drop-down-btn-stamina" data-id="stamina" chosen-value-id="" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -222,7 +227,7 @@
                                     </div>
                                     <div class="col-md-3" id="stamina-icons">
                                         <script>
-                                            $(document).ready(function() {
+                                            document.addEventListener("DOMContentLoaded", function () {
                                                 insertIcons(0, staminaFullIcon, staminaEmptyIcon, 'stamina-icons');
                                             });
                                         </script>
@@ -237,6 +242,7 @@
                                     Please choose an option.
                                 </div>
                                 <div class="row g-2" id="experience-container">
+                                    <input type="hidden" id="drop-down-btn-experience-hidden" name ="experience" value="0">
                                     <div class="col-md-3">
                                         <div class="btn-group dropend">
                                             <button id="drop-down-btn-experience" data-id="experience" chosen-value-id="" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
@@ -254,7 +260,7 @@
                                     </div>
                                     <div class="col-md-3" id="experience-icons">
                                         <script>
-                                            $(document).ready(function() {
+                                            document.addEventListener("DOMContentLoaded", function () {
                                                 insertIcons(0, experienceFullIcon, experienceEmptyIcon, 'experience-icons');
                                             });
                                         </script>
@@ -269,6 +275,7 @@
                                     Please choose an option.
                                 </div>
                                 <div class="row g-2" id="scenery-container">
+                                    <input type="hidden" id="drop-down-btn-scenery-hidden" name ="scenery" value="0">
                                     <div class="col-md-3">
                                         <div class="btn-group dropend">
                                             <button id="drop-down-btn-scenery" data-id="scenery" chosen-value-id="" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -286,7 +293,7 @@
                                     </div>
                                     <div class="col-md-3" id="scenery-icons">
                                         <script>
-                                            $(document).ready(function() {
+                                            document.addEventListener("DOMContentLoaded", function () {
                                                 insertIcons(0, sceneryFullIcon, sceneryEmptyIcon, 'scenery-icons');
                                             });
                                         </script>
