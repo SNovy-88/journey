@@ -8,7 +8,6 @@
 <%@ page import="at.fhv.journey.model.Hike" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
-<%@ page import="static at.fhv.journey.utils.MonthsFunctions.*" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
 <!-- Bootstrap css href -->
@@ -27,8 +26,25 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="JS/hikeDetails.js"></script>
     <script>
-       let start = <%=getStartMonthInt(hike.getRecommendedMonths())%>;
-       let end = <%=getEndMonthInt(hike.getRecommendedMonths())%>;
+      
+      // Document ready function
+      $(document).ready(function () {
+
+          // Extract the start and end months from the range
+          let recommendedMonths = <%=hike.getRecommendedMonths()%>;
+
+          // Iterate over each month element and colour background if
+          // bit operation AND is true
+          $('.month').each(function () {
+              let month = parseInt($(this).data('month')); // month is value 1 to 2048
+              let monthElement = $(this);
+
+              if((recommendedMonths & month) !== 0) {
+                  monthElement.css('background-color', '#b1ff2e');
+              }
+          });
+      });
+   
     </script>
 
     <!--Navigation bar-->
@@ -160,38 +176,38 @@
                             <div class = "col month" data-month="2">
                                 Feb
                             </div>
-                            <div class = "col month" data-month="3">
+                            <div class = "col month" data-month="4">
                                 Mar
                             </div>
-                            <div class = "col month" data-month="4">
+                            <div class = "col month" data-month="8">
                                 Apr
                             </div>
                         </div>
                         <div class = "row">
-                            <div class = "col month"  data-month="5">
+                            <div class = "col month"  data-month="16">
                                 Mai
                             </div>
-                            <div class = "col month"  data-month="6">
+                            <div class = "col month"  data-month="32">
                                 Jun
                             </div>
-                            <div class = "col month"  data-month="7">
+                            <div class = "col month"  data-month="64">
                                 Jul
                             </div>
-                            <div class = "col month"  data-month="8">
+                            <div class = "col month"  data-month="128">
                                 Aug
                             </div>
                         </div>
                         <div class = "row">
-                            <div class = "col month" data-month="9">
+                            <div class = "col month" data-month="256">
                                 Sep
                             </div>
-                            <div class = "col month" data-month="10">
+                            <div class = "col month" data-month="512">
                                 Oct
                             </div>
-                            <div class = "col month" data-month="11">
+                            <div class = "col month" data-month="1024">
                                 Nov
                             </div>
-                            <div class = "col month" data-month="12">
+                            <div class = "col month" data-month="2048">
                                 Dec
                             </div>
                         </div>

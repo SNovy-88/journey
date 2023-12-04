@@ -217,6 +217,13 @@ function createHike() {
     updateGPXInput();
 }
 
+// Prevent pressing enter while typing
+document.getElementById("createHike").addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+    }
+});
+
 // Attach a beforeunload event to show a toast-pop-up warning if there are unsaved changes
 window.addEventListener('beforeunload', function (e) {
     if (unsavedChanges) {
