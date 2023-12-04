@@ -117,43 +117,126 @@
                             </div>
                             <div id="test-l-2" class="content"> <!-- Content of the 2nd stepper part -->
 
-                                    <!-- Hour input -->
-                                    <div class="form-floating mb-3">
-                                        <input type="number" id="typeNumberHour" class="form-control" name="duration-hr"/>
-                                        <label class="form-label" for="typeNumberHour"> Duration Hour </label>
+                                <!-- Hour input -->
+                                <div class="form-floating mb-3">
+                                    <input type="number" id="typeNumberHour" class="form-control" name="duration-hr"/>
+                                    <label class="form-label" for="typeNumberHour"> Duration Hour </label>
+                                </div>
+                                <!-- Minute input -->
+                                <div class="form-floating mb-3">
+                                    <input type="number" id="typeNumberMinute" class="form-control" max="59" name="duration-min"/>
+                                    <label class="form-label" for="typeNumberMinute"> Duration Minute </label>
+                                </div>
+                                <!-- Height difference input -->
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Height difference" aria-label="Height difference" aria-describedby="basic-addon1" name="height-difference">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon1">m</span>
                                     </div>
-                                    <!-- Minute input -->
-                                    <div class="form-floating mb-3">
-                                        <input type="number" id="typeNumberMinute" class="form-control" max="59" name="duration-min"/>
-                                        <label class="form-label" for="typeNumberMinute"> Duration Minute </label>
+                                </div>
+                                <!-- Distance input -->
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Distance" aria-label="Distance" aria-describedby="basic-addon2" step=".1" name="distance">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">km</span>
                                     </div>
-                                    <!-- Height difference input -->
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Height difference" aria-label="Height difference" aria-describedby="basic-addon1" name="height-difference">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon1">m</span>
+                                </div>
+                                <!-- Sliders for several option inputs -->
+                                <label for="customRange1" class="form-label"> Fitness Level </label> <!-- Fitness Level -->
+                                <input type="range" class="form-range" min="1" max="5" id="customRange1" name="fitness-level">
+                                <label for="customRange2" class="form-label"> Stamina </label> <!-- Stamina -->
+                                <input type="range" class="form-range" min="1" max="5" id="customRange2" name="stamina">
+                                <label for="customRange3" class="form-label"> Experience </label> <!-- Experience -->
+                                <input type="range" class="form-range" min="1" max="5" id="customRange3" name="experience">
+                                <label for="customRange4" class="form-label"> Landscape </label> <!-- Landscape -->
+                                <input type="range" class="form-range" min="1" max="5" id="customRange4" name="scenery">
+
+                                <label>Hike recommended in: </label>
+                                <br>
+                                <!-- - Checkboxes for month input -->
+                                <div class="form-check" id="check-box">
+                                    <div class="container text-lg-start">
+                                        <div class="row">
+                                            <div class="col">
+                                                <input class="form-check-input" type="checkbox" name="Jan" value="1" id="Jan">
+                                                <label class="form-check-label" for="Jan">
+                                                    January
+                                                </label>
+                                            </div>
+                                            <div class="col">
+                                                <input class="form-check-input" type="checkbox" name="Feb" value="2" id="Feb">
+                                                <label class="form-check-label" for="Feb">
+                                                    February
+                                                </label>
+                                            </div>
+                                            <div class="col">
+                                                <input class="form-check-input" type="checkbox" name="Mar" value="4" id="Mar">
+                                                <label class="form-check-label" for="Mar">
+                                                    March
+                                                </label>
+                                            </div>
+                                            <div class="col">
+                                                <input class="form-check-input" type="checkbox" name="Apr" value="8" id="Apr">
+                                                <label class="form-check-label" for="Apr">
+                                                    April
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <input class="form-check-input" type="checkbox" name="May" value="16" id="May">
+                                                <label class="form-check-label" for="May">
+                                                    May
+                                                </label>
+                                            </div>
+                                            <div class="col">
+                                                <input class="form-check-input" type="checkbox" name="Jun" value="32" id="Jun">
+                                                <label class="form-check-label" for="Jun">
+                                                    June
+                                                </label>
+                                            </div>
+                                            <div class="col">
+                                                <input class="form-check-input" type="checkbox" name="Jul" value="64" id="Jul">
+                                                <label class="form-check-label" for="Jul">
+                                                    July
+                                                </label>
+                                            </div>
+                                            <div class="col">
+                                                <input class="form-check-input" type="checkbox" name="Aug" value="128" id="Aug">
+                                                <label class="form-check-label" for="Aug">
+                                                    August
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <input class="form-check-input" type="checkbox" name="Sep" value="256" id="Sep">
+                                                <label class="form-check-label" for="Sep">
+                                                    September
+                                                </label>
+                                            </div>
+                                            <div class="col">
+                                                <input class="form-check-input" type="checkbox" name="Oct" value="512" id="Oct">
+                                                <label class="form-check-label" for="Oct">
+                                                    October
+                                                </label>
+                                            </div>
+                                            <div class="col">
+                                                <input class="form-check-input" type="checkbox" name="Nov" value="1024" id="Nov">
+                                                <label class="form-check-label" for="Nov">
+                                                    November
+                                                </label>
+                                            </div>
+                                            <div class="col">
+                                                <input class="form-check-input" type="checkbox" name="Dec" value="2048" id="Dec">
+                                                <label class="form-check-label" for="Dec">
+                                                    December
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
-                                    <!-- Distance input -->
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Distance" aria-label="Distance" aria-describedby="basic-addon2" step=".1" name="distance">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2">km</span>
-                                        </div>
-                                    </div>
-                                    <!-- Sliders for several option inputs -->
-                                    <label for="customRange1" class="form-label"> Fitness Level </label> <!-- Fitness Level -->
-                                    <input type="range" class="form-range" min="1" max="5" id="customRange1" name="fitness-level">
-                                    <label for="customRange2" class="form-label"> Stamina </label> <!-- Stamina -->
-                                    <input type="range" class="form-range" min="1" max="5" id="customRange2" name="stamina">
-                                    <label for="customRange3" class="form-label"> Experience </label> <!-- Experience -->
-                                    <input type="range" class="form-range" min="1" max="5" id="customRange3" name="experience">
-                                    <label for="customRange4" class="form-label"> Landscape </label> <!-- Landscape -->
-                                    <input type="range" class="form-range" min="1" max="5" id="customRange4" name="scenery">
-
-                                    <%--<label for="customRange5" class="form-label"> Preferred months </label> <!-- Preferred months -->
-                                    <input type="range" class="form-range" min="1" max="11" id="customRange5">--%>
-
+                                </div>
+                                <br>
                                 <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
                                 <button class="btn btn-primary" type="button" onclick="stepper1.next()">Next</button>
                             </div>
