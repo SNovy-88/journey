@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @MultipartConfig
 public class createPageServlet extends HttpServlet {
     @Transactional
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
 
         //Stepper 1
