@@ -48,7 +48,6 @@ public class createPageServlet extends HttpServlet {
         LocalDate date = LocalDate.now();
 
         Hike hike = new Hike();
-//      hike.setHikeID(hikeId);
         hike.setName(name);
         hike.setDescription(description);
         hike.setDistance(distance);

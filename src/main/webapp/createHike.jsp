@@ -15,13 +15,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
     <link rel="stylesheet" href="bs-stepper.min.css">
 
-    <%--<!-- Include jQuery JavaScript -->
-    <script
-            src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
-            integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
-            crossorigin="anonymous"></script>--%>
-
-    <!-- Include the bs-stepper JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
 
     <!-- Leaflet CSS -->
@@ -92,50 +85,49 @@
                         </div>
                         <div class="bs-stepper-content"> <!-- Stepper content -->
                             <div id="test-l-1" class="content"> <!-- Content of the 1st stepper part -->
-                                <p class="text-center"> <!-- not necessary? -->
-                                    <!-- Name input -->
-                                    <div class="invalid-feedback" id="inputFeedback">
-                                        Please choose a title.
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="floatingInput" name="nameInput" placeholder="Name your hike here">
-                                        <label for="floatingInput">Title</label>
-                                    </div>
-                                    <!-- Description input -->
-                                    <div class="invalid-feedback" id="textareaFeedback">
-                                        Please choose a description.
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <textarea class="form-control" placeholder="Leave a description here" id="floatingTextarea2" name="descInput" style="height: 150px" data-mdb-showcounter="true" maxlength="500"></textarea>
-                                        <label for="floatingTextarea2">Description</label>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <!-- Bootstrap On/Off switch to enable/disable features -->
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch" id="featureSwitch">
-                                                <label class="form-check-label" for="featureSwitch">Enable to upload a .gpx file</label>
-                                            </div>
+                                <!-- Name input -->
+                                <div class="invalid-feedback" id="inputFeedback">
+                                    Please choose a title.
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="floatingInput" name="nameInput" placeholder="Name your hike here">
+                                    <label for="floatingInput">Title</label>
+                                </div>
+                                <!-- Description input -->
+                                <div class="invalid-feedback" id="textareaFeedback">
+                                    Please choose a description.
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" placeholder="Leave a description here" id="floatingTextarea2" name="descInput" style="height: 150px" data-mdb-showcounter="true" maxlength="500"></textarea>
+                                    <label for="floatingTextarea2">Description</label>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <!-- Bootstrap On/Off switch to enable/disable features -->
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="featureSwitch">
+                                            <label class="form-check-label" for="featureSwitch">Enable to upload a .gpx file</label>
                                         </div>
-                                        <div class="col-md-9">
-                                            <!-- Hidden input to store the switch state -->
-                                            <input type="hidden" id="switchState" name="switchState" value="map">
-                                            <!-- GPX Upload input (initially hidden) -->
-                                            <div class="invalid-feedback" id="fileUploadFeedback">
-                                                Please choose a file.
+                                    </div>
+                                    <div class="col-md-9">
+                                        <!-- Hidden input to store the switch state -->
+                                        <input type="hidden" id="switchState" name="switchState" value="map">
+                                        <!-- GPX Upload input (initially hidden) -->
+                                        <div class="invalid-feedback" id="fileUploadFeedback">
+                                            Please choose a file.
+                                        </div>
+                                        <div id="fileUploadFeature" style="display: none;">
+                                            <div class="input-group custom-file-upload-container" style="width: 75%;">
+                                                <input type="file" class="form-control" id="customFileEnd" name="gpxDataUpload"/>
+                                                <button type="button" class="btn btn-secondary" onclick="resetFileInput()">Reset</button>
+                                                <button type="button" class="btn btn-primary" onclick="showRoute()">Show Route</button>
                                             </div>
-                                            <div id="fileUploadFeature" style="display: none;">
-                                                <div class="input-group custom-file-upload-container" style="width: 75%;">
-                                                    <input type="file" class="form-control" id="customFileEnd" name="gpxDataUpload"/>
-                                                    <button type="button" class="btn btn-secondary" onclick="resetFileInput()">Reset</button>
-                                                    <button type="button" class="btn btn-primary" onclick="showRoute()">Show Route</button>
-                                                </div>
-                                                <br>
+                                            <br>
 
-                                            </div>
                                         </div>
                                     </div>
+                                </div>
                                 <div id="mapContainer" style="display: none;">
                                     <div id="messageContainer" class="d-flex align-items-center justify-content-center">
                                         <p> Insert a .gpx file and click on 'Show route' to make the map appear.</p>
@@ -155,7 +147,6 @@
                                         <button class="btn btn-secondary" type="button" onclick="exportAsGPX()"> Export as GPX </button> <!-- Export button -->
                                     </div>
                                     <ul id="coordinates-list"></ul> <!-- List of waypoints -->
-                                </p>
                                 <button class="btn btn-primary" type="button" onclick="if (validateStep1()) stepper1.next()">Next</button>
                                 <button class="btn btn-success" type="submit" onclick="createHike()">Create Hike</button> <!-- Create Hike button -->
                             </div>
@@ -223,7 +214,7 @@
                                                 Select an option
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <!-- updateDropdown(dropdown Button(to change title), this option (to highlight it), categorie (to get right icons)) -->
+                                                <!-- updateDropdown(dropdown Button(to change title), this option (to highlight it)) -->
                                                 <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdown('drop-down-btn-fitness', this)" data-id="1">Easy</a></li>
                                                 <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdown('drop-down-btn-fitness', this)" data-id="2">Moderate</a></li>
                                                 <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdown('drop-down-btn-fitness', this)" data-id="3">Intermediate</a></li>
@@ -336,7 +327,7 @@
                                 <br>
 
                                 <p>Fields marked with an <sup>*</sup> have to be filled in!</p>
-                                <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
+                                <button class="btn btn-primary" type="button" onclick="if (validateStep2()) stepper1.previous()">Previous</button>
                                 <button class="btn btn-primary" type="button" onclick="if (validateStep2()) stepper1.next()">Next</button>
                             </div>
 

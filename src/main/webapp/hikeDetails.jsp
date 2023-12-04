@@ -27,50 +27,8 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="JS/hikeDetails.js"></script>
     <script>
-        /*// Document ready function
-        $(document).ready(function () {
-
-            // Extract the start and end months from the range
-           */ let start = <%=getStartMonthInt(hike.getRecommendedMonths())%>;
-            let end = <%=getEndMonthInt(hike.getRecommendedMonths())%>;/*
-
-            // Iterate over each month element
-            $('.month').each(function () {
-                let month = parseInt($(this).data('month'));
-
-                // Check if the month is within the range
-                if (end > 12) {
-                    let startNew = 1;
-                    let endNew = end - 12;
-                    checkRangeAndHighlightRecommendedMonths($(this), month, startNew, endNew);
-                    checkRangeAndHighlightRecommendedMonths($(this), month, start, end);
-                } else if (end <= 12) {
-                    checkRangeAndHighlightRecommendedMonths($(this), month, start, end);
-                }
-            });
-        });
-
-        function insertIcons(value, full, empty, container_id) {
-            console.log('insertIcons called with value:', value);
-            if (value >= 1 && value <= 5) {
-                var svgHTML = '';
-                for (var i = 0; i < value; i++) {
-                    svgHTML += full;
-                }
-                for (var j = 0; j < 5 - value; j++) {
-                    svgHTML += empty;
-                }
-                document.getElementById(container_id).innerHTML = svgHTML;
-            }
-        }
-
-
-        function checkRangeAndHighlightRecommendedMonths(element, month, start, end){
-            if (month >= start && month <= end) {
-                element.css('background-color', '#b1ff2e');
-            }
-        }*/
-
+       let start = <%=getStartMonthInt(hike.getRecommendedMonths())%>;
+       let end = <%=getEndMonthInt(hike.getRecommendedMonths())%>;
     </script>
 
     <!--Navigation bar-->
