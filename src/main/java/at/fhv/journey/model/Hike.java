@@ -156,7 +156,7 @@ public class Hike {
     }
 
 
-    @Column(name = "suggested_month")
+    @Column(name = "suggested_months")
     public int getRecommendedMonths() {
         return _recommendedMonths;
     }
