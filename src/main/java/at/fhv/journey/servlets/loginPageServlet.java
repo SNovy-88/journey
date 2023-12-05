@@ -25,6 +25,10 @@ public class loginPageServlet extends HttpServlet {
         if (isValidUser(email, password)) {
             HttpSession session = request.getSession(true);
             session.setAttribute("email", email);
+
+            String username = getUsernameFromDatabase(email);
+            session.setAttribute("username", username);
+
             response.sendRedirect("success.jsp");
         } else {
             response.sendRedirect("login.jsp");
@@ -41,6 +45,23 @@ public class loginPageServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    private String getUsernameFromDatabase(String email) {
+        try {
+            DatabaseFacade df = new DatabaseFacade();
+            List<User> users = df.getUsersByEmail(email);
+
+            if (users != null && !users.isEmpty()) {
+                return users.get(0).getUsername();
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
