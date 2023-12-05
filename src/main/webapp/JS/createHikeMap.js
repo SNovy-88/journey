@@ -12,9 +12,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // Initialize an empty array to store waypoints
 const waypoints = [];
 
-// Initialize a polyline to connect waypoints with lines
-const polyline = L.polyline([], {color: 'none'}).addTo(map);
-
 // Get the <ul> element to display coordinates
 const coordinatesList = document.getElementById('coordinates-list');
 
@@ -24,6 +21,9 @@ const waypointNameInput = document.getElementById('waypointNameInput');
 
 // Initialize a variable to store GPX data
 let cachedGPXData = '';
+
+// Declare routePolyline at the beginning of your script, outside any function, to ensure proper scope
+let routePolyline;
 
 // Add a click event listener to the map
 map.on('click', function (e) {
@@ -51,7 +51,7 @@ map.on('click', function (e) {
     });
 
     // Function to be called when the "Add Waypoint" button is clicked
-    window.addWaypoint = async function () {
+    window.addWaypoint = function () {
         // Get the waypoint name from the input field
         const waypointName = waypointNameInput.value;
 
@@ -61,17 +61,17 @@ map.on('click', function (e) {
         // Add a marker at the clicked location
         const marker = L.marker(clickedLatLng).addTo(map);
 
-        // Store the waypoint in the array with name
-        waypoints.push({name: waypointName, latlng: clickedLatLng});
+        // Enable dragging for the marker
+        enableMarkerDragging(marker, waypoints.length - 1);
 
-        // Update the polyline with the new waypoint
-        polyline.setLatLngs(waypoints.map(wp => wp.latlng));
+        // Store the waypoint in the array with name and marker
+        waypoints.push({ name: waypointName, latlng: clickedLatLng, marker });
 
         // If there are at least two waypoints, fetch route and zoom the map
         if (waypoints.length >= 2) {
             const prevWaypoint = waypoints[waypoints.length - 2].latlng;
-            await fetchRoute(prevWaypoint, clickedLatLng);
-            map.fitBounds(polyline.getBounds());
+            fetchRoute(prevWaypoint, clickedLatLng);
+            map.fitBounds(L.latLngBounds(waypoints.map(wp => wp.latlng)));
         }
 
         // Update the coordinates list
@@ -82,6 +82,7 @@ map.on('click', function (e) {
     };
 });
 
+// Function to fetch updated route after waypoint deletion
 async function fetchRoute(startLatLng, endLatLng) {
     const profile = 'foot-hiking'; // Specify the hiking profile
     const url = `https://api.openrouteservice.org/v2/directions/${profile}?api_key=${ORS_API_KEY}&start=${startLatLng.lng},${startLatLng.lat}&end=${endLatLng.lng},${endLatLng.lat}`;
@@ -92,14 +93,8 @@ async function fetchRoute(startLatLng, endLatLng) {
 
         const routeCoordinates = data.features[0].geometry.coordinates.map(coord => L.latLng(coord[1], coord[0]));
 
-        // Clear the existing polyline
-        polyline.setLatLngs([]);
-
         // Add the route polyline to the map
-        const routePolyline = L.polyline(routeCoordinates, { color: 'red' }).addTo(map);
-
-        // Append the route coordinates to the existing polyline
-        polyline.setLatLngs(polyline.getLatLngs().concat(routeCoordinates));
+        routePolyline = L.polyline(routeCoordinates, { color: 'red' }).addTo(map);
     } catch (error) {
         console.error('Error fetching route:', error);
     }
@@ -110,11 +105,82 @@ function updateCoordinatesList() {
     // Clear the existing list
     coordinatesList.innerHTML = '';
 
-    // Add coordinates to the list
+    // Add coordinates and delete button to the list
     waypoints.forEach(function (waypoint, index) {
         const li = document.createElement('li');
-        li.textContent = 'Waypoint ' + (index + 1) + ': ' + waypoint.name + ' (' + waypoint.latlng.lat + ', ' + waypoint.latlng.lng + ')';
+        li.innerHTML = `
+            Waypoint ${index + 1}: ${waypoint.name} (${waypoint.latlng.lat}, ${waypoint.latlng.lng})
+        `;
         coordinatesList.appendChild(li);
+    });
+}
+
+// Function to be called when the "Delete Last Waypoint" button is clicked
+window.deleteLastWaypoint = function () {
+    if (waypoints.length > 0) {
+        // Remove the last waypoint from the array
+        const removedWaypoint = waypoints.pop();
+
+        // Remove the marker from the map
+        map.removeLayer(removedWaypoint.marker);
+
+        // Update the route and fit bounds
+        updateRoute();
+
+        // Update the coordinates list
+        updateCoordinatesList();
+
+        // Create GPX data and update the hidden input field
+        cachedGPXData = createGPX();
+    }
+};
+
+// Function to update the route when waypoints are added, deleted, or dragged
+function updateRoute() {
+    // Clear the existing route
+    clearRoute();
+
+    // Recalculate the route if there are at least two waypoints
+    if (waypoints.length >= 2) {
+        for (let i = 0; i < waypoints.length - 1; i++) {
+            const startLatLng = waypoints[i].latlng;
+            const endLatLng = waypoints[i + 1].latlng;
+            fetchRoute(startLatLng, endLatLng);
+        }
+    }
+}
+
+// Function to clear the route from the map
+function clearRoute() {
+    // Remove existing route polylines from the map
+    map.eachLayer(layer => {
+        if (layer instanceof L.Polyline) {
+            map.removeLayer(layer);
+        }
+    });
+}
+
+// Function to enable dragging for a marker
+function enableMarkerDragging(marker, index) {
+    marker.dragging.enable();
+
+    marker.on('dragend', function (event) {
+        // Find the index of the dragged marker in the waypoints array
+        const draggedIndex = waypoints.findIndex(wp => wp.marker === marker);
+
+        if (draggedIndex !== -1) {
+            // Update the latlng of the dragged waypoint
+            waypoints[draggedIndex].latlng = marker.getLatLng();
+
+            // Update the route with the new waypoints
+            updateRoute();
+
+            // Update the coordinates list
+            updateCoordinatesList();
+
+            // Create GPX data and update the hidden input field
+            cachedGPXData = createGPX();
+        }
     });
 }
 
