@@ -62,8 +62,6 @@ public class DatabaseFacade implements IdbFacadeJPA {
 
     }
 
-
-
     public List<User> getUsersByEmail(String email) {
         try (UserBrokerJPA ub = new UserBrokerJPA()){
             return ub.getUsersByEmail(email);

@@ -32,7 +32,6 @@
             <h2 class="text-light font-weight-bold">Welcome to <span style="color: #b1ff2e;">Journey</span>!</h2>
             <p class="lead" style="color: #ffffff">Enter your email address to check for an existing account.</p>
         </div>
-
         <div class="login-form">
             <form action="loginPageServlet" method="post" class="col-md-6 mx-auto d-flex flex-column align-items-center">
             <div class="form-group">
@@ -41,7 +40,6 @@
                     <div class="invalid-feedback">
                         Please enter a valid email address.
                     </div>
-
                     <label for="inputPassword" class="mb-2"></label>
                     <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" required>
                     <div class="invalid-feedback">
