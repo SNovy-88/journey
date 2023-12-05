@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(name = "loginPageServlet", urlPatterns = "/loginPageServlet")
+@WebServlet(name = "loginPageServlet", value = "/loginPageServlet")
 public class loginPageServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

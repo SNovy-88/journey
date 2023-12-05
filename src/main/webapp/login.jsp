@@ -34,7 +34,7 @@
         </div>
 
         <div class="login-form">
-            <form action="/Journey_war_exploded/loginPageServlet" method="post" class="col-md-6 mx-auto d-flex flex-column align-items-center">
+            <form action="loginPageServlet" method="post" class="col-md-6 mx-auto d-flex flex-column align-items-center">
             <div class="form-group">
                     <label for="inputEmail" class="mb-2"></label>
                     <input type="email" class="form-control" id="inputEmail" placeholder="Email Address" name="email" required>
