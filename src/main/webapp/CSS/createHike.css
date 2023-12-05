@@ -21,3 +21,14 @@
     padding: 20px; /* Add padding to the text */
     font-size: 24px; /* Set the font size */
 }
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+       -moz-appearance:textfield;
+   }
+

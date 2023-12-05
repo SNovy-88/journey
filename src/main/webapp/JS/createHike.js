@@ -24,34 +24,16 @@ function validateStep1() {
     const switchState = switchStateInput.value;
 
     // Validation: Name input
-    if (!isInputValid) {
-        inputElement.classList.add('is-invalid');
-        inputFeedback.style.display = 'block';
-    } else {
-        inputElement.classList.remove('is-invalid');
-        inputFeedback.style.display = 'none';
-    }
+    validation(isInputValid, inputElement, inputFeedback);
     // Validation: Description input
-    if (!isTextareaValid) {
-        textareaElement.classList.add('is-invalid');
-        textareaFeedback.style.display = 'block';
-    } else {
-        textareaElement.classList.remove('is-invalid');
-        textareaFeedback.style.display = 'none';
-    }
+    validation(isTextareaValid, textareaElement, textareaFeedback);
     // Additional validation based on the switch state
     // Validation: Map vs. file-upload input
     if (switchState === 'map') {
         const mapInput = document.getElementById('gpxDataInput');
         const mapFeedback = document.getElementById('mapFeedback');
         const isMapValid = waypoints.length > 0;
-        if (!isMapValid) {
-            mapInput.classList.add('is-invalid');
-            mapFeedback.style.display = 'block';
-        } else {
-            mapInput.classList.remove('is-invalid');
-            mapFeedback.style.display = 'none';
-        }
+        validation(isMapValid, mapInput, mapFeedback);
         return isInputValid && isTextareaValid && isMapValid;
     } else if (switchState === 'upload') {
         const fileUploadInput = document.getElementById('customFileEnd');
@@ -75,12 +57,123 @@ function validateStep1() {
                 fileUploadFeedback.style.display = 'none';
             }
         }
-
         return isInputValid && isTextareaValid && isFileUploadValid;
     }
-
     // Default case (should not reach here)
     return false;
+}
+
+//Function for validation of duration (hr and min), height difference, distance
+//fitness level, stamina, experience and scenery
+function validateStep2() {
+    const inputHrElement = document.getElementById('duration-hr');
+    const inputHrFeedback = document.getElementById('duration-hr-feedback');
+
+    const inputMinElement = document.getElementById('duration-min');
+    const inputMinFeedback = document.getElementById('duration-min-feedback');
+
+    const inputHeightDiffElement = document.getElementById('height-difference');
+    const inputHeightDiffFeedback = document.getElementById('height-difference-feedback');
+
+    const inputDistanceElement = document.getElementById('distance');
+    const inputDistanceFeedback = document.getElementById('distance-feedback');
+
+    const inputFitnessElement = document.getElementById('drop-down-btn-fitness');
+    const inputFitnessFeedback = document.getElementById('fitness-feedback');
+
+    const inputStaminaElement = document.getElementById('drop-down-btn-stamina');
+    const inputStaminaFeedback = document.getElementById('stamina-feedback');
+
+    const inputExperienceElement = document.getElementById('drop-down-btn-experience');
+    const inputExperienceFeedback = document.getElementById('experience-feedback');
+
+    const inputSceneryElement = document.getElementById('drop-down-btn-scenery');
+    const inputSceneryFeedback = document.getElementById('scenery-feedback');
+
+
+    const isInputHrValid = isWholeNumber(inputHrElement.value.trim());
+    const isInputMinValid = isWholeNumber(inputMinElement.value.trim()) && parseInt(inputMinElement.value) >= 0 && parseInt(inputMinElement.value) <= 59;
+    const isInputHeightDiffValid = isWholeNumber(inputHeightDiffElement.value.trim()) && parseInt(inputHeightDiffElement.value) > 0;
+    const isDistanceValid = isDecimalNumber(inputDistanceElement.value.trim()) && parseInt(inputDistanceElement.value) > 0;
+    const isFitnessValid = inputFitnessElement.getAttribute('chosen-value-id') !== '';
+    const isStaminaValid = inputStaminaElement.getAttribute('chosen-value-id') !== '';
+    const isExperienceValid = inputExperienceElement.getAttribute('chosen-value-id') !== '';
+    const isSceneryValid = inputSceneryElement.getAttribute('chosen-value-id') !== '';
+
+    validation(isInputHrValid, inputHrElement, inputHrFeedback);
+    validation(isInputMinValid, inputMinElement, inputMinFeedback);
+    validation(isInputHeightDiffValid, inputHeightDiffElement, inputHeightDiffFeedback);
+    validation(isDistanceValid, inputDistanceElement, inputDistanceFeedback);
+    validation(isFitnessValid, inputFitnessElement, inputFitnessFeedback);
+    validation(isStaminaValid, inputStaminaElement, inputStaminaFeedback);
+    validation(isExperienceValid, inputExperienceElement, inputExperienceFeedback);
+    validation(isSceneryValid, inputSceneryElement, inputSceneryFeedback);
+
+    return  isInputHrValid &&
+        isInputMinValid &&
+        isInputHeightDiffValid &&
+        isDistanceValid &&
+        isFitnessValid &&
+        isStaminaValid &&
+        isExperienceValid &&
+        isSceneryValid;
+}
+
+// Function to display feedback and mark fields red
+function validation(valid, input, feedback){
+    if(!valid){
+        input.classList.add('is-invalid');
+        feedback.style.display = 'block';
+    } else {
+        input.classList.remove('is-invalid');
+        feedback.style.display = 'none';
+    }
+}
+
+//checks if number is a whole number withough decimals
+function isWholeNumber(value){
+    return /^\d+$/.test(value);
+}
+
+//checks if number is a decimal with either none, 1 or 2 decimals
+function isDecimalNumber(value){
+    return /^\d+(\.\d{1,2})?$/.test(value);
+}
+
+//Updates Dropbox Title to display chosen option
+//Marks chosen option and displays icons according to chosen option
+function updateDropdown(dropdown, element) {
+    // Setting the Text of the button to the selected option
+    let dropdownButton = document.getElementById(dropdown);
+    let selectedValue = element.getAttribute("data-id");
+    dropdownButton.innerHTML = element.innerHTML;
+    dropdownButton.setAttribute("chosen-value-id", selectedValue);
+    document.getElementById(dropdown+"-hidden").value = selectedValue;
+
+    // Highlighting the selected option so this is visible when opening dropdown again
+    let dropdownItem = document.querySelector("a.dropdown-item.active");
+    if (dropdownItem) {
+        dropdownItem.classList.remove("active");
+    }
+    element.classList.add("active");
+
+    //console.log(selectedValue);
+
+    // Inserting the right icons, depending on the hike attribute
+    let attribute = dropdownButton.getAttribute("data-id");
+    switch (attribute){
+        case "stamina":
+            insertIcons(selectedValue, staminaFullIcon, staminaEmptyIcon, 'stamina-icons');
+            break;
+
+        case "experience":
+            insertIcons(selectedValue, experienceFullIcon, experienceEmptyIcon, 'experience-icons');
+            break;
+
+        case "scenery":
+            insertIcons(selectedValue, sceneryFullIcon, sceneryEmptyIcon, 'scenery-icons');
+            break;
+    }
 }
 
 // Get the switch, feature elements, and switch state input
@@ -123,6 +216,13 @@ function createHike() {
     // Update the hidden input field with cached GPX data
     updateGPXInput();
 }
+
+// Prevent pressing enter while typing
+document.getElementById("createHike").addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+    }
+});
 
 // Attach a beforeunload event to show a toast-pop-up warning if there are unsaved changes
 window.addEventListener('beforeunload', function (e) {
