@@ -13,6 +13,7 @@
   <%--das kommt noch--%>
 </head>
 <body>
+<jsp:include page="navBar.jsp"/>
 
 </body>
 </html>
