@@ -1,13 +1,5 @@
 package at.fhv.journey.model;
-
-import io.hypersistence.utils.hibernate.type.range.PostgreSQLRangeType;
-import io.hypersistence.utils.hibernate.type.range.Range;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import org.hibernate.annotations.Type;
-
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -23,7 +15,7 @@ public class Hike {
     private int _heightDifference;
     private int _fitnessLevel;
     private String _description;
-    private Range _recommendedMonths;
+    private int _recommendedMonths;
 
     private int _stamina;
     private int _experience;
@@ -50,6 +42,7 @@ public class Hike {
 
     @Id
     @Column(name = "hike_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getHike_id() {
         return _hike_id;
     }
@@ -163,13 +156,12 @@ public class Hike {
     }
 
 
-    @Column(name = "suggested_month", columnDefinition = "int4range")
-    @Type(PostgreSQLRangeType.class)
-    public Range getRecommendedMonths() {
+    @Column(name = "suggested_months")
+    public int getRecommendedMonths() {
         return _recommendedMonths;
     }
 
-    public void setRecommendedMonths(Range recommendedMonths) {
+    public void setRecommendedMonths(int recommendedMonths) {
         _recommendedMonths = recommendedMonths;
     }
 
