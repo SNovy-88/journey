@@ -94,7 +94,7 @@ function validateStep2() {
     const isInputHrValid = isWholeNumber(inputHrElement.value.trim());
     const isInputMinValid = isWholeNumber(inputMinElement.value.trim()) && parseInt(inputMinElement.value) >= 0 && parseInt(inputMinElement.value) <= 59;
     const isInputHeightDiffValid = isWholeNumber(inputHeightDiffElement.value.trim()) && parseInt(inputHeightDiffElement.value) > 0;
-    const isDistanceValid = isDecimalNumber(inputDistanceElement.value.trim()) && parseInt(inputDistanceElement.value) > 0;
+    const isDistanceValid = isDecimalNumber(inputDistanceElement.value.trim()) && parseFloat(inputDistanceElement.value) > 0;
     const isFitnessValid = inputFitnessElement.getAttribute('chosen-value-id') !== '';
     const isStaminaValid = inputStaminaElement.getAttribute('chosen-value-id') !== '';
     const isExperienceValid = inputExperienceElement.getAttribute('chosen-value-id') !== '';
