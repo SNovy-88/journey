@@ -15,7 +15,7 @@
     <div class="background">
         <div class="login">
             <p> Find your path, embrace the journey! </p>
-            <a href="register.jsp"><button class="loginButton">Sign in or register!</button></a>
+            <a href="login.jsp"><button class="loginButton">Sign in or register!</button></a>
         </div>
     </div>
 </div>
