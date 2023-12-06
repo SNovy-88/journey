@@ -1,6 +1,5 @@
 package at.fhv.journey.model;
 import jakarta.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -9,7 +8,7 @@ public class Hike {
 
     private int _hike_id;
     private String _name;
-    private BigDecimal _distance;
+    private double _distance;
     private int _durationHour;
     private int _durationMin;
     private int _heightDifference;
@@ -32,7 +31,7 @@ public class Hike {
                 int heightDifference, int fitnessLevel){
         _hike_id = hike_id;
         _name = name;
-        _distance = BigDecimal.valueOf(distance);
+        _distance = distance;
         _durationHour = durationHour;
         _durationMin = durationMin;
         _heightDifference = heightDifference;
@@ -59,10 +58,10 @@ public class Hike {
     }
 
     @Column(name = "distance")
-    public BigDecimal getDistance() {
+    public double getDistance() {
         return _distance;
     }
-    public void setDistance(BigDecimal distance) {
+    public void setDistance(double distance) {
         _distance = distance;
     }
 
