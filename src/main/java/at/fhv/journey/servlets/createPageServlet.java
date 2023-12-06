@@ -14,8 +14,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,8 +33,7 @@ public class createPageServlet extends HttpServlet {
         //Stepper 2
         int durationHour = Integer.parseInt(request.getParameter("duration-hr"));
         int durationMin = Integer.parseInt(request.getParameter("duration-min"));
-        BigDecimal distance = BigDecimal.valueOf(Double.parseDouble(request.getParameter("distance")));
-        distance = distance.setScale(2, RoundingMode.HALF_UP);
+        double distance = Double.parseDouble(request.getParameter("distance"));
         int heightDifference = Integer.parseInt(request.getParameter("height-difference"));
 
         int fitnessLevel = Integer.parseInt(request.getParameter("fitness-level"));
