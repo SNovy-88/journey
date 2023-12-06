@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/createHike.css">
 
-    <title> Journey | Create</title>
+    <title> Journey | Create your hike </title>
+
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -23,32 +24,10 @@
     <!-- Leaflet JavaScript -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-gpx@1.4.0/gpx.js"></script>
+    <script src="https://unpkg.com/leaflet-draggable"></script>
 
-    <style>
-        #mapContainer {
-            position: relative;
-            height: 400px; /* Set an initial height for the map container */
-        }
-
-        #messageContainer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #eaffc7; /* Set the background color of the message container to grey */
-            border: 2px solid grey; /* Set the border color and width */
-            box-sizing: border-box; /* Include the border width in the total height of the container */
-        }
-
-        /* Add styles for the text inside the message container */
-        #messageContainer p {
-            color: black; /* Set the text color */
-            margin: 0; /* Remove default margin */
-            padding: 20px; /* Add padding to the text */
-            font-size: 24px; /* Set the font size */
-        }
-    </style>
+    <!-- OpenRouteService JavaScript -->
+    <script src="https://maps.openrouteservice.org/assets/js/openrouteservice-leaflet.js"></script>
 </head>
 <body>
     <jsp:include page="navBar.jsp"/>
@@ -132,7 +111,7 @@
                                     <div id="messageContainer" class="d-flex align-items-center justify-content-center">
                                         <p> Insert a .gpx file and click on 'Show route' to make the map appear.</p>
                                     </div>
-                                    <div id="uploadMap" style="height: 400px;"></div>
+                                    <div id="uploadMap" style="height: 500px;"></div>
                                 </div>
                                 <br>
                                     <!-- Show Map -->
@@ -141,10 +120,11 @@
                                     </div>
                                     <div id="mapFeature">
                                         <br>
-                                        <div id="map" style="height: 400px;"></div>
+                                        <div id="map" style="height: 500px;"></div>
                                         <input type="hidden" id="gpxDataInput" name="gpxDataInput"> <!-- hidden input element for transferring gpxData from JS into JSP form element -->
                                         <br>
-                                        <button class="btn btn-secondary" type="button" onclick="exportAsGPX()"> Export as GPX </button> <!-- Export button -->
+                                        <button class="btn btn-secondary" type="button" onclick="exportAsGPX()"> Export as GPX </button>
+                                        <button class="btn btn-danger" type="button" onclick="deleteLastWaypoint()">Delete Last Waypoint</button>
                                     </div>
                                     <ul id="coordinates-list"></ul> <!-- List of waypoints -->
                                 <button class="btn btn-primary" type="button" onclick="if (validateStep1()) stepper1.next()">Next</button>
