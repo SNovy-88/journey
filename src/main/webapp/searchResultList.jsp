@@ -26,6 +26,16 @@
 
 
     <div class="search-container-rlist">
+        <div class="filter">
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                FILTER
+            </button>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                </div>
+            </div>
+        </div>
         <form action="/Journey_war_exploded/searchResultList">
             <input type="text" class="search-input" name="searchString" placeholder="All Hikes" value="<%= searchString %>">
             <button class="search-button-rlist">Search</button>
@@ -111,5 +121,6 @@
 
 <!-- Bootstrap js implementation -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
 </body>
 </html>
