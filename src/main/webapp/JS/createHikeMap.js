@@ -58,8 +58,16 @@ map.on('click', function (e) {
         // Close the modal
         $('#waypointModal').modal('hide');
 
-        // Add a marker at the clicked location
-        const marker = L.marker(clickedLatLng).addTo(map);
+        // Create a custom icon for the waypoint marker
+        const customIcon = L.icon({
+            iconUrl: 'pictures/Leaflet/pin-icon-wpt.png',
+            iconSize: [33, 51],
+            iconAnchor: [16, 51],
+            popupAnchor: [0, -51]
+        });
+
+        // Add a marker at the clicked location with the custom icon
+        const marker = L.marker(clickedLatLng, { icon: customIcon }).addTo(map);
 
         // Enable dragging for the marker
         enableMarkerDragging(marker, waypoints.length - 1);
