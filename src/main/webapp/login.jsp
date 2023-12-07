@@ -30,7 +30,7 @@
     </div>
     <div class="login-text mb-4 text-center">
       <h2 class="text-light font-weight-bold">Welcome to <span style="color: #b1ff2e;">Journey</span>!</h2>
-      <p class="lead" style="color: #ffffff">Enter your email address to check for an existing account.</p>
+      <p class="lead" style="color: #ffffff">Embark on your journey. Sign in to Journey now!</p>
     </div>
     <div class="login-form">
       <form action="loginPageServlet" method="post" class="col-md-6 mx-auto d-flex flex-column align-items-center">
@@ -52,9 +52,34 @@
   </div>
 </div>
 
-<!-- Bootstrap JS and jQuery -->
+<div class="modal fade" id="loginErrorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Login Error</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Invalid email address or password. Please try again.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS und jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+  var loginError = <%= request.getAttribute("loginError") %>;
+</script>
+<script src="JS/loginValidation.js"></script>
+
 </body>
 </html>

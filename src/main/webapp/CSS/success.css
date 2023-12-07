@@ -9,7 +9,11 @@
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
     width: 100%;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 
 .option-button:hover {

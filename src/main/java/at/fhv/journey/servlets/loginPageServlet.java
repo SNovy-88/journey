@@ -31,7 +31,8 @@ public class loginPageServlet extends HttpServlet {
 
             response.sendRedirect("success.jsp");
         } else {
-            response.sendRedirect("login.jsp");
+            request.setAttribute("loginError", true);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 

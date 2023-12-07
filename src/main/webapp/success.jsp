@@ -22,14 +22,16 @@
     <p class="lead">
     <div class="row justify-content-center">
       <div class="col-lg-6 col-md-6 col-sm-12">
-        <button class="option-button" onclick="window.location.href='/Journey_war_exploded/search.jsp'">
-          <i class="fas fa-binoculars fa-3x"></i><br> Discover
-        </button>
+        <a href="search.jsp" class="option-button">
+          <i class="fas fa-binoculars fa-3x"></i><br>
+          Discover
+        </a>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12">
-        <button class="option-button" onclick="window.location.href='/Journey_war_exploded/createHike.jsp'">
-          <i class="fas fa-map fa-3x"></i><br> Create
-        </button>
+        <a href="createHike.jsp" class="option-button">
+          <i class="fas fa-map fa-3x"></i><br>
+          Create
+        </a>
       </div>
     </div>
     </p>
