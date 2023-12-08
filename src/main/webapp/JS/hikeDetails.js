@@ -7,7 +7,7 @@ function highlightRecommendedMonths(monthsBitmask){
             monthElement.css('background-color', '#b1ff2e');
         }
     });
-};
+}
 
 function insertIcons(value, full, empty, container_id) {
     console.log('insertIcons called with value:', value);
