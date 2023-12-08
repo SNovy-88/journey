@@ -26,23 +26,10 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="JS/hikeDetails.js"></script>
     <script>
-      
-      // Document ready function
+
       $(document).ready(function () {
-
-          // Extract the start and end months from the range
           let recommendedMonths = <%=hike.getRecommendedMonths()%>;
-
-          // Iterate over each month element and colour background if
-          // bit operation AND is true
-          $('.month').each(function () {
-              let month = parseInt($(this).data('month')); // month is value 1 to 2048
-              let monthElement = $(this);
-
-              if((recommendedMonths & month) !== 0) {
-                  monthElement.css('background-color', '#b1ff2e');
-              }
-          });
+          highlightRecommendedMonths(recommendedMonths);
       });
    
     </script>
