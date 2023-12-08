@@ -34,6 +34,7 @@
     <% Hike hike = (Hike) request.getAttribute("hike");%>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="JS/hikeDetails.js"></script>
+    <script src="JS/hikeDetailsMap.js"></script>
     <script>
 
       $(document).ready(function () {
