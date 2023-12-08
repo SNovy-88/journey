@@ -10,6 +10,8 @@
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Bootstrap css href -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -19,6 +21,13 @@
         <link rel="stylesheet" href="CSS/styles.css">
         <link rel="stylesheet" href="CSS/hikeDetails.css">
         <title>Journey | Detail-Page</title>
+
+        <!-- Leaflet CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+        <!-- Leaflet JavaScript -->
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet-gpx@1.4.0/gpx.js"></script>
     </head>
 
     <body>
@@ -87,23 +96,27 @@
                     <p><%= hike.getDescription()%></p>
                 </div>
                 <div>
-                    <h2>Waypoints</h2>
-
+                    <h2> Map view </h2>
+                    <%-- Use JSTL c:out tag to escape HTML characters --%>
+                    <input type="hidden" id="xmlText" name="xmlText" value="<c:out value='${xmlText}' />">
+                    <div id="detailMap" style="height: 400px;"></div>
+                    <br>
                     <%
                         List<Map<String, String>> waypointsList = (List<Map<String, String>>) request.getAttribute("waypointsList");
 
                         if (waypointsList != null) {
                             for (Map<String, String> waypoint : waypointsList) {
+                                String name = waypoint.get("name");
+                                if (name == null || name.trim().isEmpty()) {
+                                    name = "Unnamed Waypoint";
+                                }
                     %>
-                    <p>Name: <%= waypoint.get("name")%>, Latitude: <%= waypoint.get("latitude") %>, Longitude: <%= waypoint.get("longitude") %></p>
+                    <p>Name: <%= name %>, (Latitude: <%= waypoint.get("latitude") %>, Longitude: <%= waypoint.get("longitude") %>)</p>
                     <%
                             }
                         }
                     %>
-
                 </div>
-
-
             </div>
             <!-- Right Field -->
             <div class = "right-box">

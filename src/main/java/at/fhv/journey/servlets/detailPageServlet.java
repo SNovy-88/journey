@@ -12,6 +12,7 @@ package at.fhv.journey.servlets;
 
 import at.fhv.journey.hibernate.facade.DatabaseFacade;
 import at.fhv.journey.model.Hike;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -40,7 +41,7 @@ import java.util.Map;
 @WebServlet(name = "detailPage", value = "/detailPage")
 public class detailPageServlet extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
 
         int hikeId = Integer.parseInt(request.getParameter("hike-id"));
@@ -49,30 +50,15 @@ public class detailPageServlet extends HttpServlet {
         Hike chosenhike = df.getHikeByID(hikeId);
         request.setAttribute("hike", chosenhike);
 
-        //XML-Text
-
         String xmlText = chosenhike.getGpxLocation();
 
-        if (xmlText != null) {
-            // Testausgabe
-            System.out.println("GPX Location content: " + xmlText);
+        request.setAttribute("xmlText", xmlText);
 
-            // Extrahiere Waypoints und setze sie im Request
-            extractWaypoints(xmlText, request);
+        extractWaypoints(xmlText, request);
 
-         
-        } else {
-            response.getWriter().println("GpxLocation is null");
-        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/hikeDetails.jsp");
+        dispatcher.forward(request, response);
 
-
-
-
-        try {
-            request.getRequestDispatcher("/hikeDetails.jsp").forward(request, response);
-        } catch (ServletException e){
-            throw new RuntimeException(e);
-        }
     }
 
     public void destroy(){
