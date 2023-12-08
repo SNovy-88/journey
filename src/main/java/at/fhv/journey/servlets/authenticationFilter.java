@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebFilter(urlPatterns = { "/createHike.jsp" })
+@WebFilter(urlPatterns = { "/createHike.jsp", "/account.jsp" })
 public class authenticationFilter implements Filter {
 
     @Override

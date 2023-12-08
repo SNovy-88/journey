@@ -20,3 +20,20 @@
     background-color: #8ddb1f;
     transform: scale(1.1);
 }
+
+.signOut-button {
+    margin: auto;
+    padding: 10px 22px;
+    font-size: 14px;
+    background-color: #b1ff2e;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.signOut-button:hover {
+    background-color: #8ddb1f;
+    transform: scale(1.2);
+}

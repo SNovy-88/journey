@@ -33,6 +33,9 @@
           Create
         </a>
       </div>
+    <form action="logoutServlet" method="post" style="margin-top: 20px;">
+      <button class="option-button">Sign Out</button>
+    </form>
     </div>
     </p>
   </div>
