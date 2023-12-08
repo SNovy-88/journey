@@ -35,12 +35,10 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="JS/hikeDetails.js"></script>
     <script>
-
       $(document).ready(function () {
           let recommendedMonths = <%=hike.getRecommendedMonths()%>;
           highlightRecommendedMonths(recommendedMonths);
       });
-   
     </script>
 
     <!--Navigation bar-->
