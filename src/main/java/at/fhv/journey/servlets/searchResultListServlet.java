@@ -1,3 +1,13 @@
+/*
+ * Copyright (c) 2023 Sarah N
+ *
+ * Project Name:         Journey
+ * Description:
+ *
+ * Date of Creation/
+ * Last Update:          22/11/2023
+ */
+
 package at.fhv.journey.servlets;
 
 import java.io.IOException;

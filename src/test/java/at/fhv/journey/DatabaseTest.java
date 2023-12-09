@@ -1,12 +1,14 @@
-package at.fhv.journey;/*
+/*
  * Copyright (c) 2023 Sarah N
  *
  * Project Name:         Journey
  * Description:
  *
  * Date of Creation/
- * Last Update:          13/11/2023
+ * Last Update:          24/11/2023
  */
+
+package at.fhv.journey;
 
 import at.fhv.journey.hibernate.facade.DatabaseFacade;
 import at.fhv.journey.model.Hike;

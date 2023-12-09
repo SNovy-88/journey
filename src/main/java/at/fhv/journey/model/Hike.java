@@ -1,14 +1,5 @@
 package at.fhv.journey.model;
-
-import io.hypersistence.utils.hibernate.type.range.PostgreSQLRangeType;
-import io.hypersistence.utils.hibernate.type.range.Range;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import org.hibernate.annotations.Type;
-
-import java.math.BigDecimal;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -17,13 +8,13 @@ public class Hike {
 
     private int _hike_id;
     private String _name;
-    private BigDecimal _distance;
+    private double _distance;
     private int _durationHour;
     private int _durationMin;
     private int _heightDifference;
     private int _fitnessLevel;
     private String _description;
-    private Range _recommendedMonths;
+    private int _recommendedMonths;
 
     private int _stamina;
     private int _experience;
@@ -40,7 +31,7 @@ public class Hike {
                 int heightDifference, int fitnessLevel){
         _hike_id = hike_id;
         _name = name;
-        _distance = BigDecimal.valueOf(distance);
+        _distance = distance;
         _durationHour = durationHour;
         _durationMin = durationMin;
         _heightDifference = heightDifference;
@@ -50,6 +41,7 @@ public class Hike {
 
     @Id
     @Column(name = "hike_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getHike_id() {
         return _hike_id;
     }
@@ -66,10 +58,10 @@ public class Hike {
     }
 
     @Column(name = "distance")
-    public BigDecimal getDistance() {
+    public double getDistance() {
         return _distance;
     }
-    public void setDistance(BigDecimal distance) {
+    public void setDistance(double distance) {
         _distance = distance;
     }
 
@@ -163,13 +155,12 @@ public class Hike {
     }
 
 
-    @Column(name = "suggested_month", columnDefinition = "int4range")
-    @Type(PostgreSQLRangeType.class)
-    public Range getRecommendedMonths() {
+    @Column(name = "suggested_months")
+    public int getRecommendedMonths() {
         return _recommendedMonths;
     }
 
-    public void setRecommendedMonths(Range recommendedMonths) {
+    public void setRecommendedMonths(int recommendedMonths) {
         _recommendedMonths = recommendedMonths;
     }
 

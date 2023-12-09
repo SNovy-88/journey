@@ -1,3 +1,7 @@
+* {
+    scrollbar-width: none;
+}
+
 h1 {
     text-align: center;
     margin-top: 10px;
@@ -54,13 +58,14 @@ h1 {
     white-space: normal;
 }
 
-/* href of the header */
-.hike-details-link-header {
-    color: black;
+/* Hike name */
+.hike-name {
     text-decoration: none;
 }
-.hike-details-link-header:hover {
-    text-decoration: revert;
+
+.hike-name:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 /* image resizing and aspect ratio */
@@ -192,13 +197,13 @@ h1 {
     align-items: center;
     justify-content: center;
     place-items: center;
-    padding-bottom: 5vh;
+    padding: 2vh;
+    background-color: #2b2b2b;
 }
 
 .search-button-rlist {
     margin-left: 10px;
-    padding: 15px 30px;
-    font-size: 18px;
+    padding: 0.5vh;
     background-color: #b1ff2e;
     color: black;
     border: none;
@@ -206,6 +211,7 @@ h1 {
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
 }
+
 
 .search-button-rlist:hover {
     background-color: #8ddb1f;
@@ -215,5 +221,16 @@ h1 {
 .search-input {
     color: #999999;
     font-style: italic;
+    height: 1vh;
 }
 
+.scroll {
+    top: 0;
+    position: sticky;
+    z-index: 100;
+}
+
+.noHikeText {
+    width: 100%;
+    text-align: center;
+}

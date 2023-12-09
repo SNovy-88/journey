@@ -1,0 +1,34 @@
+#mapContainer {
+    position: relative;
+    height: 500px; /* Set an initial height for the map container */
+}
+
+#messageContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #eaffc7; /* Set the background color of the message container to grey */
+    border: 2px solid grey; /* Set the border color and width */
+    box-sizing: border-box; /* Include the border width in the total height of the container */
+}
+
+/* Add styles for the text inside the message container */
+#messageContainer p {
+    color: black; /* Set the text color */
+    margin: 0; /* Remove default margin */
+    padding: 20px; /* Add padding to the text */
+    font-size: 24px; /* Set the font size */
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+       -moz-appearance:textfield;
+   }
+

@@ -1,7 +1,9 @@
 package at.fhv.journey.hibernate.facade;
 
 import at.fhv.journey.hibernate.broker.HikeBrokerJPA;
+import at.fhv.journey.hibernate.broker.UserBrokerJPA;
 import at.fhv.journey.model.Hike;
+import at.fhv.journey.model.User;
 
 import java.util.List;
 
@@ -54,7 +56,15 @@ public class DatabaseFacade implements IdbFacadeJPA {
         }
     }
 
+    public List<User> getUsersByEmail(String email) {
+        try (UserBrokerJPA ub = new UserBrokerJPA()){
+            return ub.getUsersByEmail(email);
+        }
+    }
+
     public static void main(String[] args) {
+
+
 
     }
 }
