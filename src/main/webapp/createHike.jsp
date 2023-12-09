@@ -26,6 +26,7 @@
 
     <!-- OpenRouteService JavaScript -->
     <script src="https://maps.openrouteservice.org/assets/js/openrouteservice-leaflet.js"></script>
+
 </head>
 <body>
     <jsp:include page="navBar.jsp"/>
