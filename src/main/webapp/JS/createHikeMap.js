@@ -55,15 +55,32 @@ map.on('click', function (e) {
         // Get the waypoint name from the input field
         const waypointName = waypointNameInput.value;
 
+        // Get the selected waypoint type from the dropdown
+        const waypointType = document.getElementById('waypointTypeSelect').value;
+
         // Close the modal
         $('#waypointModal').modal('hide');
 
+        // Create a custom icon based on the selected waypoint type
+        let customIconUrl;
+        switch (waypointType) {
+            case 'poi':
+                customIconUrl = 'pictures/Leaflet/pin-icon-poi.png';
+                break;
+            case 'hut':
+                customIconUrl = 'pictures/Leaflet/pin-icon-hut.png';
+                break;
+            default:
+                customIconUrl = 'pictures/Leaflet/pin-icon-wpt.png';
+                break;
+        }
+
         // Create a custom icon for the waypoint marker
         const customIcon = L.icon({
-            iconUrl: 'pictures/Leaflet/pin-icon-wpt.png',
-            iconSize: [33, 51],
-            iconAnchor: [16, 51],
-            popupAnchor: [0, -51]
+            iconUrl: customIconUrl,
+            iconSize: [64, 64],
+            iconAnchor: [32, 64],
+            popupAnchor: [0, -32]
         });
 
         // Add a marker at the clicked location with the custom icon
@@ -72,8 +89,8 @@ map.on('click', function (e) {
         // Enable dragging for the marker
         enableMarkerDragging(marker, waypoints.length - 1);
 
-        // Store the waypoint in the array with name and marker
-        waypoints.push({ name: waypointName, latlng: clickedLatLng, marker });
+        // Store the waypoint in the array with name, type, and marker
+        waypoints.push({ name: waypointName, type: waypointType, latlng: clickedLatLng, marker: marker });
 
         // If there are at least two waypoints, fetch route and zoom the map
         if (waypoints.length >= 2) {
@@ -214,9 +231,11 @@ function createGPX() {
         waypoints.map(function (waypoint) {
             return '<trkpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' +
                 '<name>' + waypoint.name + '</name>' +
+                '<type>' + waypoint.type + '</type>' +
                 '</trkpt>' +
                 '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' +
                 '<name>' + waypoint.name + '</name>' +
+                '<type>' + waypoint.type + '</type>' +
                 '</wpt>';
         }).join('') +
         '</trkseg>' +

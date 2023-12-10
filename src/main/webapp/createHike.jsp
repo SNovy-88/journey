@@ -430,11 +430,18 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="waypointModalLabel"> Enter Waypoint Name </h5>
+                        <h5 class="modal-title" id="waypointModalLabel"> Enter Waypoint Information </h5>
                     </div>
                     <div class="modal-body">
-                        <%--suppress HtmlFormInputWithoutLabel --%>
-                        <input type="text" id="waypointNameInput" class="form-control" placeholder="Enter name (optional)"> <!-- evtl. make it non-optional -->
+                        <label for="waypointNameInput">Select Waypoint Name:</label>
+                        <input type="text" id="waypointNameInput" class="form-control" placeholder="Enter name (optional)">
+                        <br>
+                        <label for="waypointTypeSelect">Select Waypoint Type:</label>
+                        <select id="waypointTypeSelect" class="form-control">
+                            <option value="standard">Standard Waypoint</option>
+                            <option value="poi">Point of Interest</option>
+                            <option value="hut">Hut</option>
+                        </select>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
