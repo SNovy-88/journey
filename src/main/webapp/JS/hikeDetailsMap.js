@@ -1,5 +1,10 @@
 const ORS_API_KEY = '5b3ce3597851110001cf6248e11f847fc0db4d8eb62bc09dcf82494f';
 
+// Document ready function
+document.addEventListener("DOMContentLoaded", function () {
+    initializeAndShowRoute();
+});
+
 // Initialize the upload map
 let detailMap = null;
 
@@ -26,19 +31,41 @@ async function initializeAndShowRoute() {
         lat: parseFloat(wpt.getAttribute('lat')),
         lon: parseFloat(wpt.getAttribute('lon')),
         name: wpt.querySelector('name').textContent.trim() || 'Unnamed Waypoint',
+        type: wpt.querySelector('type').textContent.trim() || 'standard',
     }));
 
-    // Create a custom icon for the waypoint marker
-    const customIcon = L.icon({
-        iconUrl: 'pictures/Leaflet/pin-icon-wpt.png',
-        iconSize: [33, 51],
-        iconAnchor: [16, 51],
-        popupAnchor: [0, -51],
-    });
-
-    // Add waypoint markers with the custom icon and popup to the upload map
+    // Add waypoint markers with the custom icon and popup to the detail map
     waypoints.forEach((waypoint) => {
-        const marker = L.marker([waypoint.lat, waypoint.lon], { icon: customIcon }).addTo(detailMap);
+        let icon;
+
+        // Choose icon based on waypoint type
+        switch (waypoint.type) {
+            case 'poi':
+                icon = L.icon({
+                    iconUrl: 'pictures/Leaflet/pin-icon-poi.png',
+                    iconSize: [64, 64],
+                    iconAnchor: [32, 64],
+                    popupAnchor: [0, -32]
+                });
+                break;
+            case 'hut':
+                icon = L.icon({
+                    iconUrl: 'pictures/Leaflet/pin-icon-hut.png',
+                    iconSize: [64, 64],
+                    iconAnchor: [32, 64],
+                    popupAnchor: [0, -32]
+                });
+                break;
+            default:
+                icon = L.icon({
+                    iconUrl: 'pictures/Leaflet/pin-icon-wpt.png',
+                    iconSize: [64, 64],
+                    iconAnchor: [32, 64],
+                    popupAnchor: [0, -32]
+                });
+        }
+
+        const marker = L.marker([waypoint.lat, waypoint.lon], { icon: icon }).addTo(detailMap);
         marker.bindPopup(waypoint.name);
     });
 

@@ -77,19 +77,41 @@ async function showRoute() {
             lat: parseFloat(wpt.getAttribute('lat')),
             lon: parseFloat(wpt.getAttribute('lon')),
             name: wpt.querySelector('name').textContent.trim() || 'Unnamed Waypoint',
+            type: wpt.querySelector('type').textContent.trim() || 'standard',
         }));
-
-        // Create a custom icon for the waypoint marker
-        const customIcon = L.icon({
-            iconUrl: 'pictures/Leaflet/pin-icon-wpt.png',
-            iconSize: [33, 51],
-            iconAnchor: [16, 51],
-            popupAnchor: [0, -51]
-        });
 
         // Add waypoint markers with the custom icon and popup to the upload map
         waypoints.forEach((waypoint) => {
-            const marker = L.marker([waypoint.lat, waypoint.lon], { icon: customIcon }).addTo(uploadMap);
+            let icon;
+
+            // Choose icon based on waypoint type
+            switch (waypoint.type) {
+                case 'poi':
+                    icon = L.icon({
+                        iconUrl: 'pictures/Leaflet/pin-icon-poi.png',
+                        iconSize: [64, 64],
+                        iconAnchor: [32, 64],
+                        popupAnchor: [0, -32]
+                    });
+                    break;
+                case 'hut':
+                    icon = L.icon({
+                        iconUrl: 'pictures/Leaflet/pin-icon-hut.png',
+                        iconSize: [64, 64],
+                        iconAnchor: [32, 64],
+                        popupAnchor: [0, -32]
+                    });
+                    break;
+                default:
+                    icon = L.icon({
+                        iconUrl: 'pictures/Leaflet/pin-icon-wpt.png',
+                        iconSize: [64, 64],
+                        iconAnchor: [32, 64],
+                        popupAnchor: [0, -32]
+                    });
+            }
+
+            const marker = L.marker([waypoint.lat, waypoint.lon], { icon: icon }).addTo(uploadMap);
             marker.bindPopup(waypoint.name);
         });
 
