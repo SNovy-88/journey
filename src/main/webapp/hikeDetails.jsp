@@ -8,8 +8,6 @@
 <%@ page import="at.fhv.journey.model.Hike" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.List" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Bootstrap css href -->
@@ -21,6 +19,12 @@
         <link rel="stylesheet" href="CSS/styles.css">
         <link rel="stylesheet" href="CSS/hikeDetails.css">
         <title>Journey | Detail-Page</title>
+
+        <!-- Include Bootstrap CSS and JS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
         <!-- Leaflet CSS -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -96,25 +100,31 @@
                 </div>
                 <div>
                     <h2> Map view </h2>
-                    <%-- Use JSTL c:out tag to escape HTML characters --%>
+                    <!-- Use JSTL c:out tag to escape HTML characters -->
                     <input type="hidden" id="xmlText" name="xmlText" value="<c:out value='${xmlText}' />">
                     <div id="detailMap" style="height: 400px;"></div>
                     <br>
-                    <%
-                        List<Map<String, String>> waypointsList = (List<Map<String, String>>) request.getAttribute("waypointsList");
-
-                        if (waypointsList != null) {
-                            for (Map<String, String> waypoint : waypointsList) {
-                                String name = waypoint.get("name");
-                                if (name == null || name.trim().isEmpty()) {
-                                    name = "Unnamed Waypoint";
-                                }
-                    %>
-                    <p>Name: <%= name %>, (Latitude: <%= waypoint.get("latitude") %>, Longitude: <%= waypoint.get("longitude") %>)</p>
-                    <%
-                            }
-                        }
-                    %>
+                    <!-- Accordion for waypoint descriptions -->
+                    <c:forEach var="waypoint" items="${waypointsList}" varStatus="loop">
+                        <div class="card">
+                            <div class="card-header" id="heading${loop.index}">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${loop.index}" aria-expanded="true" aria-controls="collapse${loop.index}">
+                                        ${waypoint.name}
+                                        <c:choose>
+                                            <c:when test="${waypoint.type eq 'poi'}">[Point of Interest]</c:when>
+                                            <c:when test="${waypoint.type eq 'hut'}">[Hut / Refuge]</c:when>
+                                        </c:choose>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapse${loop.index}" class="collapse" aria-labelledby="heading${loop.index}" data-parent="#accordion">
+                                <div class="card-body">
+                                    ${waypoint.description}
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
             <!-- Right Field -->

@@ -102,7 +102,6 @@
                                                 <button type="button" class="btn btn-primary" onclick="showRoute()">Show Route</button>
                                             </div>
                                             <br>
-
                                         </div>
                                     </div>
                                 </div>
@@ -114,11 +113,16 @@
                                 </div>
                                 <br>
                                     <!-- Show Map -->
-                                    <div class="invalid-feedback" id="mapFeedback">
-                                        Route needs at least one waypoint.
-                                    </div>
                                     <div id="mapFeature">
                                         <br>
+                                        <div>
+                                            <p>
+                                                Create your route by adding waypoints to the map! (Hint: use your mouse to drag a pin after adding it to the map)
+                                            </p>
+                                        </div>
+                                        <div class="invalid-feedback" id="mapFeedback">
+                                            Route needs at least one waypoint.
+                                        </div>
                                         <div id="map" style="height: 500px;"></div>
                                         <input type="hidden" id="gpxDataInput" name="gpxDataInput"> <!-- hidden input element for transferring gpxData from JS into JSP form element -->
                                         <br>
@@ -433,15 +437,18 @@
                         <h5 class="modal-title" id="waypointModalLabel"> Enter Waypoint Information </h5>
                     </div>
                     <div class="modal-body">
-                        <label for="waypointNameInput">Select Waypoint Name:</label>
+                        <label for="waypointNameInput">Waypoint Name:</label>
                         <input type="text" id="waypointNameInput" class="form-control" placeholder="Enter name (optional)">
                         <br>
                         <label for="waypointTypeSelect">Select Waypoint Type:</label>
                         <select id="waypointTypeSelect" class="form-control">
                             <option value="standard">Standard Waypoint</option>
                             <option value="poi">Point of Interest</option>
-                            <option value="hut">Hut</option>
+                            <option value="hut">Hut / Refuge</option>
                         </select>
+                        <br>
+                        <label for="waypointDescriptionInput">Waypoint Description:</label>
+                        <textarea id="waypointDescriptionInput" class="form-control" placeholder="Enter description (optional)"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

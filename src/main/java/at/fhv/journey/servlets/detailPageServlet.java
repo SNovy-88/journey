@@ -84,11 +84,15 @@ public class detailPageServlet extends HttpServlet {
                 String latitude = waypoint.getAttribute("lat");
                 String longitude = waypoint.getAttribute("lon");
                 String name = waypoint.getElementsByTagName("name").item(0).getTextContent();
+                String type = waypoint.getElementsByTagName("type").item(0).getTextContent();
+                String description = waypoint.getElementsByTagName("desc").item(0).getTextContent();
 
                 Map<String, String> waypointMap = new HashMap<>();
                 waypointMap.put("latitude", latitude);
                 waypointMap.put("longitude", longitude);
                 waypointMap.put("name", name);
+                waypointMap.put("type", type);
+                waypointMap.put("description", description);
 
                 waypointsList.add(waypointMap);
             }

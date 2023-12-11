@@ -58,6 +58,9 @@ map.on('click', function (e) {
         // Get the selected waypoint type from the dropdown
         const waypointType = document.getElementById('waypointTypeSelect').value;
 
+        // Get the waypoint description from the textarea
+        const waypointDescription = document.getElementById('waypointDescriptionInput').value;
+
         // Close the modal
         $('#waypointModal').modal('hide');
 
@@ -89,8 +92,8 @@ map.on('click', function (e) {
         // Enable dragging for the marker
         enableMarkerDragging(marker, waypoints.length - 1);
 
-        // Store the waypoint in the array with name, type, and marker
-        waypoints.push({ name: waypointName, type: waypointType, latlng: clickedLatLng, marker: marker });
+        // Store the waypoint in the array with name, type, description, and marker
+        waypoints.push({ name: waypointName, type: waypointType, description: waypointDescription, latlng: clickedLatLng, marker: marker });
 
         // If there are at least two waypoints, fetch route and zoom the map
         if (waypoints.length >= 2) {
@@ -232,10 +235,12 @@ function createGPX() {
             return '<trkpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' +
                 '<name>' + waypoint.name + '</name>' +
                 '<type>' + waypoint.type + '</type>' +
+                '<desc>' + waypoint.description + '</desc>' +
                 '</trkpt>' +
                 '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' +
                 '<name>' + waypoint.name + '</name>' +
                 '<type>' + waypoint.type + '</type>' +
+                '<desc>' + waypoint.description + '</desc>' +
                 '</wpt>';
         }).join('') +
         '</trkseg>' +
@@ -247,3 +252,10 @@ function createGPX() {
 function updateGPXInput() {
     document.getElementById('gpxDataInput').value = cachedGPXData;
 }
+
+// Handle waypoint type selection
+$('.dropdown-item').on('click', function() {
+    const selectedType = $(this).data('value');
+    $('#waypointTypeDropdown').html($(this).text());
+    $('#waypointTypeSelect').val(selectedType);
+});
