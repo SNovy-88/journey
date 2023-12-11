@@ -252,10 +252,3 @@ function createGPX() {
 function updateGPXInput() {
     document.getElementById('gpxDataInput').value = cachedGPXData;
 }
-
-// Handle waypoint type selection
-$('.dropdown-item').on('click', function() {
-    const selectedType = $(this).data('value');
-    $('#waypointTypeDropdown').html($(this).text());
-    $('#waypointTypeSelect').val(selectedType);
-});
