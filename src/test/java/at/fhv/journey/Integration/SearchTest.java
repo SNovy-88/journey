@@ -53,4 +53,6 @@ public class SearchTest {
     driver.findElement(By.cssSelector(".col-md-8")).click();
     assertThat(driver.findElement(By.cssSelector("h2")).getText(), is("Ludesch Dorfrundweg"));
   }
+
+
 }
