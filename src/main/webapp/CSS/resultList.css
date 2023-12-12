@@ -1,5 +1,5 @@
-* {
-    scrollbar-width: none;
+.body {
+    overflow-y: hidden;
 }
 
 h1 {
@@ -11,6 +11,8 @@ h1 {
 
 /* hike-box-container contains every hike element from the search results*/
 .hike-box-container {
+    height: calc(98vh - 125px);
+    overflow-y: auto;
     display: flex;
     flex-wrap: wrap;
     margin-left: 20%;
