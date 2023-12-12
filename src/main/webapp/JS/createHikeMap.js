@@ -1,3 +1,6 @@
+const ORS_API_KEY = '5b3ce3597851110001cf6248e11f847fc0db4d8eb62bc09dcf82494f';
+
+
 // Initialize the map
 const map = L.map('map').setView([47, 11], 7); // Set the initial view
 
@@ -9,9 +12,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // Initialize an empty array to store waypoints
 const waypoints = [];
 
-// Initialize a polyline to connect waypoints with lines
-const polyline = L.polyline([], {color: 'blue'}).addTo(map);
-
 // Get the <ul> element to display coordinates
 const coordinatesList = document.getElementById('coordinates-list');
 
@@ -21,6 +21,9 @@ const waypointNameInput = document.getElementById('waypointNameInput');
 
 // Initialize a variable to store GPX data
 let cachedGPXData = '';
+
+// Declare routePolyline at the beginning of your script, outside any function, to ensure proper scope
+let routePolyline;
 
 // Add a click event listener to the map
 map.on('click', function (e) {
@@ -52,21 +55,48 @@ map.on('click', function (e) {
         // Get the waypoint name from the input field
         const waypointName = waypointNameInput.value;
 
+        // Get the selected waypoint type from the dropdown
+        const waypointType = document.getElementById('waypointTypeSelect').value;
+
         // Close the modal
         $('#waypointModal').modal('hide');
 
-        // Add a marker at the clicked location
-        const marker = L.marker(clickedLatLng).addTo(map);
+        // Create a custom icon based on the selected waypoint type
+        let customIconUrl;
+        switch (waypointType) {
+            case 'poi':
+                customIconUrl = 'pictures/Leaflet/pin-icon-poi.png';
+                break;
+            case 'hut':
+                customIconUrl = 'pictures/Leaflet/pin-icon-hut.png';
+                break;
+            default:
+                customIconUrl = 'pictures/Leaflet/pin-icon-wpt.png';
+                break;
+        }
 
-        // Store the waypoint in the array with name
-        waypoints.push({ name: waypointName, latlng: clickedLatLng });
+        // Create a custom icon for the waypoint marker
+        const customIcon = L.icon({
+            iconUrl: customIconUrl,
+            iconSize: [64, 64],
+            iconAnchor: [32, 64],
+            popupAnchor: [0, -32]
+        });
 
-        // Update the polyline with the new waypoint
-        polyline.setLatLngs(waypoints.map(wp => wp.latlng));
+        // Add a marker at the clicked location with the custom icon
+        const marker = L.marker(clickedLatLng, { icon: customIcon }).addTo(map);
 
-        // If there are at least two waypoints, zoom the map to fit all waypoints
-        if (waypoints.length === 2) {
-            map.fitBounds(polyline.getBounds());
+        // Enable dragging for the marker
+        enableMarkerDragging(marker, waypoints.length - 1);
+
+        // Store the waypoint in the array with name, type, and marker
+        waypoints.push({ name: waypointName, type: waypointType, latlng: clickedLatLng, marker: marker });
+
+        // If there are at least two waypoints, fetch route and zoom the map
+        if (waypoints.length >= 2) {
+            const prevWaypoint = waypoints[waypoints.length - 2].latlng;
+            fetchRoute(prevWaypoint, clickedLatLng);
+            map.fitBounds(L.latLngBounds(waypoints.map(wp => wp.latlng)));
         }
 
         // Update the coordinates list
@@ -77,16 +107,105 @@ map.on('click', function (e) {
     };
 });
 
+// Function to fetch updated route after waypoint deletion
+async function fetchRoute(startLatLng, endLatLng) {
+    const profile = 'foot-hiking'; // Specify the hiking profile
+    const url = `https://api.openrouteservice.org/v2/directions/${profile}?api_key=${ORS_API_KEY}&start=${startLatLng.lng},${startLatLng.lat}&end=${endLatLng.lng},${endLatLng.lat}`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const routeCoordinates = data.features[0].geometry.coordinates.map(coord => L.latLng(coord[1], coord[0]));
+
+        // Add the route polyline to the map
+        routePolyline = L.polyline(routeCoordinates, { color: 'red' }).addTo(map);
+    } catch (error) {
+        console.error('Error fetching route:', error);
+    }
+}
+
 // Function to update the coordinates list
 function updateCoordinatesList() {
     // Clear the existing list
     coordinatesList.innerHTML = '';
 
-    // Add coordinates to the list
+    // Add coordinates and delete button to the list
     waypoints.forEach(function (waypoint, index) {
         const li = document.createElement('li');
-        li.textContent = 'Waypoint ' + (index + 1) + ': ' + waypoint.name + ' (' + waypoint.latlng.lat + ', ' + waypoint.latlng.lng + ')';
+        li.innerHTML = `
+            Waypoint ${index + 1}: ${waypoint.name} (${waypoint.latlng.lat}, ${waypoint.latlng.lng})
+        `;
         coordinatesList.appendChild(li);
+    });
+}
+
+// Function to be called when the "Delete Last Waypoint" button is clicked
+window.deleteLastWaypoint = function () {
+    if (waypoints.length > 0) {
+        // Remove the last waypoint from the array
+        const removedWaypoint = waypoints.pop();
+
+        // Remove the marker from the map
+        map.removeLayer(removedWaypoint.marker);
+
+        // Update the route and fit bounds
+        updateRoute();
+
+        // Update the coordinates list
+        updateCoordinatesList();
+
+        // Create GPX data and update the hidden input field
+        cachedGPXData = createGPX();
+    }
+};
+
+// Function to update the route when waypoints are added, deleted, or dragged
+function updateRoute() {
+    // Clear the existing route
+    clearRoute();
+
+    // Recalculate the route if there are at least two waypoints
+    if (waypoints.length >= 2) {
+        for (let i = 0; i < waypoints.length - 1; i++) {
+            const startLatLng = waypoints[i].latlng;
+            const endLatLng = waypoints[i + 1].latlng;
+            fetchRoute(startLatLng, endLatLng);
+        }
+    }
+}
+
+// Function to clear the route from the map
+function clearRoute() {
+    // Remove existing route polylines from the map
+    map.eachLayer(layer => {
+        if (layer instanceof L.Polyline) {
+            map.removeLayer(layer);
+        }
+    });
+}
+
+// Function to enable dragging for a marker
+function enableMarkerDragging(marker, index) {
+    marker.dragging.enable();
+
+    marker.on('dragend', function (event) {
+        // Find the index of the dragged marker in the waypoints array
+        const draggedIndex = waypoints.findIndex(wp => wp.marker === marker);
+
+        if (draggedIndex !== -1) {
+            // Update the latlng of the dragged waypoint
+            waypoints[draggedIndex].latlng = marker.getLatLng();
+
+            // Update the route with the new waypoints
+            updateRoute();
+
+            // Update the coordinates list
+            updateCoordinatesList();
+
+            // Create GPX data and update the hidden input field
+            cachedGPXData = createGPX();
+        }
     });
 }
 
@@ -102,13 +221,25 @@ function exportAsGPX() {
     link.click();
 }
 
-// Function to create waypoints as GPX single-handedly
+// Function to create GPX with track and waypoints
 function createGPX() {
     return '<?xml version="1.0" encoding="UTF-8" standalone="no" ?>' +
         '<gpx version="1.1" creator="Journey">' +
-        waypoints.map(function (waypoint, index) {
-            return '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' + '<name>' + waypoint.name + '</name>' + '</wpt>';
+        '<trk>' +
+        '<name>A hike created with Journey!</name>' +
+        '<trkseg>' +
+        waypoints.map(function (waypoint) {
+            return '<trkpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' +
+                '<name>' + waypoint.name + '</name>' +
+                '<type>' + waypoint.type + '</type>' +
+                '</trkpt>' +
+                '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' +
+                '<name>' + waypoint.name + '</name>' +
+                '<type>' + waypoint.type + '</type>' +
+                '</wpt>';
         }).join('') +
+        '</trkseg>' +
+        '</trk>' +
         '</gpx>';
 }
 

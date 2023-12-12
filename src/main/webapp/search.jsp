@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/search.css">
-
+    <script src="JS/search.js"></script>
     <title>Journey | Discover</title>
 </head>
 <body class="search">
@@ -18,7 +18,7 @@
             <div class="search-container">
                 <form action="/Journey_war_exploded/searchResultList">
                     <input type="text" class="search-input" name="searchString" placeholder="Enter hike name, city, or region">
-                    <button class="search-button">Search</button>
+                    <button class="search-button" id="btn-search">Search</button>
                 </form>
             </div>
         </div>
