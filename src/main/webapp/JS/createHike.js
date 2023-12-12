@@ -66,6 +66,7 @@ function validateStep1() {
 //Function for validation of duration (hr and min), height difference, distance
 //fitness level, stamina, experience and scenery
 function validateStep2() {
+    console.log("validateStep2 called");
     const inputHrElement = document.getElementById('duration-hr');
     const inputHrFeedback = document.getElementById('duration-hr-feedback');
 
@@ -109,7 +110,7 @@ function validateStep2() {
     validation(isExperienceValid, inputExperienceElement, inputExperienceFeedback);
     validation(isSceneryValid, inputSceneryElement, inputSceneryFeedback);
 
-    return  isInputHrValid &&
+    return isInputHrValid &&
         isInputMinValid &&
         isInputHeightDiffValid &&
         isDistanceValid &&
@@ -120,8 +121,8 @@ function validateStep2() {
 }
 
 // Function to display feedback and mark fields red
-function validation(valid, input, feedback){
-    if(!valid){
+function validation(valid, input, feedback) {
+    if (!valid) {
         input.classList.add('is-invalid');
         feedback.style.display = 'block';
     } else {
@@ -131,12 +132,12 @@ function validation(valid, input, feedback){
 }
 
 //checks if number is a whole number withough decimals
-function isWholeNumber(value){
+function isWholeNumber(value) {
     return /^\d+$/.test(value);
 }
 
 //checks if number is a decimal with either none, 1 or 2 decimals
-function isDecimalNumber(value){
+function isDecimalNumber(value) {
     return /^\d+(\.\d{1,2})?$/.test(value);
 }
 
@@ -148,7 +149,7 @@ function updateDropdown(dropdown, element) {
     let selectedValue = element.getAttribute("data-id");
     dropdownButton.innerHTML = element.innerHTML;
     dropdownButton.setAttribute("chosen-value-id", selectedValue);
-    document.getElementById(dropdown+"-hidden").value = selectedValue;
+    document.getElementById(dropdown + "-hidden").value = selectedValue;
 
     // Highlighting the selected option so this is visible when opening dropdown again
     let dropdownItem = document.querySelector("a.dropdown-item.active");
@@ -161,7 +162,7 @@ function updateDropdown(dropdown, element) {
 
     // Inserting the right icons, depending on the hike attribute
     let attribute = dropdownButton.getAttribute("data-id");
-    switch (attribute){
+    switch (attribute) {
         case "stamina":
             insertIcons(selectedValue, staminaFullIcon, staminaEmptyIcon, 'stamina-icons');
             break;
@@ -184,7 +185,7 @@ const mapFeature = document.getElementById('mapFeature');
 const switchStateInput = document.getElementById('switchState');
 
 // Add event listener to the switch
-featureSwitch.addEventListener('change', function() {
+featureSwitch.addEventListener('change', function () {
     // Toggle the visibility of features based on the switch state
     fileUploadFeature.style.display = featureSwitch.checked ? 'block' : 'none';
     uploadMapFeature.style.display = featureSwitch.checked ? 'block' : 'none';
@@ -211,14 +212,21 @@ featureSwitch.addEventListener('change', function() {
 // Function to create hike and send GPX data to the servlet
 function createHike() {
     // Reset the flag
+    console.log("create Hike called");
     unsavedChanges = false;
 
     // Update the hidden input field with cached GPX data
     updateGPXInput();
+    validateStep2()
+    if (validateStep2() === true) {
+        // Submit the form
+        document.getElementById('createHikeForm').submit();
+        // launchPopup();
+    }
 }
 
 // Prevent pressing enter while typing
-document.getElementById("createHike").addEventListener("keypress", function (e) {
+document.getElementById("createHikeForm").addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
         e.preventDefault();
     }

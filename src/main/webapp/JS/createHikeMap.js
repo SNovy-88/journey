@@ -245,5 +245,6 @@ function createGPX() {
 
 // Function to update the hidden input field with cached GPX data
 function updateGPXInput() {
+    console.log("updateGPXInput called");
     document.getElementById('gpxDataInput').value = cachedGPXData;
 }

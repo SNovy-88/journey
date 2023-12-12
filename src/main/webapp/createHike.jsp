@@ -12,6 +12,9 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
     <!-- Include the bs-stepper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
 
@@ -33,7 +36,7 @@
     <script src="JS/hikeDetails.js"></script>
 
     <!-- Stepper element -->
-    <form id="createHike" action="create_hike" method="post" enctype="multipart/form-data">
+    <form id="createHikeForm" action="create_hike" method="post" enctype="multipart/form-data">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 mt-5">
@@ -51,13 +54,6 @@
                                 <button type="button" class="btn step-trigger">
                                     <span class="bs-stepper-circle">2</span>
                                     <span class="bs-stepper-label"> Description </span>
-                                </button>
-                            </div>
-                            <div class="line"></div>
-                            <div class="step" data-target="#test-l-3">
-                                <button type="button" class="btn step-trigger">
-                                    <span class="bs-stepper-circle">3</span>
-                                    <span class="bs-stepper-label"> Images </span>
                                 </button>
                             </div>
                         </div>
@@ -127,7 +123,6 @@
                                         <ul id="coordinates-list"></ul> <!-- List of waypoints -->
                                     </div>
                                 <button class="btn btn-primary" type="button" onclick="if (validateStep1()) stepper1.next()">Next</button>
-                                <button class="btn btn-success" type="submit" onclick="createHike()">Create Hike</button> <!-- Create Hike button -->
                             </div>
 
                             <!-- STEPPER 2 -->
@@ -392,32 +387,8 @@
                                 </div>
                                 <br>
                              <p>Fields marked with an <sup>*</sup> have to be filled in!</p>
-                                <button class="btn btn-primary" type="button" onclick="if (validateStep2()) stepper1.previous()">Previous</button>
-                                <button class="btn btn-primary" type="button" onclick="if (validateStep2()) stepper1.next()">Next</button>
-                            </div>
-
-                            <!-- STEPPER 3 -->
-                            <div id="test-l-3" class="content"> <!-- Content of the 3rd stepper part -->
-
-                                    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-                                    <!-- Image input -->
-                                    <div class="file-upload">
-                                        <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
-                                        <div class="image-upload-wrap">
-                                            <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
-                                            <div class="drag-text">
-                                                <h3>Drag and drop a file or select add Image</h3>
-                                            </div>
-                                        </div>
-                                        <div class="file-upload-content">
-                                            <img class="file-upload-image" src="#" alt="your image" />
-                                            <div class="image-title-wrap">
-                                                <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <button class="btn btn-primary" type="button" onclick="stepper1.next()">Next</button>
                                 <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
+                                <button class="btn btn-success" type="button" onclick="createHike()">Create Hike</button> <!-- Create Hike button -->
                             </div>
                         </div>
                     </div>
@@ -461,7 +432,7 @@
                         Hike successfully created!
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
