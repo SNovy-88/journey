@@ -3,7 +3,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "hike", schema = "journey")
+@Table(name = "hikepicture", schema = "journey")
 public class Hike {
 
     private int _hike_id;
@@ -22,6 +22,7 @@ public class Hike {
     private String _author;
     private LocalDate _dateCreated;
     private String _gpxLocation;
+    private String _image;
 
     public Hike(){
 
@@ -155,7 +156,7 @@ public class Hike {
     }
 
 
-    @Column(name = "suggested_months")
+    @Column(name = "suggested_month")
     public int getRecommendedMonths() {
         return _recommendedMonths;
     }
@@ -163,6 +164,9 @@ public class Hike {
     public void setRecommendedMonths(int recommendedMonths) {
         _recommendedMonths = recommendedMonths;
     }
+    @Column(name = "image")
+    public String getImage(){return _image;}
+    public void setImage(String image) {_image = image;}
 
 
     //Functions to convert 1-5 Scales into String output
