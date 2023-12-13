@@ -120,7 +120,7 @@
                             </div>
                             <div id="collapse${loop.index}" class="collapse" aria-labelledby="heading${loop.index}" data-parent="#accordion">
                                 <div class="card-body">
-                                        ${empty waypoint.description ? 'No description available' : waypoint.description}
+                                    ${empty waypoint.description ? 'No description available' : waypoint.description}
                                 </div>
                             </div>
                         </div>
