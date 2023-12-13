@@ -110,7 +110,7 @@
                             <div class="card-header" id="heading${loop.index}">
                                 <h5 class="mb-0">
                                     <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${loop.index}" aria-expanded="true" aria-controls="collapse${loop.index}">
-                                        ${waypoint.name}
+                                        ${empty waypoint.name ? 'Waypoint' : waypoint.name}
                                         <c:choose>
                                             <c:when test="${waypoint.type eq 'poi'}">[Point of Interest]</c:when>
                                             <c:when test="${waypoint.type eq 'hut'}">[Hut / Refuge]</c:when>
@@ -120,7 +120,7 @@
                             </div>
                             <div id="collapse${loop.index}" class="collapse" aria-labelledby="heading${loop.index}" data-parent="#accordion">
                                 <div class="card-body">
-                                    ${waypoint.description}
+                                        ${empty waypoint.description ? 'No description available' : waypoint.description}
                                 </div>
                             </div>
                         </div>

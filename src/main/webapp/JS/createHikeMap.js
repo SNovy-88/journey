@@ -35,6 +35,11 @@ map.on('click', function (e) {
 
     // Set up a click event listener for the "Add Waypoint" button in the modal
     $('#waypointModal').on('shown.bs.modal', function () {
+        // Reset the description input and type selection
+        $('#waypointDescriptionInput').val('');
+        $('#waypointTypeSelect').val('standard');
+
+        // Focus on the waypoint name input
         $('#waypointNameInput').focus();
     });
 
