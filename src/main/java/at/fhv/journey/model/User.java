@@ -1,19 +1,19 @@
 package at.fhv.journey.model;
 
-
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name ="user", schema ="journey")
+@Table(name = "user", schema = "journey")
 public class User {
 
     private int _user_id;
     private String _username;
     private String _email;
     private String _password;
+    private List<Comment> _comments;
 
-    public User(){
-
+    public User() {
     }
 
     public User(int userId, String username, String email, String password) {
@@ -26,38 +26,50 @@ public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getUser_id(){
+    public int getUser_id() {
         return _user_id;
     }
 
-    public void setUser_id(int userId){
+    public void setUser_id(int userId) {
         _user_id = userId;
     }
 
-    @Column(name ="username")
-    public String getUsername(){
+    @Column(name = "username")
+    public String getUsername() {
         return _username;
     }
 
-    public void setUsername(String username){
+    public void setUsername(String username) {
         _username = username;
     }
 
     @Column(name = "email")
-    public String getEmail(){
+    public String getEmail() {
         return _email;
     }
 
-    public void setEmail(String email){
+    public void setEmail(String email) {
         _email = email;
     }
 
     @Column(name = "password")
-    public String getPassword(){
+    public String getPassword() {
         return _password;
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         _password = password;
+    }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public List<Comment> getComments() {
+        return _comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        _comments = comments;
+        for (Comment comment : comments) {
+            comment.setUserId(this);
+        }
     }
 }

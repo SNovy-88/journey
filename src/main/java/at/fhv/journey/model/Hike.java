@@ -1,6 +1,7 @@
 package at.fhv.journey.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "hike", schema = "journey")
@@ -22,6 +23,13 @@ public class Hike {
     private String _author;
     private LocalDate _dateCreated;
     private String _gpxLocation;
+
+    private List<Comment> _comments;
+
+    @OneToMany(mappedBy = "hike", cascade = CascadeType.ALL)
+    public List<Comment> getComments() {
+        return _comments;
+    }
 
     public Hike(){
 
@@ -164,6 +172,12 @@ public class Hike {
         _recommendedMonths = recommendedMonths;
     }
 
+    public void setComments(List<Comment> comments) {
+        _comments = comments;
+        for (Comment comment : comments) {
+            comment.setHikeId(this);
+        }
+    }
 
     //Functions to convert 1-5 Scales into String output
 
