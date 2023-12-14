@@ -231,6 +231,36 @@ h1 {
     text-align: center;
 }
 
-filter {
-    position: absolute;
+.filter {
+    background-color: white;
+    width: 20vw;
+    float: left;
+    height: 100%;
+    border-right: solid grey;
 }
+
+.filterHead {
+    text-align: center;
+    border-bottom: solid grey;
+}
+
+.filterClass {
+    margin-left: 5px;
+    border-bottom: solid lightgray;
+}
+
+.filterRating {
+    width: 50%;
+}
+
+.monthsSelect {
+    column-count: 3;
+    column-gap: 20px;
+    column-rule: 1px solid lightgrey;
+    margin-top: -15px;
+}
+
+.input-group {
+    margin-top: -15px;
+}
+

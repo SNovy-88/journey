@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/resultList.css">
     <link rel="stylesheet" href="CSS/search.css">
+    <link rel="stylesheet" href="CSS/createHike.css">
     <title>Journey | Results</title>
 
     <!-- Bootstrap css href -->
@@ -26,21 +27,115 @@
 
 
     <div class="search-container-rlist">
-        <div class="filter">
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                FILTER
-            </button>
-            <div class="collapse" id="collapseExample">
-                <div class="card card-body">
-                    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-                </div>
-            </div>
-        </div>
         <form action="/Journey_war_exploded/searchResultList">
             <input type="text" class="search-input" name="searchString" placeholder="All Hikes" value="<%= searchString %>">
             <button class="search-button-rlist">Search</button>
         </form>
     </div>
+
+<div class="filter">
+    <h2 class="filterHead"> FILTER </h2>
+    <div class="filterClass">
+        <label for="fitness">Fitness-Level:</label>
+        <br>
+        <select name="fitness" id="fitness" class="filterRating">
+            <option value="" selected="selected" hidden="hidden">Choose here</option>
+            <option value="1">Easy</option>
+            <option value="2">Moderate</option>
+            <option value="3">Intermediate</option>
+            <option value="4">Expert</option>
+            <option value="5">Challenging</option>
+        </select>
+    </div>
+    <div class="filterClass">
+        <label for="stamina">Stamina:</label>
+        <br>
+        <select name="stamina" id="stamina" class="filterRating">
+            <option value="" selected="selected" hidden="hidden">Choose here</option>
+            <option value="1">Untrained</option>
+            <option value="2">Moderate</option>
+            <option value="3">Intermediate</option>
+            <option value="4">Athletic</option>
+            <option value="5">Elite</option>
+        </select>
+    </div>
+    <div class="filterClass">
+    <label for="experience">Experience:</label>
+    <br>
+    <select name="experience" id="experience" class="filterRating">
+        <option value="" selected="selected" hidden="hidden">Choose here</option>
+        <option value="1">Novice</option>
+        <option value="2">Practised</option>
+        <option value="3">Intermediate</option>
+        <option value="4">Experienced</option>
+        <option value="5">Expert</option>
+    </select>
+    </div>
+    <div class="filterClass">
+    <label for="scenery">Scenery:</label>
+    <br>
+    <select name="scenery" id="scenery" class="filterRating">
+        <option value="" selected="selected" hidden="hidden">Choose here</option>
+        <option value="1">Unremarkable</option>
+        <option value="2">Ordinary</option>
+        <option value="3">Enjoyable</option>
+        <option value="4">Beautiful</option>
+        <option value="5">Stunning</option>
+    </select>
+    </div>
+    <div class="filterClass">
+    <p> Preferred months:</p>
+        <div class="monthsSelect">
+            <input type="checkbox" id="month1" name="month1" value="January">
+            <label for="month1"> Jan </label><br>
+            <input type="checkbox" id="month2" name="month2" value="February">
+            <label for="month2"> Feb </label><br>
+            <input type="checkbox" id="month3" name="month3" value="March">
+            <label for="month3"> Mar </label><br>
+            <input type="checkbox" id="month4" name="month4" value="April">
+            <label for="month4"> Apr </label><br>
+            <input type="checkbox" id="month5" name="month5" value="May">
+            <label for="month5"> May </label><br>
+            <input type="checkbox" id="month6" name="month6" value="June">
+            <label for="month6"> Jun </label><br>
+            <input type="checkbox" id="month7" name="month7" value="July">
+            <label for="month7"> Jul </label><br>
+            <input type="checkbox" id="month8" name="month8" value="August">
+            <label for="month8"> Aug </label><br>
+            <input type="checkbox" id="month9" name="month9" value="September">
+            <label for="month9"> Sep </label><br>
+            <input type="checkbox" id="month10" name="month10" value="October">
+            <label for="month10"> Oct </label><br>
+            <input type="checkbox" id="month11" name="month11" value="November">
+            <label for="month11"> Nov </label><br>
+            <input type="checkbox" id="month12" name="month12" value="December">
+            <label for="month12"> Dec </label><br>
+        </div>
+    </div>
+    <div class="filterClass">
+        <p>Height-Difference:</p>
+        <div class="input-group">
+            <input type="number" pattern="\d+" aria-label="height-difference" class="form-control" id="height-difference" name="height-difference">
+            <span class="input-group-text">m</span>
+        </div>
+    </div>
+    <div class="filterClass">
+        <p>Distance:</p>
+        <div class="input-group">
+            <input type="number" aria-label="distance" class="form-control" id="distance" name="distance" step="any">
+            <span class="input-group-text">km</span>
+        </div>
+    </div>
+    <div class="filterClass">
+        <p>Duration:</p>
+        <div class="input-group">
+            <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d+" inputmode="numeric" step="1" min="0" name="duration-hr">
+            <span class="input-group-text">hr</span>
+            <input type="number" aria-label="duration-min" class="form-control" id="duration-min" pattern="\d+" inputmode="numeric" step="1" min="0" max="59" name="duration-min">
+            <span class="input-group-text">min</span>
+        </div>
+    </div>
+</div>
 </div>
 
 <div class="hike-box-container"> <!-- hike-box-container contains every hike element from the search results -->
