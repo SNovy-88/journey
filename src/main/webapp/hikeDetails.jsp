@@ -235,10 +235,12 @@
                         String lastLon = "0";
 
                         if (waypointsList != null) {
-                            lastLat = waypointsList.get(waypointsList.size() - 1).get("latitude");
-                            lastLon = waypointsList.get(waypointsList.size() - 1).get("longitude");
+                            lastLat = waypointsList.get(0).get("latitude");
+                            lastLon = waypointsList.get(0).get("longitude");
                         }
                     %>
+
+
                 <!--https://www.windy.com/de/-Gewitter-thunder?thunder,2023120621,47.180,9.439,10,m:eX6agqS-->
                     <iframe width="380" height="450" src="https://embed.windy.com/embed2.html?lat=<%=lastLat%>&lon=<%=lastLon%>&detailLat=<%=lastLat%>&detailLon=<%=lastLon%>&width=380&height=450&zoom=11&level=surface&overlay=temp&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=true&metricWind=default&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
 
