@@ -8,6 +8,8 @@
 <%@ page import="at.fhv.journey.model.Hike" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Bootstrap css href -->
@@ -36,6 +38,7 @@
 
     <body>
     <% Hike hike = (Hike) request.getAttribute("hike");%>
+    <% List<Map<String, String>> waypointsList = (List<Map<String, String>>) request.getAttribute("waypointsList");%>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="JS/hikeDetails.js"></script>
     <script src="JS/hikeDetailsMap.js"></script>
