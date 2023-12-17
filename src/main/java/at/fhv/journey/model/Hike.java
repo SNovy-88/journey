@@ -1,6 +1,7 @@
 package at.fhv.journey.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,7 +25,7 @@ public class Hike {
     private LocalDate _dateCreated;
     private String _gpxLocation;
 
-    private List<Comment> _comments;
+    private List<Comment> _comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "hike", cascade = CascadeType.ALL)
     public List<Comment> getComments() {
@@ -173,9 +174,9 @@ public class Hike {
     }
 
     public void setComments(List<Comment> comments) {
-        _comments = comments;
+        this._comments = comments;
         for (Comment comment : comments) {
-            comment.setHikeId(this);
+            comment.setHike(this);
         }
     }
 

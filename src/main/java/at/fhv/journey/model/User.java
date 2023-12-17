@@ -67,9 +67,9 @@ public class User {
     }
 
     public void setComments(List<Comment> comments) {
-        _comments = comments;
+        this._comments = comments;
         for (Comment comment : comments) {
-            comment.setUserId(this);
+            comment.setUser(this);
         }
     }
 }

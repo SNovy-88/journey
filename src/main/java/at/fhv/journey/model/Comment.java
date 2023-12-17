@@ -28,22 +28,22 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    public User getUserId() {
+    public User getUser() {
         return _user_id;
     }
 
-    public void setUserId(User user_id) {
-        _user_id = user_id;
+    public void setUser(User user) {
+        _user_id = user;
     }
 
     @ManyToOne
     @JoinColumn(name = "hike_id", nullable = false)
-    public Hike getHikeId() {
+    public Hike getHike() {
         return _hike_id;
     }
 
-    public void setHikeId(Hike hike_id) {
-        _hike_id = hike_id;
+    public void setHike(Hike hike) {
+        _hike_id = hike;
     }
 
     @Column(name = "comment_text")

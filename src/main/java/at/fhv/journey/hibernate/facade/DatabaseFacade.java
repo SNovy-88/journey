@@ -1,7 +1,9 @@
 package at.fhv.journey.hibernate.facade;
 
+import at.fhv.journey.hibernate.broker.CommentBrokerJPA;
 import at.fhv.journey.hibernate.broker.HikeBrokerJPA;
 import at.fhv.journey.hibernate.broker.UserBrokerJPA;
+import at.fhv.journey.model.Comment;
 import at.fhv.journey.model.Hike;
 import at.fhv.journey.model.User;
 
@@ -59,6 +61,18 @@ public class DatabaseFacade implements IdbFacadeJPA {
     public List<User> getUsersByEmail(String email) {
         try (UserBrokerJPA ub = new UserBrokerJPA()){
             return ub.getUsersByEmail(email);
+        }
+    }
+
+    public List<Comment> getCommentsForHike(int hikeId){
+        try (CommentBrokerJPA cb = new CommentBrokerJPA()){
+            return cb.getCommentsForHike(hikeId);
+        }
+    }
+
+    public List<Comment> getCommentsForUser(int userId){
+        try (CommentBrokerJPA cbu = new CommentBrokerJPA()){
+            return cbu.getCommentsForUser(userId);
         }
     }
 
