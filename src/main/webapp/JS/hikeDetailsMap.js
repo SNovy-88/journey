@@ -74,35 +74,16 @@ async function initializeAndShowRoute() {
         const startPoint = waypoints[i];
         const endPoint = waypoints[i + 1];
 
-        const route = await calculateRoute(startPoint, endPoint);
+        const { geojson, details } = await fetchRoute([
+            { lat: startPoint.lat, lng: startPoint.lon },
+            { lat: endPoint.lat, lng: endPoint.lon }
+        ]);
 
         // Add the route as a layer to the upload map
-        L.polyline(route, { color: 'red' }).addTo(detailMap);
+        L.geoJSON(geojson, { color: 'red' }).addTo(detailMap);
     }
 
     // Fit the upload map to the bounds of all routes
     const bounds = L.latLngBounds(waypoints.map((wpt) => L.latLng(wpt.lat, wpt.lon)));
     detailMap.fitBounds(bounds);
-}
-
-// Function to calculate route between two waypoints using OpenRouteService API
-async function calculateRoute(startPoint, endPoint) {
-    const profile = 'foot-hiking'; // Specify the hiking profile
-    const url = `https://api.openrouteservice.org/v2/directions/${profile}?api_key=${ORS_API_KEY}&start=${startPoint.lon},${startPoint.lat}&end=${endPoint.lon},${endPoint.lat}`;
-
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (data.features && data.features.length > 0) {
-            // Extract coordinates from the route geometry
-            return data.features[0].geometry.coordinates.map(([lon, lat]) => [lat, lon]);
-        } else {
-            console.error('Error calculating route:', data);
-            return [];
-        }
-    } catch (error) {
-        console.error('Error calculating route:', error);
-        return [];
-    }
 }

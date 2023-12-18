@@ -130,7 +130,7 @@
                                         <button class="btn btn-danger" type="button" onclick="deleteLastWaypoint()">Delete Last Waypoint</button>
                                         <ul id="coordinates-list"></ul> <!-- List of waypoints -->
                                     </div>
-                                <button class="btn btn-primary" type="button" onclick="if (validateStep1()) stepper1.next()">Next</button>
+                                <button class="btn btn-primary" type="button" onclick="if (validateStep1()) nextButtonClick()">Next</button>
                                 <button class="btn btn-success" type="submit" onclick="createHike()">Create Hike</button> <!-- Create Hike button -->
                             </div>
 
@@ -147,9 +147,9 @@
                                             Minute value needs to be under 60.
                                         </div>
                                         <div class="input-group">
-                                            <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d+" inputmode="numeric" step="1" min="0" name="duration-hr">
+                                            <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d+" inputmode="numeric" step="1" min="0" name="duration-hr" readonly>
                                             <span class="input-group-text">hr</span>
-                                            <input type="number" aria-label="duration-min" class="form-control" id="duration-min" pattern="\d+" inputmode="numeric" step="1" min="0" max="59" name="duration-min">
+                                            <input type="number" aria-label="duration-min" class="form-control" id="duration-min" pattern="\d+" inputmode="numeric" step="1" min="0" max="59" name="duration-min" readonly>
                                             <span class="input-group-text">min</span>
                                         </div>
                                     </div>
@@ -162,7 +162,7 @@
                                             Please input a whole number.
                                         </div>
                                         <div class="input-group">
-                                            <input type="number" pattern="\d+" aria-label="height-difference" class="form-control" id="height-difference" name="height-difference">
+                                            <input type="number" pattern="\d+" aria-label="height-difference" class="form-control" id="height-difference" name="height-difference" readonly>
                                             <span class="input-group-text">m</span>
 
                                         </div>
@@ -175,7 +175,7 @@
                                             Please input a number i.e. 2.34 or 5.7
                                         </div>
                                         <div class="input-group">
-                                            <input type="number" aria-label="distance" class="form-control" id="distance" name="distance" step="any">
+                                            <input type="number" aria-label="distance" class="form-control" id="distance" name="distance" step="any" readonly>
                                             <span class="input-group-text">km</span>
                                         </div>
                                         <label for="distance" class="form-text">Input decimals with a dot, i.e. 12.4 or 4.67</label>
@@ -478,6 +478,7 @@
     <script src="JS/createHike.js"></script>
     <script src="JS/createHikeMap.js"></script>
     <script src="JS/createHikeUploadMap.js"></script>
+    <script src="JS/fetchRoute.js"></script>
     <script src="JS/createHikeImage.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <!--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js" integrity="sha384-cwmrdGZwrLYKw8X6zXkDo3MeqYTgVMiP+GxBSzLz3l2DE6/72UnZVJ8E+biqU1Kb" crossorigin="anonymous"></script>-->
