@@ -39,19 +39,19 @@
         <label for="fitness">Fitness-Level:</label>
         <br>
         <select name="fitness" id="fitness" class="filterRating">
-            <option value="" selected="selected" hidden="hidden">Choose here</option>
+            <option value="0" selected="selected" hidden="hidden">Choose here</option>
             <option value="1">Easy</option>
             <option value="2">Moderate</option>
             <option value="3">Intermediate</option>
-            <option value="4">Expert</option>
-            <option value="5">Challenging</option>
+            <option value="4">Challenging</option>
+            <option value="5">Expert</option>
         </select>
     </div>
     <div class="filterClass">
         <label for="stamina">Stamina:</label>
         <br>
         <select name="stamina" id="stamina" class="filterRating">
-            <option value="" selected="selected" hidden="hidden">Choose here</option>
+            <option value="0" selected="selected" hidden="hidden">Choose here</option>
             <option value="1">Untrained</option>
             <option value="2">Moderate</option>
             <option value="3">Intermediate</option>
@@ -63,7 +63,7 @@
     <label for="experience">Experience:</label>
     <br>
     <select name="experience" id="experience" class="filterRating">
-        <option value="" selected="selected" hidden="hidden">Choose here</option>
+        <option value="0" selected="selected" hidden="hidden">Choose here</option>
         <option value="1">Novice</option>
         <option value="2">Practised</option>
         <option value="3">Intermediate</option>
@@ -75,7 +75,7 @@
     <label for="scenery">Scenery:</label>
     <br>
     <select name="scenery" id="scenery" class="filterRating">
-        <option value="" selected="selected" hidden="hidden">Choose here</option>
+        <option value="0" selected="selected" hidden="hidden">Choose here</option>
         <option value="1">Unremarkable</option>
         <option value="2">Ordinary</option>
         <option value="3">Enjoyable</option>
@@ -86,29 +86,29 @@
     <div class="filterClass">
     <p> Preferred months:</p>
         <div class="monthsSelect">
-            <input type="checkbox" id="month1" name="month1" value="January">
+            <input class="month" type="checkbox" id="month1" name="month1" value="1">
             <label for="month1"> Jan </label><br>
-            <input type="checkbox" id="month2" name="month2" value="February">
+            <input class="month" type="checkbox" id="month2" name="month2" value="2">
             <label for="month2"> Feb </label><br>
-            <input type="checkbox" id="month3" name="month3" value="March">
+            <input class="month" type="checkbox" id="month3" name="month3" value="4">
             <label for="month3"> Mar </label><br>
-            <input type="checkbox" id="month4" name="month4" value="April">
+            <input class="month" type="checkbox" id="month4" name="month4" value="8">
             <label for="month4"> Apr </label><br>
-            <input type="checkbox" id="month5" name="month5" value="May">
+            <input class="month" type="checkbox" id="month5" name="month5" value="16">
             <label for="month5"> May </label><br>
-            <input type="checkbox" id="month6" name="month6" value="June">
+            <input class="month" type="checkbox" id="month6" name="month6" value="32">
             <label for="month6"> Jun </label><br>
-            <input type="checkbox" id="month7" name="month7" value="July">
+            <input class="month" type="checkbox" id="month7" name="month7" value="64">
             <label for="month7"> Jul </label><br>
-            <input type="checkbox" id="month8" name="month8" value="August">
+            <input class="month" type="checkbox" id="month8" name="month8" value="128">
             <label for="month8"> Aug </label><br>
-            <input type="checkbox" id="month9" name="month9" value="September">
+            <input class="month" type="checkbox" id="month9" name="month9" value="256">
             <label for="month9"> Sep </label><br>
-            <input type="checkbox" id="month10" name="month10" value="October">
+            <input class="month" type="checkbox" id="month10" name="month10" value="512">
             <label for="month10"> Oct </label><br>
-            <input type="checkbox" id="month11" name="month11" value="November">
+            <input class="month" type="checkbox" id="month11" name="month11" value="1024">
             <label for="month11"> Nov </label><br>
-            <input type="checkbox" id="month12" name="month12" value="December">
+            <input class="month" type="checkbox" id="month12" name="month12" value="2048">
             <label for="month12"> Dec </label><br>
         </div>
     </div>
@@ -135,6 +135,7 @@
             <span class="input-group-text">min</span>
         </div>
     </div>
+    <button onclick="filter()">Apply</button>
 </div>
 </div>
 
@@ -216,6 +217,7 @@
 
 <!-- Bootstrap js implementation -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="JS/filter.js"></script>
 
 </body>
 </html>

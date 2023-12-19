@@ -29,18 +29,31 @@ public class searchResultListServlet extends HttpServlet {
 
         // Retrieve the search string from the request parameters
         String searchString = request.getParameter("searchString");
+        String fitness = request.getParameter("fitness");
+        String stamina = request.getParameter("stamina");
+        String experience = request.getParameter("experience");
+        String scenery = request.getParameter("scenery");
+        String months = request.getParameter("months");
+
+        DatabaseFacade df = new DatabaseFacade();
+        List<Hike> hikeList;
+
+        if(fitness != null) {
+            hikeList = df.getHikesByName(searchString, Integer.parseInt(fitness), Integer.parseInt(stamina), Integer.parseInt(experience), Integer.parseInt(scenery), Integer.parseInt(months));
+
+        }
+        else {
+            hikeList = df.getAllHikes();
+        }
+
 
         // If the search string is not null or empty, filter the hikes based on the search string
-        if (searchString != null && !searchString.isEmpty()) {
-            DatabaseFacade df = new DatabaseFacade();
-            List<Hike> filteredHikeList = df.getHikesByName(searchString);
-            request.setAttribute("hikeList", filteredHikeList);
-        } else {
+
             // If no search string provided, return all hikes
-            DatabaseFacade df = new DatabaseFacade();
-            List<Hike> hikeList = df.getAllHikes();
+
+
             request.setAttribute("hikeList", hikeList);
-        }
+
 
         try {
             request.getRequestDispatcher("/searchResultList.jsp").forward(request, response);
