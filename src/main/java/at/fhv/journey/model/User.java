@@ -3,6 +3,8 @@ package at.fhv.journey.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name ="user", schema ="journey")
 public class User {
@@ -11,6 +13,17 @@ public class User {
     private String _username;
     private String _email;
     private String _password;
+
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public User(){
 

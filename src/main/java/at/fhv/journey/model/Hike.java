@@ -1,6 +1,7 @@
 package at.fhv.journey.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "hike", schema = "journey")
@@ -22,6 +23,17 @@ public class Hike {
     private String _author;
     private LocalDate _dateCreated;
     private String _gpxLocation;
+
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "hike")
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public Hike(){
 
