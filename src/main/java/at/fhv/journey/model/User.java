@@ -16,7 +16,7 @@ public class User {
 
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public List<Comment> getComments() {
         return comments;
     }

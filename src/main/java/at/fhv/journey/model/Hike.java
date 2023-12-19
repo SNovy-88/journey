@@ -26,7 +26,7 @@ public class Hike {
 
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "hike")
+    @OneToMany(mappedBy = "hike", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public List<Comment> getComments() {
         return comments;
     }
