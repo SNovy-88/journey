@@ -137,15 +137,10 @@
                             <!-- STEPPER 2 -->
                             <div id="test-l-2" class="content"> <!-- Content of the 2nd stepper part -->
 
-                                <div class="row g-2">
-                                    <div class="col-md-3" style="margin-top: 30px"> <!-- Group for Duration hr and min -->
-                                        <label for="duration-hr" class="form-label">Duration<sup>*</sup></label>
-                                        <div class="invalid-feedback" id="duration-hr-feedback">
-                                            The hour field is mandatory. If duration is under 1 hour please input 0.
-                                        </div>
-                                        <div class="invalid-feedback" id="duration-min-feedback">
-                                            Minute value needs to be under 60.
-                                        </div>
+                                <div class="row g-2" style="margin-top: 30px">
+                                    <!-- Group for Duration hr and min -->
+                                    <label for="duration-hr" class="form-label">Duration (autom. calculated)</label>
+                                    <div class="col-md-2">
                                         <div class="input-group">
                                             <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d+" inputmode="numeric" step="1" min="0" name="duration-hr" readonly>
                                             <span class="input-group-text">hr</span>
@@ -154,31 +149,24 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="row g-1">
-                                    <div class="col-md-3" style="margin-top: 30px"> <!-- Height difference input -->
-                                        <label for="height-difference" class="form-label">Height Difference<sup>*</sup></label>
-                                        <div class="invalid-feedback" id="height-difference-feedback">
-                                            Please input a whole number.
-                                        </div>
+                                <div class="row g-1" style="margin-top: 30px">
+                                    <!-- Height difference input -->
+                                    <label for="height-difference" class="form-label">Height Difference (autom. calculated)</label>
+                                    <div class="col-md-2">
                                         <div class="input-group">
                                             <input type="number" pattern="\d+" aria-label="height-difference" class="form-control" id="height-difference" name="height-difference" readonly>
                                             <span class="input-group-text">m</span>
-
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row g-1">
-                                    <div class="col-md-3" style="margin-top: 30px"> <!-- Distance input -->
-                                        <label for="distance" class="form-label">Distance<sup>*</sup></label>
-                                        <div class="invalid-feedback" id="distance-feedback">
-                                            Please input a number i.e. 2.34 or 5.7
-                                        </div>
+                                <div class="row g-1" style="margin-top: 30px">
+                                    <!-- Distance input -->
+                                    <label for="distance" class="form-label">Distance (autom. calculated)</label>
+                                    <div class="col-md-2">
                                         <div class="input-group">
                                             <input type="number" aria-label="distance" class="form-control" id="distance" name="distance" step="any" readonly>
                                             <span class="input-group-text">km</span>
                                         </div>
-                                        <label for="distance" class="form-text">Input decimals with a dot, i.e. 12.4 or 4.67</label>
                                     </div>
                                 </div>
                                 <hr>

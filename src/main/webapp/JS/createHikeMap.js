@@ -176,7 +176,7 @@ window.nextButtonClick = async function () {
     document.getElementById('duration-hr').value = Math.floor(totalDuration / 3600);
     document.getElementById('duration-min').value = Math.floor((totalDuration % 3600) / 60);
     document.getElementById('height-difference').value = Math.round(totalAscent);
-    document.getElementById('distance').value = (totalDistance / 1000).toFixed(2).replace('.', ',');
+    document.getElementById('distance').value = (totalDistance / 1000).toFixed(2);
 
     // Move to the next step
     stepper1.next();
