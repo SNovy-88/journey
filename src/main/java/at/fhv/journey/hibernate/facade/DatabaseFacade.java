@@ -38,13 +38,11 @@ public class DatabaseFacade implements IdbFacadeJPA {
         }
     }
 
-
     public List<Hike> getAllHikes() {
         try (HikeBrokerJPA hb = new HikeBrokerJPA()) {
             return hb.getAll(Hike.class);
         }
     }
-
 
     public Hike getHikeByID(int id) {
         try (HikeBrokerJPA hb = new HikeBrokerJPA()) {
@@ -78,7 +76,27 @@ public class DatabaseFacade implements IdbFacadeJPA {
 
     public static void main(String[] args) {
 
+        DatabaseFacade facade = DatabaseFacade.getInstance();
+        //Test für die getCommentForHike Methode
+        int hikeIdForTest = 1;
+        List<Comment> commentsForHike = facade.getCommentsForHike(hikeIdForTest);
 
+        System.out.println("Comments for Hike with ID " + hikeIdForTest + ":");
+        for (Comment comment : commentsForHike) {
+            System.out.println("Comment ID: " + comment.getCommentId());
+            System.out.println("User ID: " + comment.getUser().getUser_id());
+            System.out.println("Comment Text: " + comment.getCommentText());
+        }
 
+        //Test für die getCommentForUser Methode
+        int userIdForTest = 4;
+        List<Comment> commentsForUser = facade.getCommentsForUser(userIdForTest);
+
+        System.out.println("Comments for User with ID " + userIdForTest + ":");
+        for (Comment comment : commentsForUser) {
+            System.out.println("Comment ID: " + comment.getCommentId());
+            System.out.println("Hike ID: " + comment.getHike().getHike_id());
+            System.out.println("Comment Text: " + comment.getCommentText());
+        }
     }
 }

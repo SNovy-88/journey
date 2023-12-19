@@ -27,7 +27,7 @@ public class Hike {
 
     private List<Comment> _comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "hike", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "hike", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<Comment> getComments() {
         return _comments;
     }
@@ -46,6 +46,7 @@ public class Hike {
         _heightDifference = heightDifference;
         _fitnessLevel = fitnessLevel;
         _description = description;
+        //_comments = new ArrayList<>();
     }
 
     @Id
@@ -174,11 +175,14 @@ public class Hike {
     }
 
     public void setComments(List<Comment> comments) {
-        this._comments = comments;
-        for (Comment comment : comments) {
-            comment.setHike(this);
+        if (comments != null) {
+            this._comments = comments;
+            for (Comment comment : comments) {
+                comment.setHike(this);
+            }
         }
     }
+
 
     //Functions to convert 1-5 Scales into String output
 

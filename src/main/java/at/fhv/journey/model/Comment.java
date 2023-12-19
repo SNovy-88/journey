@@ -26,7 +26,7 @@ public class Comment {
         _commentId = commentId;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     public User getUser() {
         return _user_id;
@@ -36,7 +36,7 @@ public class Comment {
         _user_id = user;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "hike_id", nullable = false)
     public Hike getHike() {
         return _hike_id;

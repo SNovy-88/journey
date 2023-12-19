@@ -1,6 +1,8 @@
 package at.fhv.journey.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,6 +23,7 @@ public class User {
         this._username = username;
         this._email = email;
         this._password = password;
+        this._comments = new ArrayList<>();
     }
 
     @Id
@@ -61,7 +64,7 @@ public class User {
         _password = password;
     }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<Comment> getComments() {
         return _comments;
     }
