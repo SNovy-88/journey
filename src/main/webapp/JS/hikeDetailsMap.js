@@ -80,10 +80,70 @@ async function initializeAndShowRoute() {
         ]);
 
         // Add the route as a layer to the upload map
-        L.geoJSON(geojson, { color: 'red' }).addTo(detailMap);
+        const routeLayer = L.geoJSON(geojson, { color: 'red' }).addTo(detailMap);
+
+        // Extract elevation data
+        const elevationData = extractElevationData(geojson);
+
+        // Add elevation profile chart
+        addElevationProfileChart(elevationData, routeLayer);
     }
 
     // Fit the upload map to the bounds of all routes
     const bounds = L.latLngBounds(waypoints.map((wpt) => L.latLng(wpt.lat, wpt.lon)));
     detailMap.fitBounds(bounds);
+}
+
+function extractElevationData(responseData) {
+    const coordinates = responseData.features[0].geometry.coordinates;
+    const elevationData = coordinates.map(coord => coord[2]); // Extracting height from the third entry of each coordinate
+    return elevationData;
+}
+
+function addElevationProfileChart(elevationData, routeLayer) {
+    const ctx = document.getElementById('elevationChart').getContext('2d');
+
+    const chartData = {
+        labels: elevationData.map((_, index) => `Point ${index + 1}`),
+        datasets: [{
+            label: 'Elevation Profile',
+            data: elevationData,
+            borderColor: 'green',
+            backgroundColor: 'rgba(1, 50, 32, 0.1)',
+            fill: true
+        }]
+    };
+
+    const chartOptions = {
+        scales: {
+            x: {
+                display: false, // Hide x-axis labels
+                title: {
+                    display: false
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Elevation (meters)'
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: false // Hide the legend
+            }
+        },
+        elements: {
+            point: {
+                radius: 0 // Set point radius to 0 to hide points
+            }
+        }
+    };
+
+    new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: chartOptions
+    });
 }

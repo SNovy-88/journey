@@ -32,6 +32,9 @@
         <!-- Leaflet JavaScript -->
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
         <script src="https://unpkg.com/leaflet-gpx@1.4.0/gpx.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     </head>
 
     <body>
@@ -104,6 +107,8 @@
                     <!-- Use JSTL c:out tag to escape HTML characters -->
                     <input type="hidden" id="xmlText" name="xmlText" value="<c:out value='${xmlText}' />">
                     <div id="detailMap" style="height: 400px;"></div>
+                    <br>
+                    <canvas id="elevationChart" width="800" height="300"></canvas>
                     <br>
                     <!-- Accordion for waypoint descriptions -->
                     <c:forEach var="waypoint" items="${waypointsList}" varStatus="loop">
