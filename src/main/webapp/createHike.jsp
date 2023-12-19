@@ -399,23 +399,60 @@
                             <!-- STEPPER 3 -->
                             <div id="test-l-3" class="content"> <!-- Content of the 3rd stepper part -->
 
-                                    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-                                    <!-- Image input -->
-                                    <div class="file-upload">
-                                        <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
-                                        <div class="image-upload-wrap">
-                                            <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
-                                            <div class="drag-text">
-                                                <h3>Drag and drop a file or select add Image</h3>
-                                            </div>
-                                        </div>
-                                        <div class="file-upload-content">
-                                            <img class="file-upload-image" src="#" alt="your image" />
-                                            <div class="image-title-wrap">
-                                                <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <form id="image-form" enctype="multipart/form-data" class="btn btn-primary">
+                                    <label for="image">Upload Image:</label>
+                                    <br>
+                                    <input type="file" id="image" name="image" accept="image/*">
+                                </form>
+                                <br>
+
+                                <div id="preview-container">
+                                    <img id="uploaded-image"   src="" alt="Uploaded Image">
+                                    <br>
+                                    <div id="remove-btn" class="btn btn-primary" onclick="removeImage()">Remove Image</div>
+                                </div>
+
+                                <script>
+                                    function showPreview(input) {
+                                        const fileInput = input.files[0];
+                                        const previewContainer = document.getElementById("preview-container");
+                                        const uploadedImage = document.getElementById("uploaded-image");
+
+                                        if (fileInput) {
+                                            const reader = new FileReader();
+
+                                            reader.onload = function (e) {
+                                                previewContainer.style.display = "block";
+                                                uploadedImage.src = e.target.result;
+                                            };
+
+                                            reader.readAsDataURL(fileInput);
+                                        }
+                                    }
+
+                                    function removeImage() {
+                                        const previewContainer = document.getElementById("preview-container");
+                                        const uploadedImage = document.getElementById("uploaded-image");
+                                        const fileInput = document.getElementById("image");
+
+                                        // Clear the file input
+                                        fileInput.value = "";
+
+                                        // Hide the preview container
+                                        previewContainer.style.display = "none";
+
+                                        // Clear the image source
+                                        uploadedImage.src = "";
+                                    }
+
+                                    // Attach the showPreview function to the change event of the file input
+                                    document.getElementById("image").addEventListener("change", function () {
+                                        showPreview(this);
+                                    });
+                                </script>
+                                <br>
+
+
                                 <button class="btn btn-primary" type="button" onclick="stepper1.next()">Next</button>
                                 <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
                             </div>

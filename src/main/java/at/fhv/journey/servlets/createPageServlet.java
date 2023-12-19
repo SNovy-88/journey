@@ -11,9 +11,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "createPageServlet", value = "/create_hike")
@@ -66,6 +71,43 @@ public class createPageServlet extends HttpServlet {
         hike.setScenery(scenery);
         hike.setRecommendedMonths(checkedMonths);
         hike.setDateCreated(date);
+
+        hike.setImage("test1.jpg");
+
+        Part filePart = request.getPart("image");
+        // Get the InputStream to upload the file to the server
+        if (filePart != null && filePart.getSize() > 0) {
+            try (InputStream fileContent = filePart.getInputStream()) {
+                //String relativePath = "/pictures/uploads";
+
+                // Define the directory to store the uploaded file
+                //String uploadDirectory = getServletContext().getRealPath(relativePath);
+
+                // Create the directory if it doesn't exist
+            /*
+            Path uploadPath = Paths.get(uploadDirectory);
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }*/
+
+                // Generate a unique filename for the uploaded file
+                String fileName = UUID.randomUUID().toString() + ".jpg";
+
+                // Use Paths.get instead of resolve to construct a path relative to the source directory
+                Path serverPath = Paths.get(getServletContext().getRealPath(""));
+                Path subPath = serverPath.subpath(0, serverPath.getNameCount() - 2);
+                Path realPath = Paths.get(serverPath.getRoot().toString(), subPath.toString(), "src/main/webapp/pictures/uploads", fileName);
+
+                // Copy the InputStream to the desired location
+                Files.copy(fileContent, realPath, StandardCopyOption.REPLACE_EXISTING);
+
+                hike.setImage(fileName);
+
+
+            }
+        }
+
+
 
         //TODO needs to be changed to userId once Create is locked for normal users
         if(session.getAttribute("username") != null){
