@@ -24,7 +24,7 @@
     <script src="JS/search.js"></script>
 
     <%-- Retrieve the search string from the request --%>
-    <% String searchString = "";
+    <% String searchString;
         if (request.getParameter("searchString") != null) {
             searchString = request.getParameter("searchString");
         }else {
@@ -39,7 +39,7 @@
                 <h2 style="color: white;">Filter</h2>
             </div>
             <div class="col-md-10" >
-                <form action="/Journey_war_exploded/filterResultList">
+                <form action="filterResultList">
                     <input id="search-input" type="text" class="search-input" name="searchString" placeholder="All Hikes" value="<%= searchString%>">
                     <button class="search-button-rlist">Search</button>
                 </form>
@@ -296,7 +296,7 @@
                                 <input type="submit" value="detailsPage">
                             </form>
                             -->
-                            <form action ="/Journey_war_exploded/detailPage" id="moreDetailsForm">
+                            <form action ="detailPage" id="moreDetailsForm">
                                 <input type="hidden" value = "<%=hike.getHike_id()%>" name = hike-id>
                                 <button type="submit" value = "hikeDetails" id = "hikeDetailsButton" class = "hike-details-link">More Details</button>
                             </form>
