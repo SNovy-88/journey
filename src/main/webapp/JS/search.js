@@ -14,7 +14,7 @@ function updateDropdownExIcons(dropdown, element) {
     // Setting the Text of the button to the selected option
     let dropdownButton = document.getElementById(dropdown);
     let selectedValue = element.getAttribute("data-id");
-    dropdownButton.innerHTML = element.innerHTML;
+    dropdownButton.innerHTML = element.innerHTML; // sets Button text to chosen value
     dropdownButton.setAttribute("chosen-value-id", selectedValue);
     document.getElementById(dropdown+"-hidden").value = selectedValue;
 
