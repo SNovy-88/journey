@@ -21,32 +21,37 @@ import java.util.Map;
 
 public class HikeBrokerJPA extends BrokerBaseJPA<Hike> {
 
-    public List<Hike> getHikesWithFilter(String name, Integer fitness, Integer stamina, Integer experience, Integer scenery, Integer months) {
+    public List<Hike> getHikesWithFilter(String name, String fitness, String stamina, String experience, String scenery, Integer months) {
         EntityManager entityManager = getEntityManager();
 
         // Start with base query
-        StringBuilder queryString = new StringBuilder("SELECT h FROM Hike h WHERE h.name ILIKE :name");
+        StringBuilder queryString = new StringBuilder("SELECT h FROM Hike h WHERE TRIM(h.name) ILIKE :name");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", "%" + name + "%");
 
 
         // Append conditions for each filter if they are not null
-        if (fitness != null) {
+        if ((fitness != null) && (!fitness.isEmpty())) {
+            System.out.println("fitness-HikeBroker: " + fitness);
+            Integer fitnessInt = Integer.parseInt(fitness);
             queryString.append(" AND h.fitnessLevel = :fitness");
-            parameters.put("fitness", fitness);
+            parameters.put("fitness", fitnessInt);
         }
-       /* if (stamina != null) {
-            queryString.append(" AND h.stamina <= :stamina");
-            parameters.put("stamina", stamina);
+        if (stamina != null && (!stamina.isEmpty())) {
+            Integer staminaInt = Integer.parseInt(stamina);
+            queryString.append(" AND h.stamina = :stamina");
+            parameters.put("stamina", staminaInt);
         }
-        if (experience != null) {
-            queryString.append(" AND h.experience <= :experience");
-            parameters.put("experience", experience);
+        if (experience != null && !experience.isEmpty()) {
+            Integer experienceInt = Integer.parseInt(experience);
+            queryString.append(" AND h.experience = :experience");
+            parameters.put("experience", experienceInt);
         }
-        if (scenery != null) {
-            queryString.append(" AND h.scenery >= :scenery");
-            parameters.put("scenery", scenery);
-        }*/
+        if (scenery != null && !scenery.isEmpty()) {
+            Integer sceneryInt = Integer.parseInt(scenery);
+            queryString.append(" AND h.scenery = :scenery");
+            parameters.put("scenery", sceneryInt);
+        }
 
         Query query = entityManager.createQuery(queryString.toString(), Hike.class);
         for (Map.Entry<String, Object> entry : parameters.entrySet()) {
