@@ -13,14 +13,13 @@ package at.fhv.journey.hibernate.broker;
 import at.fhv.journey.model.Hike;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
-import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class HikeBrokerJPA extends BrokerBaseJPA<Hike> {
-
+    //Todo months filter needs to be added and the other text fields
     public List<Hike> getHikesWithFilter(String name, String fitness, String stamina, String experience, String scenery, Integer months) {
         EntityManager entityManager = getEntityManager();
 
