@@ -29,6 +29,7 @@ public class searchResultListServlet extends HttpServlet {
 
         // Retrieve the search string from the request parameters
         String searchString = request.getParameter("searchString");
+        System.out.println("searchString-Servlet: " + searchString);
         String fitness = request.getParameter("fitness");
         String stamina = request.getParameter("stamina");
         String experience = request.getParameter("experience");
@@ -37,14 +38,16 @@ public class searchResultListServlet extends HttpServlet {
 
         DatabaseFacade df = new DatabaseFacade();
         List<Hike> hikeList;
-
-        if(fitness != null) {
-            hikeList = df.getHikesByName(searchString, Integer.parseInt(fitness), Integer.parseInt(stamina), Integer.parseInt(experience), Integer.parseInt(scenery), Integer.parseInt(months));
+        System.out.println("fitness-Servlet: " + fitness);
+        if(fitness != null || stamina != null || experience != null || scenery != null || months != null) {
+            hikeList = df.getHikesWithFilter(searchString, Integer.parseInt(fitness), Integer.parseInt(stamina), Integer.parseInt(experience), Integer.parseInt(scenery), Integer.parseInt(months));
 
         }
         else {
-            hikeList = df.getAllHikes();
+            hikeList = df.getHikesByName(searchString);
         }
+
+        //TODO here needs to be checked if the search string is empty or not
 
 
         // If the search string is not null or empty, filter the hikes based on the search string

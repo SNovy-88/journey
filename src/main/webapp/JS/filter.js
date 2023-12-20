@@ -1,5 +1,5 @@
 function filter() {
-    const fitness = document.getElementById("fitness")
+    const fitness = document.getElementById("drop-down-btn-fitness")
     const stamina = document.getElementById("stamina")
     const experience = document.getElementById("experience")
     const scenery = document.getElementById("scenery")
@@ -15,6 +15,6 @@ function filter() {
     })
 
     const currentUrl = window.location.href;
-    window.location.href = currentUrl.split("&")[0] + `&fitness=${fitness.value}&stamina=${stamina.value}&experience=${experience.value}&scenery=${scenery.value}&months=${monthBits}`
+    window.location.href = currentUrl.split("&")[0] + `&fitness=${fitness.getAttribute('chosen-value-id')}&stamina=${stamina.value}&experience=${experience.value}&scenery=${scenery.value}&months=${monthBits}`
     //console.log(monthBits);
 }

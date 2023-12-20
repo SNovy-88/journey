@@ -21,122 +21,144 @@
 
 <div class="scroll">
     <jsp:include page="navBar.jsp"/>
+    <script src="JS/search.js"></script>
 
     <%-- Retrieve the search string from the request --%>
     <% String searchString = request.getParameter("searchString"); %>
 
 
     <div class="search-container-rlist">
-        <form action="/Journey_war_exploded/searchResultList">
-            <input type="text" class="search-input" name="searchString" placeholder="All Hikes" value="<%= searchString %>">
-            <button class="search-button-rlist">Search</button>
-        </form>
+        <div class="row">
+            <div class="col-md-2" style="text-align: left; padding-left: 7%">
+                <h2 style="color: white;">Filter</h2>
+            </div>
+            <div class="col-md-10" >
+                <form action="/Journey_war_exploded/searchResultList">
+                    <input type="text" class="search-input" name="searchString" placeholder="All Hikes" value="<%= searchString %>">
+                    <button class="search-button-rlist">Search</button>
+                </form>
+            </div>
+        </div>
     </div>
 
-<div class="filter">
-    <h2 class="filterHead"> FILTER </h2>
-    <div class="filterClass">
-        <label for="fitness">Fitness-Level:</label>
+    <div class="filter">
+        <div class="filterClass">
+            <label for="fitness">Fitness-Level:</label>
+            <br>
+            <div class="btn-group dropend">
+                <button id="drop-down-btn-fitness" data-id="fitness" chosen-value-id="" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Select an option
+                </button>
+                <ul class="dropdown-menu">
+                    <!-- updateDropdown(dropdown Button(to change title), this option (to highlight it)) -->
+                    <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="1">Easy</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="2">Moderate</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="3">Intermediate</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="4">Expert</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="5">Challenging</a></li>
+                </ul>
+            </div>
+
+
+            <select name="fitness" id="fitness" class="filterRating">
+                <option value="0" selected="selected" hidden="hidden">Choose here</option>
+                <option value="1">Easy</option>
+                <option value="2">Moderate</option>
+                <option value="3">Intermediate</option>
+                <option value="4">Challenging</option>
+                <option value="5">Expert</option>
+            </select>
+        </div>
+        <div class="filterClass">
+            <label for="stamina">Stamina:</label>
+            <br>
+            <select name="stamina" id="stamina" class="filterRating">
+                <option value="0" selected="selected" hidden="hidden">Choose here</option>
+                <option value="1">Untrained</option>
+                <option value="2">Moderate</option>
+                <option value="3">Intermediate</option>
+                <option value="4">Athletic</option>
+                <option value="5">Elite</option>
+            </select>
+        </div>
+        <div class="filterClass">
+        <label for="experience">Experience:</label>
         <br>
-        <select name="fitness" id="fitness" class="filterRating">
+        <select name="experience" id="experience" class="filterRating">
             <option value="0" selected="selected" hidden="hidden">Choose here</option>
-            <option value="1">Easy</option>
-            <option value="2">Moderate</option>
+            <option value="1">Novice</option>
+            <option value="2">Practised</option>
             <option value="3">Intermediate</option>
-            <option value="4">Challenging</option>
+            <option value="4">Experienced</option>
             <option value="5">Expert</option>
         </select>
-    </div>
-    <div class="filterClass">
-        <label for="stamina">Stamina:</label>
+        </div>
+        <div class="filterClass">
+        <label for="scenery">Scenery:</label>
         <br>
-        <select name="stamina" id="stamina" class="filterRating">
+        <select name="scenery" id="scenery" class="filterRating">
             <option value="0" selected="selected" hidden="hidden">Choose here</option>
-            <option value="1">Untrained</option>
-            <option value="2">Moderate</option>
-            <option value="3">Intermediate</option>
-            <option value="4">Athletic</option>
-            <option value="5">Elite</option>
+            <option value="1">Unremarkable</option>
+            <option value="2">Ordinary</option>
+            <option value="3">Enjoyable</option>
+            <option value="4">Beautiful</option>
+            <option value="5">Stunning</option>
         </select>
-    </div>
-    <div class="filterClass">
-    <label for="experience">Experience:</label>
-    <br>
-    <select name="experience" id="experience" class="filterRating">
-        <option value="0" selected="selected" hidden="hidden">Choose here</option>
-        <option value="1">Novice</option>
-        <option value="2">Practised</option>
-        <option value="3">Intermediate</option>
-        <option value="4">Experienced</option>
-        <option value="5">Expert</option>
-    </select>
-    </div>
-    <div class="filterClass">
-    <label for="scenery">Scenery:</label>
-    <br>
-    <select name="scenery" id="scenery" class="filterRating">
-        <option value="0" selected="selected" hidden="hidden">Choose here</option>
-        <option value="1">Unremarkable</option>
-        <option value="2">Ordinary</option>
-        <option value="3">Enjoyable</option>
-        <option value="4">Beautiful</option>
-        <option value="5">Stunning</option>
-    </select>
-    </div>
-    <div class="filterClass">
-    <p> Preferred months:</p>
-        <div class="monthsSelect">
-            <input class="month" type="checkbox" id="month1" name="month1" value="1">
-            <label for="month1"> Jan </label><br>
-            <input class="month" type="checkbox" id="month2" name="month2" value="2">
-            <label for="month2"> Feb </label><br>
-            <input class="month" type="checkbox" id="month3" name="month3" value="4">
-            <label for="month3"> Mar </label><br>
-            <input class="month" type="checkbox" id="month4" name="month4" value="8">
-            <label for="month4"> Apr </label><br>
-            <input class="month" type="checkbox" id="month5" name="month5" value="16">
-            <label for="month5"> May </label><br>
-            <input class="month" type="checkbox" id="month6" name="month6" value="32">
-            <label for="month6"> Jun </label><br>
-            <input class="month" type="checkbox" id="month7" name="month7" value="64">
-            <label for="month7"> Jul </label><br>
-            <input class="month" type="checkbox" id="month8" name="month8" value="128">
-            <label for="month8"> Aug </label><br>
-            <input class="month" type="checkbox" id="month9" name="month9" value="256">
-            <label for="month9"> Sep </label><br>
-            <input class="month" type="checkbox" id="month10" name="month10" value="512">
-            <label for="month10"> Oct </label><br>
-            <input class="month" type="checkbox" id="month11" name="month11" value="1024">
-            <label for="month11"> Nov </label><br>
-            <input class="month" type="checkbox" id="month12" name="month12" value="2048">
-            <label for="month12"> Dec </label><br>
         </div>
-    </div>
-    <div class="filterClass">
-        <p>Height-Difference:</p>
-        <div class="input-group">
-            <input type="number" pattern="\d+" aria-label="height-difference" class="form-control" id="height-difference" name="height-difference">
-            <span class="input-group-text">m</span>
+        <div class="filterClass">
+        <p> Preferred months:</p>
+            <div class="monthsSelect">
+                <input class="month" type="checkbox" id="month1" name="month1" value="1">
+                <label for="month1"> Jan </label><br>
+                <input class="month" type="checkbox" id="month2" name="month2" value="2">
+                <label for="month2"> Feb </label><br>
+                <input class="month" type="checkbox" id="month3" name="month3" value="4">
+                <label for="month3"> Mar </label><br>
+                <input class="month" type="checkbox" id="month4" name="month4" value="8">
+                <label for="month4"> Apr </label><br>
+                <input class="month" type="checkbox" id="month5" name="month5" value="16">
+                <label for="month5"> May </label><br>
+                <input class="month" type="checkbox" id="month6" name="month6" value="32">
+                <label for="month6"> Jun </label><br>
+                <input class="month" type="checkbox" id="month7" name="month7" value="64">
+                <label for="month7"> Jul </label><br>
+                <input class="month" type="checkbox" id="month8" name="month8" value="128">
+                <label for="month8"> Aug </label><br>
+                <input class="month" type="checkbox" id="month9" name="month9" value="256">
+                <label for="month9"> Sep </label><br>
+                <input class="month" type="checkbox" id="month10" name="month10" value="512">
+                <label for="month10"> Oct </label><br>
+                <input class="month" type="checkbox" id="month11" name="month11" value="1024">
+                <label for="month11"> Nov </label><br>
+                <input class="month" type="checkbox" id="month12" name="month12" value="2048">
+                <label for="month12"> Dec </label><br>
+            </div>
         </div>
-    </div>
-    <div class="filterClass">
-        <p>Distance:</p>
-        <div class="input-group">
-            <input type="number" aria-label="distance" class="form-control" id="distance" name="distance" step="any">
-            <span class="input-group-text">km</span>
+        <div class="filterClass">
+            <p>Height-Difference:</p>
+            <div class="input-group">
+                <input type="number" pattern="\d+" aria-label="height-difference" class="form-control" id="height-difference" name="height-difference">
+                <span class="input-group-text">m</span>
+            </div>
         </div>
-    </div>
-    <div class="filterClass">
-        <p>Duration:</p>
-        <div class="input-group">
-            <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d+" inputmode="numeric" step="1" min="0" name="duration-hr">
-            <span class="input-group-text">hr</span>
-            <input type="number" aria-label="duration-min" class="form-control" id="duration-min" pattern="\d+" inputmode="numeric" step="1" min="0" max="59" name="duration-min">
-            <span class="input-group-text">min</span>
+        <div class="filterClass">
+            <p>Distance:</p>
+            <div class="input-group">
+                <input type="number" aria-label="distance" class="form-control" id="distance" name="distance" step="any">
+                <span class="input-group-text">km</span>
+            </div>
         </div>
+        <div class="filterClass">
+            <p>Duration:</p>
+            <div class="input-group">
+                <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d+" inputmode="numeric" step="1" min="0" name="duration-hr">
+                <span class="input-group-text">hr</span>
+                <input type="number" aria-label="duration-min" class="form-control" id="duration-min" pattern="\d+" inputmode="numeric" step="1" min="0" max="59" name="duration-min">
+                <span class="input-group-text">min</span>
+            </div>
+        </div>
+        <button onclick="filter()">Apply</button>
     </div>
-    <button onclick="filter()">Apply</button>
-</div>
 </div>
 
 <div class="hike-box-container"> <!-- hike-box-container contains every hike element from the search results -->
