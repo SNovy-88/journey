@@ -48,7 +48,7 @@ public class DatabaseFacade implements IdbFacadeJPA {
         }
     }
 
-    public List<Hike> getHikesWithFilter(String name, int fitness, int stamina, int experience, int scenery, int months) {
+    public List<Hike> getHikesWithFilter(String name, String fitness, String stamina, String experience, String scenery, int months) {
         try (HikeBrokerJPA hb = new HikeBrokerJPA()){
             return hb.getHikesWithFilter(name, fitness, stamina, experience, scenery, months);
         }
