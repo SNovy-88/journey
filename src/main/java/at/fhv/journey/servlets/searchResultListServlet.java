@@ -5,7 +5,7 @@
  * Description:
  *
  * Date of Creation/
- * Last Update:          22/11/2023
+ * Last Update:          20/12/2023
  */
 
 package at.fhv.journey.servlets;
@@ -29,34 +29,18 @@ public class searchResultListServlet extends HttpServlet {
 
         // Retrieve the search string from the request parameters
         String searchString = request.getParameter("searchString");
-        System.out.println("searchString-Servlet: " + searchString);
-        String fitness = request.getParameter("fitness");
-        String stamina = request.getParameter("stamina");
-        String experience = request.getParameter("experience");
-        String scenery = request.getParameter("scenery");
-        String months = request.getParameter("months");
-
-        DatabaseFacade df = new DatabaseFacade();
-        List<Hike> hikeList;
-        System.out.println("fitness-Servlet: " + fitness);
-        if(fitness != null || stamina != null || experience != null || scenery != null || months != null) {
-            hikeList = df.getHikesWithFilter(searchString, Integer.parseInt(fitness), Integer.parseInt(stamina), Integer.parseInt(experience), Integer.parseInt(scenery), Integer.parseInt(months));
-
-        }
-        else {
-            hikeList = df.getHikesByName(searchString);
-        }
-
-        //TODO here needs to be checked if the search string is empty or not
-
 
         // If the search string is not null or empty, filter the hikes based on the search string
-
+        if (searchString != null && !searchString.isEmpty()) {
+            DatabaseFacade df = new DatabaseFacade();
+            List<Hike> filteredHikeList = df.getHikesByName(searchString);
+            request.setAttribute("hikeList", filteredHikeList);
+        } else {
             // If no search string provided, return all hikes
-
-
+            DatabaseFacade df = new DatabaseFacade();
+            List<Hike> hikeList = df.getAllHikes();
             request.setAttribute("hikeList", hikeList);
-
+        }
 
         try {
             request.getRequestDispatcher("/searchResultList.jsp").forward(request, response);
