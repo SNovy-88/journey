@@ -33,6 +33,7 @@
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
         <script src="https://unpkg.com/leaflet-gpx@1.4.0/gpx.js"></script>
 
+        <!-- Chart JS -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     </head>
