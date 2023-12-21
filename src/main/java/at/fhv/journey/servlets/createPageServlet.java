@@ -84,14 +84,15 @@ public class createPageServlet extends HttpServlet {
 
                 // Use Paths.get instead of resolve to construct a path relative to the source directory
                 Path serverPath = Paths.get(getServletContext().getRealPath(imagePath.getImagePath()),fileName);
-                //Path subPath = serverPath.subpath(0, serverPath.getNameCount() - 2);
-                //Path realPath = Paths.get(serverPath.toString(), fileName);
+                Path subPath = serverPath.subpath(0, serverPath.getNameCount() - 2);
+                Path realPath = Paths.get(subPath.toString(), fileName);
 
                 if (!Files.exists(serverPath)) {
                     Files.createDirectories(serverPath);
                 }
 
                 Files.copy(fileContent, serverPath, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(fileContent, realPath, StandardCopyOption.REPLACE_EXISTING);
 
                 hike.setImage(fileName);
             }
