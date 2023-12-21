@@ -3,6 +3,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
+<%@ page import="at.fhv.journey.utils.imagePath" %>
 
 <html>
 <head lang="en">
@@ -43,7 +44,7 @@
             <div class="row"> <!-- grid system for the infos inside a box -->
                 <div class="col-md-4"> <!-- column for the image -->
                     <div class="image-container">
-                        <div class="image rounded" style="background-image: url('pictures/uploads/<%=hike.getImage()%>');"></div>
+                        <div class="image rounded" style="background-image: url('<%=imagePath.getImagePath()%><%=hike.getImage()%>');"></div>
                     </div>
                 </div>
                 <div class="col-md-8"> <!-- column for the header and description -->

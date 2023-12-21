@@ -10,6 +10,7 @@
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
+<%@ page import="at.fhv.journey.utils.imagePath" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Bootstrap css href -->
@@ -62,7 +63,7 @@
 
                 </div>
                 <div class="image-container">
-                    <img class="image" src="pictures/uploads/<%=hike.getImage()%>" alt="Hike picture"/>
+                    <img class="image" src="<%=imagePath.getImagePath()%>><%=hike.getImage()%>" alt="Hike picture"/>
                 </div>
                 <div class = hike-details-stats-container>
                     <div class="row">

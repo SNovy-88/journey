@@ -2,6 +2,7 @@ package at.fhv.journey.servlets;
 
 import at.fhv.journey.hibernate.facade.DatabaseFacade;
 import at.fhv.journey.model.Hike;
+import at.fhv.journey.utils.imagePath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -78,32 +79,21 @@ public class createPageServlet extends HttpServlet {
         // Get the InputStream to upload the file to the server
         if (filePart != null && filePart.getSize() > 0) {
             try (InputStream fileContent = filePart.getInputStream()) {
-                //String relativePath = "/pictures/uploads";
 
-                // Define the directory to store the uploaded file
-                //String uploadDirectory = getServletContext().getRealPath(relativePath);
-
-                // Create the directory if it doesn't exist
-            /*
-            Path uploadPath = Paths.get(uploadDirectory);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }*/
-
-                // Generate a unique filename for the uploaded file
-                String fileName = UUID.randomUUID().toString() + ".jpg";
+                String fileName = UUID.randomUUID() + ".jpg";
 
                 // Use Paths.get instead of resolve to construct a path relative to the source directory
-                Path serverPath = Paths.get(getServletContext().getRealPath(""));
-                Path subPath = serverPath.subpath(0, serverPath.getNameCount() - 2);
-                Path realPath = Paths.get(serverPath.getRoot().toString(), subPath.toString(), "src/main/webapp/pictures/uploads", fileName);
+                Path serverPath = Paths.get(getServletContext().getRealPath(imagePath.getImagePath()),fileName);
+                //Path subPath = serverPath.subpath(0, serverPath.getNameCount() - 2);
+                //Path realPath = Paths.get(serverPath.toString(), fileName);
 
-                // Copy the InputStream to the desired location
-                Files.copy(fileContent, realPath, StandardCopyOption.REPLACE_EXISTING);
+                if (!Files.exists(serverPath)) {
+                    Files.createDirectories(serverPath);
+                }
+
+                Files.copy(fileContent, serverPath, StandardCopyOption.REPLACE_EXISTING);
 
                 hike.setImage(fileName);
-
-
             }
         }
 
