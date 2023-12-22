@@ -78,21 +78,25 @@ public class createPageServlet extends HttpServlet {
         Part filePart = request.getPart("image");
         // Get the InputStream to upload the file to the server
         if (filePart != null && filePart.getSize() > 0) {
-            try (InputStream fileContent = filePart.getInputStream()) {
+            try (InputStream fileContent = filePart.getInputStream();
+                 InputStream fileContent2 = filePart.getInputStream()) {
 
                 String fileName = UUID.randomUUID() + ".jpg";
 
                 // Use Paths.get instead of resolve to construct a path relative to the source directory
-                Path serverPath = Paths.get(getServletContext().getRealPath(imagePath.getImagePath()),fileName);
+                Path serverImagePath = Paths.get(getServletContext().getRealPath(imagePath.getImagePath()),fileName);
+                Path serverPath = Paths.get(getServletContext().getRealPath(""));
                 Path subPath = serverPath.subpath(0, serverPath.getNameCount() - 2);
-                Path realPath = Paths.get(subPath.toString(), fileName);
+                Path realPath = Paths.get(serverImagePath.getRoot().toString(), subPath.toString(), imagePath.getImagePathFromRepository(), fileName);
 
-                if (!Files.exists(serverPath)) {
-                    Files.createDirectories(serverPath);
+                if (!Files.exists(serverImagePath)) {
+                    Files.createDirectories(serverImagePath);
                 }
-
-                Files.copy(fileContent, serverPath, StandardCopyOption.REPLACE_EXISTING);
-                Files.copy(fileContent, realPath, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(fileContent, serverImagePath, StandardCopyOption.REPLACE_EXISTING);
+                if (!Files.exists(realPath)) {
+                    Files.createDirectories(realPath);
+                }
+                Files.copy(fileContent2, realPath, StandardCopyOption.REPLACE_EXISTING);
 
                 hike.setImage(fileName);
             }

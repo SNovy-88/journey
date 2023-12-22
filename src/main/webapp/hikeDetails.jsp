@@ -63,7 +63,7 @@
 
                 </div>
                 <div class="image-container">
-                    <img class="image" src="<%=imagePath.getImagePath()%>><%=hike.getImage()%>" alt="Hike picture"/>
+                    <img class="image" src="<%=imagePath.getImagePath()%><%=hike.getImage()%>" alt="Hike picture"/>
                 </div>
                 <div class = hike-details-stats-container>
                     <div class="row">
