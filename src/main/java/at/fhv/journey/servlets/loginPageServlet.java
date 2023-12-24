@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.mindrot.jbcrypt.BCrypt;
+
 
 @WebServlet(name = "loginPageServlet", value = "/loginPageServlet")
 public class loginPageServlet extends HttpServlet {
@@ -41,7 +43,13 @@ public class loginPageServlet extends HttpServlet {
             DatabaseFacade df = new DatabaseFacade();
             List<User> users = df.getUsersByEmail(email);
 
-            return users != null && !users.isEmpty() && Objects.equals(users.get(0).getPassword(), password);
+            if (users != null && !users.isEmpty()) {
+                User user = users.get(0);
+                String hashedPassword = user.getHashedPassword();
+                return hashedPassword != null && BCrypt.checkpw(password, hashedPassword);
+            } else {
+                return false;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
