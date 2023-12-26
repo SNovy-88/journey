@@ -111,27 +111,31 @@ public class detailPageServlet extends HttpServlet {
         }
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        // Retrieve the hike ID from the request parameter
-        //int hikeId = Integer.parseInt(request.getParameter("hike-id"));
         int hikeId = 1;
-        // Create a new comment for the hike
         response.setContentType("text/html");
         HttpSession session = request.getSession();
-         //TODO if (session.getAttribute("username") != null) { --> überprüft ob angemeldet
-            String commentText = request.getParameter("commentText"); // Assuming you have an input field for comment text
-            DatabaseFacade df = DatabaseFacade.getInstance();
 
-            User currentUser = df.getUserByID(9);
+        // Retrieve the current user from the session or wherever it is stored during login
+        User currentUser = (User) session.getAttribute("user");
+        System.out.println("Hallo!");
+        if (currentUser != null) {
+            String commentText = request.getParameter("commentText");
+            DatabaseFacade df = DatabaseFacade.getInstance();
             Hike chosenHike = df.getHikeByID(hikeId);
 
+            // Create a new Comment with the current user
             Comment comment = new Comment(currentUser, chosenHike, commentText, LocalDate.now(),
                     LocalTime.now().getHour(), LocalTime.now().getMinute());
 
             df.saveObject(comment);
 
             response.sendRedirect("/Journey_war_exploded/detailPage?hike-id=1");
+        } else {
+            // Handle the case where the user is not authenticated
 
+        }
     }
+
 
 
 

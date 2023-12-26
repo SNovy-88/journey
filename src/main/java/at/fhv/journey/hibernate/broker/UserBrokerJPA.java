@@ -16,4 +16,5 @@ public class UserBrokerJPA extends BrokerBaseJPA<User>{
         entityManager.close();
         return users;
     }
+
 }
