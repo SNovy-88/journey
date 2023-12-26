@@ -12,7 +12,7 @@ public class User {
     private int _user_id;
     private String _username;
     private String _email;
-    private String _password;
+    private String _hashedPassword;
 
     private List<Comment> comments;
 
@@ -29,11 +29,11 @@ public class User {
 
     }
 
-    public User(int userId, String username, String email, String password) {
+    public User(int userId, String username, String email, String hashedPassword) {
         this._user_id = userId;
         this._username = username;
         this._email = email;
-        this._password = password;
+        this._hashedPassword = hashedPassword;
     }
 
     @Id
@@ -65,12 +65,12 @@ public class User {
         _email = email;
     }
 
-    @Column(name = "password")
-    public String getPassword(){
-        return _password;
+    @Column(name = "hashed_password")
+    public String getHashedPassword(){
+        return _hashedPassword;
     }
 
-    public void setPassword(String password){
-        _password = password;
+    public void setHashedPassword(String hashedPassword){
+        _hashedPassword = hashedPassword;
     }
 }

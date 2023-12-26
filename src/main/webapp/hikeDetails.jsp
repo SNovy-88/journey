@@ -10,6 +10,7 @@
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
+<%@ page import="at.fhv.journey.model.Comment" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Bootstrap css href -->
@@ -39,6 +40,7 @@
     <body>
     <% Hike hike = (Hike) request.getAttribute("hike");%>
     <% List<Map<String, String>> waypointsList = (List<Map<String, String>>) request.getAttribute("waypointsList");%>
+    <% List<Comment> comments = hike.getComments();%>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="JS/hikeDetails.js"></script>
     <script src="JS/hikeDetailsMap.js"></script>
@@ -126,6 +128,23 @@
                                     ${empty waypoint.description ? 'No description available' : waypoint.description}
                                 </div>
                             </div>
+                        </div>
+                    </c:forEach>
+                </div>
+                <form action="/Journey_war_exploded/detailPage" method="post">
+                    <label for="commentText">Your Comment:</label>
+                    <textarea id="commentText" name="commentText" required></textarea>
+                    <input type="hidden" name="hikeId" value="${hike.hike_id}" />
+                    <button type="submit">Add Comment</button>
+                </form>
+
+
+                <div class="comments-section">
+                    <h2>Comments</h2>
+                    <c:forEach var="comment" items="${hike.comments}">
+                        <div class="comment">
+                            <p>${comment.comment_date}</p>
+                            <p>${comment.comment_text}</p>
                         </div>
                     </c:forEach>
                 </div>

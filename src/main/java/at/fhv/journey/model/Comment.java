@@ -8,6 +8,7 @@ import java.time.LocalDate;
 public class Comment {
 
     private int _comment_id;
+
     private User _user;
     private Hike _hike;
     private String _comment_text;

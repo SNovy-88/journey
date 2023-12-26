@@ -11,6 +11,8 @@
 package at.fhv.journey.servlets;
 
 import at.fhv.journey.hibernate.facade.DatabaseFacade;
+import at.fhv.journey.model.Comment;
+import at.fhv.journey.model.User;
 import at.fhv.journey.model.Hike;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -19,6 +21,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import jakarta.servlet.http.HttpSession;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -32,6 +35,8 @@ import java.io.InputStream;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -104,6 +109,32 @@ public class detailPageServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        // Retrieve the hike ID from the request parameter
+        //int hikeId = Integer.parseInt(request.getParameter("hike-id"));
+        int hikeId = 1;
+        // Create a new comment for the hike
+        HttpSession session = request.getSession();
+        if (true) { //TODO (session.getAttribute("username") != null) --> überprüft ob angemeldet
+            String commentText = request.getParameter("commentText"); // Assuming you have an input field for comment text
+            DatabaseFacade df = new DatabaseFacade();
+            User currentUser = df.getUserByID(9);
+            Hike chosenHike = df.getHikeByID(hikeId);
+
+            Comment comment = new Comment(currentUser, chosenHike, commentText, LocalDate.now(),
+                    LocalTime.now().getHour(), LocalTime.now().getMinute());
+
+            // Save the comment to the database
+            df.saveObject(comment);
+        }
+
+        // Forward the request to the hikeDetails.jsp page or any other appropriate page
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/hikeDetails.jsp");
+        dispatcher.forward(request, response);
+    }
+
+
+
 
 
 }

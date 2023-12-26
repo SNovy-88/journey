@@ -41,7 +41,13 @@ public class loginPageServlet extends HttpServlet {
             DatabaseFacade df = new DatabaseFacade();
             List<User> users = df.getUsersByEmail(email);
 
-            return users != null && !users.isEmpty() && Objects.equals(users.get(0).getPassword(), password);
+            if (users != null && !users.isEmpty()) {
+                User user = users.get(0);
+                String hashedPassword = user.getHashedPassword();
+                return hashedPassword != null && BCrypt.checkpw(password, hashedPassword);
+            } else {
+                return false;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

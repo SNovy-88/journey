@@ -15,4 +15,13 @@ public class CommentBrokerJPA extends BrokerBaseJPA<Comment> {
         entityManager.close();
         return comments;
     }
+
+    public List<Comment> getCommentsByHike(int hikeId) {
+        EntityManager entityManager = getEntityManager();
+        List<Comment> comments = entityManager.createQuery("SELECT c FROM Comment c WHERE c.hike.hike_id = :hikeId", Comment.class)
+                .setParameter("hikeId", hikeId)
+                .getResultList();
+        entityManager.close();
+        return comments;
+    }
 }

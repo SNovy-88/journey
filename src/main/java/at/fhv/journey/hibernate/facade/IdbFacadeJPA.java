@@ -19,4 +19,5 @@ public interface IdbFacadeJPA {
     List<Hike> getHikesByName(String name);
 
     List<User> getUsersByEmail(String email);
+    User getUserByID(int id);
 }

@@ -27,6 +27,10 @@ public class DatabaseFacade implements IdbFacadeJPA {
             try(HikeBrokerJPA hb = new HikeBrokerJPA()) {
                 hb.insert((Hike) value);
             }
+        } else if (value instanceof Comment) {
+            try (CommentBrokerJPA cb = new CommentBrokerJPA()) {
+                cb.insert((Comment) value);
+            }
         }
     }
 
@@ -65,9 +69,20 @@ public class DatabaseFacade implements IdbFacadeJPA {
         }
     }
 
+    public User getUserByID(int id) {
+        try (UserBrokerJPA ub = new UserBrokerJPA()) {
+            return ub.getById(User.class, id);
+        }
+    }
+
     public List<Comment> getCommentsByUser(int userId) {
         try (CommentBrokerJPA cb = new CommentBrokerJPA()) {
             return cb.getCommentsByUser(userId);
+        }
+    }
+    public List<Comment> getCommentsByHike(int hikeId) {
+        try (CommentBrokerJPA cb = new CommentBrokerJPA()) {
+            return cb.getCommentsByHike(hikeId);
         }
     }
 
