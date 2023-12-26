@@ -111,10 +111,9 @@ public class detailPageServlet extends HttpServlet {
         }
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int hikeId = 1;
         response.setContentType("text/html");
         HttpSession session = request.getSession();
-
+        int hikeId = Integer.parseInt(request.getParameter("hikeId"));
         // Retrieve the current user from the session or wherever it is stored during login
         User currentUser = (User) session.getAttribute("user");
 
@@ -124,12 +123,13 @@ public class detailPageServlet extends HttpServlet {
             Hike chosenHike = df.getHikeByID(hikeId);
 
             // Create a new Comment with the current user
-            Comment comment = new Comment(currentUser, chosenHike, commentText, LocalDate.now(),
+            Comment comment = new Comment(currentUser, null, commentText, LocalDate.now(),
                     LocalTime.now().getHour(), LocalTime.now().getMinute());
-
+            comment.setHike(chosenHike);
             df.saveObject(comment);
+            
 
-            response.sendRedirect("/Journey_war_exploded/detailPage?hike-id=1");
+            response.sendRedirect("/Journey_war_exploded/detailPage?hike-id=1" + request.getParameter("hikeId") );
         } else {
             // Handle the case where the user is not authenticated
 
