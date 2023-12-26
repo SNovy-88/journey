@@ -117,7 +117,7 @@ public class detailPageServlet extends HttpServlet {
 
         // Retrieve the current user from the session or wherever it is stored during login
         User currentUser = (User) session.getAttribute("user");
-        System.out.println("Hallo!");
+
         if (currentUser != null) {
             String commentText = request.getParameter("commentText");
             DatabaseFacade df = DatabaseFacade.getInstance();
