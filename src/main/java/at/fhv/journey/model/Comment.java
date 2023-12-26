@@ -41,7 +41,7 @@ public class Comment {
         _comment_id = comment_id;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     public User getUser() {
         return _user;

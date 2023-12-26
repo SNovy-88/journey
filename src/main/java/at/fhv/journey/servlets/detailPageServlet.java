@@ -115,24 +115,22 @@ public class detailPageServlet extends HttpServlet {
         //int hikeId = Integer.parseInt(request.getParameter("hike-id"));
         int hikeId = 1;
         // Create a new comment for the hike
-        //HttpSession session = request.getSession();
+        response.setContentType("text/html");
+        HttpSession session = request.getSession();
          //TODO if (session.getAttribute("username") != null) { --> überprüft ob angemeldet
             String commentText = request.getParameter("commentText"); // Assuming you have an input field for comment text
-            DatabaseFacade df = new DatabaseFacade();
+            DatabaseFacade df = DatabaseFacade.getInstance();
+
             User currentUser = df.getUserByID(9);
             Hike chosenHike = df.getHikeByID(hikeId);
 
             Comment comment = new Comment(currentUser, chosenHike, commentText, LocalDate.now(),
                     LocalTime.now().getHour(), LocalTime.now().getMinute());
 
-
-            // Save the comment to the database
             df.saveObject(comment);
 
+            response.sendRedirect("/Journey_war_exploded/detailPage?hike-id=1");
 
-        // Forward the request to the hikeDetails.jsp page or any other appropriate page
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/hikeDetails.jsp");
-        dispatcher.forward(request, response);
     }
 
 
