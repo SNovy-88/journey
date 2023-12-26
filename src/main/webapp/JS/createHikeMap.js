@@ -25,6 +25,9 @@ let cachedGPXData = '';
 // Declare routePolyline at the beginning of your script, outside any function, to ensure proper scope
 let routePolyline;
 
+// Declare a global variable to store an array of route data
+let storedRouteDataMap = [];
+
 // Add a click event listener to the map
 map.on('click', function (e) {
     // Open the modal when the map is clicked
@@ -103,7 +106,7 @@ map.on('click', function (e) {
         // If there are at least two waypoints, fetch route and zoom the map
         if (waypoints.length >= 2) {
             const prevWaypoint = waypoints[waypoints.length - 2].latlng;
-            fetchRoute(prevWaypoint, clickedLatLng);
+            addRouting(prevWaypoint, clickedLatLng);
             map.fitBounds(L.latLngBounds(waypoints.map(wp => wp.latlng)));
         }
 
@@ -115,25 +118,71 @@ map.on('click', function (e) {
     };
 });
 
-// Function to fetch updated route after waypoint deletion
-async function fetchRoute(startLatLng, endLatLng) {
-    const profile = 'foot-hiking'; // Specify the hiking profile
-    const url = `https://api.openrouteservice.org/v2/directions/${profile}?api_key=${ORS_API_KEY}&start=${startLatLng.lng},${startLatLng.lat}&end=${endLatLng.lng},${endLatLng.lat}`;
-
+// Function to add route to map
+async function addRouting(startLatLng, endLatLng) {
+    const coordinates = [startLatLng, endLatLng];
     try {
-        const response = await fetch(url);
-        const data = await response.json();
+        const { geojson, details } = await fetchRoute(coordinates);
 
-        const routeCoordinates = data.features[0].geometry.coordinates.map(coord => L.latLng(coord[1], coord[0]));
+        // Extract route coordinates from the GeoJSON data
+        const routeCoordinates = geojson.features[0].geometry.coordinates.map(coord => L.latLng(coord[1], coord[0]));
 
-        // Add the route polyline to the map
-        routePolyline = L.polyline(routeCoordinates, { color: 'red' }).addTo(map);
+        // Add the route GeoJSON layer to the map
+        routePolyline = L.geoJSON(geojson, {color: 'red'}).addTo(map);
+
+        // Store the route data in the global array
+        storedRouteDataMap.push(details);
+
     } catch (error) {
         console.error('Error fetching route:', error);
     }
 }
 
-// Function to update the coordinates list
+// Function to be called when the "Next" button is clicked in the first step
+window.nextButtonClick = async function () {
+    // Get the switch-element state
+    const switchStateInput = document.getElementById('switchState');
+    const switchState = switchStateInput.value;
+
+    let totalDuration = null;
+    let totalAscent = null;
+    let totalDistance = null;
+
+    if (switchState === 'map') {
+        // Check if route data array is not empty
+        if (storedRouteDataMap.length > 0) {
+            // Sum up the total duration, ascent, and distance from all segments
+            totalDuration = storedRouteDataMap.reduce((acc, segment) => acc + segment.duration, 0);
+            totalAscent = storedRouteDataMap.reduce((acc, segment) => acc + segment.ascent, 0);
+            totalDistance = storedRouteDataMap.reduce((acc, segment) => acc + segment.distance, 0);
+        }
+    } else if (switchState === 'upload') {
+        // Check if showRoute() has been called and uploadMapRouteDataArray is not empty
+        if (storedRouteDataUploadMap.length === 0) {
+            // Call showRoute() to populate uploadMapRouteDataArray
+            await showRoute();
+        }
+
+        // Check if route data array is not empty
+        if (storedRouteDataUploadMap.length > 0) {
+            // Sum up the total duration, ascent, and distance from all segments
+            totalDuration = storedRouteDataUploadMap.reduce((acc, segment) => acc + segment.duration, 0);
+            totalAscent = storedRouteDataUploadMap.reduce((acc, segment) => acc + segment.ascent, 0);
+            totalDistance = storedRouteDataUploadMap.reduce((acc, segment) => acc + segment.distance, 0);
+        }
+    }
+
+    // Autofill the input fields in the second step
+    document.getElementById('duration-hr').value = Math.floor(totalDuration / 3600);
+    document.getElementById('duration-min').value = Math.floor((totalDuration % 3600) / 60);
+    document.getElementById('height-difference').value = Math.round(totalAscent);
+    document.getElementById('distance').value = (totalDistance / 1000).toFixed(2);
+
+    // Move to the next step
+    stepper1.next();
+};
+
+// Function to update the coordinates list below the map
 function updateCoordinatesList() {
     // Clear the existing list
     coordinatesList.innerHTML = '';
@@ -169,16 +218,25 @@ window.deleteLastWaypoint = function () {
 };
 
 // Function to update the route when waypoints are added, deleted, or dragged
-function updateRoute() {
+async function updateRoute() {
     // Clear the existing route
     clearRoute();
 
+    // Clear the storedRouteDataArray before recalculating the route
+    storedRouteDataMap = [];
+
     // Recalculate the route if there are at least two waypoints
     if (waypoints.length >= 2) {
+        const waypointPairs = [];
         for (let i = 0; i < waypoints.length - 1; i++) {
             const startLatLng = waypoints[i].latlng;
             const endLatLng = waypoints[i + 1].latlng;
-            fetchRoute(startLatLng, endLatLng);
+            waypointPairs.push([startLatLng, endLatLng]);
+        }
+
+        // Fetch routes for all waypoint pairs
+        for (const pair of waypointPairs) {
+            await addRouting(pair[0], pair[1]);
         }
     }
 }
