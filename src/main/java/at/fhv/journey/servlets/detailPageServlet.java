@@ -14,6 +14,7 @@ import at.fhv.journey.hibernate.facade.DatabaseFacade;
 import at.fhv.journey.model.Comment;
 import at.fhv.journey.model.User;
 import at.fhv.journey.model.Hike;
+import jakarta.persistence.EntityManager;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -114,8 +115,8 @@ public class detailPageServlet extends HttpServlet {
         //int hikeId = Integer.parseInt(request.getParameter("hike-id"));
         int hikeId = 1;
         // Create a new comment for the hike
-        HttpSession session = request.getSession();
-        if (true) { //TODO (session.getAttribute("username") != null) --> überprüft ob angemeldet
+        //HttpSession session = request.getSession();
+         //TODO if (session.getAttribute("username") != null) { --> überprüft ob angemeldet
             String commentText = request.getParameter("commentText"); // Assuming you have an input field for comment text
             DatabaseFacade df = new DatabaseFacade();
             User currentUser = df.getUserByID(9);
@@ -124,9 +125,10 @@ public class detailPageServlet extends HttpServlet {
             Comment comment = new Comment(currentUser, chosenHike, commentText, LocalDate.now(),
                     LocalTime.now().getHour(), LocalTime.now().getMinute());
 
+
             // Save the comment to the database
             df.saveObject(comment);
-        }
+
 
         // Forward the request to the hikeDetails.jsp page or any other appropriate page
         RequestDispatcher dispatcher = request.getRequestDispatcher("/hikeDetails.jsp");
