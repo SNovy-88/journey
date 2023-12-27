@@ -66,18 +66,6 @@ function validateStep1() {
 //Function for validation of duration (hr and min), height difference, distance
 //fitness level, stamina, experience and scenery
 function validateStep2() {
-    const inputHrElement = document.getElementById('duration-hr');
-    const inputHrFeedback = document.getElementById('duration-hr-feedback');
-
-    const inputMinElement = document.getElementById('duration-min');
-    const inputMinFeedback = document.getElementById('duration-min-feedback');
-
-    const inputHeightDiffElement = document.getElementById('height-difference');
-    const inputHeightDiffFeedback = document.getElementById('height-difference-feedback');
-
-    const inputDistanceElement = document.getElementById('distance');
-    const inputDistanceFeedback = document.getElementById('distance-feedback');
-
     const inputFitnessElement = document.getElementById('drop-down-btn-fitness');
     const inputFitnessFeedback = document.getElementById('fitness-feedback');
 
@@ -91,29 +79,17 @@ function validateStep2() {
     const inputSceneryFeedback = document.getElementById('scenery-feedback');
 
 
-    const isInputHrValid = isWholeNumber(inputHrElement.value.trim());
-    const isInputMinValid = isWholeNumber(inputMinElement.value.trim()) && parseInt(inputMinElement.value) >= 0 && parseInt(inputMinElement.value) <= 59;
-    const isInputHeightDiffValid = isWholeNumber(inputHeightDiffElement.value.trim()) && parseInt(inputHeightDiffElement.value) > 0;
-    const isDistanceValid = isDecimalNumber(inputDistanceElement.value.trim()) && parseFloat(inputDistanceElement.value) > 0;
     const isFitnessValid = inputFitnessElement.getAttribute('chosen-value-id') !== '';
     const isStaminaValid = inputStaminaElement.getAttribute('chosen-value-id') !== '';
     const isExperienceValid = inputExperienceElement.getAttribute('chosen-value-id') !== '';
     const isSceneryValid = inputSceneryElement.getAttribute('chosen-value-id') !== '';
 
-    validation(isInputHrValid, inputHrElement, inputHrFeedback);
-    validation(isInputMinValid, inputMinElement, inputMinFeedback);
-    validation(isInputHeightDiffValid, inputHeightDiffElement, inputHeightDiffFeedback);
-    validation(isDistanceValid, inputDistanceElement, inputDistanceFeedback);
     validation(isFitnessValid, inputFitnessElement, inputFitnessFeedback);
     validation(isStaminaValid, inputStaminaElement, inputStaminaFeedback);
     validation(isExperienceValid, inputExperienceElement, inputExperienceFeedback);
     validation(isSceneryValid, inputSceneryElement, inputSceneryFeedback);
 
-    return  isInputHrValid &&
-        isInputMinValid &&
-        isInputHeightDiffValid &&
-        isDistanceValid &&
-        isFitnessValid &&
+    return  isFitnessValid &&
         isStaminaValid &&
         isExperienceValid &&
         isSceneryValid;

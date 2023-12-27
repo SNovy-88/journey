@@ -30,9 +30,9 @@ input[type=number]::-webkit-inner-spin-button {
 
 input[type=number] {
        -moz-appearance:textfield;
-   }
+}
 
-#uploaded-image {
-    max-height: 300px;
-    width: auto; /* To maintain the aspect ratio */
+input[readonly] {
+    background-color: #f0f0f0; /* Greyed-out background color */
+    color: #999999; /* Text color for disabled content */
 }

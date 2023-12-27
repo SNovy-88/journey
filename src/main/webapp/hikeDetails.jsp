@@ -23,19 +23,31 @@
         <link rel="stylesheet" href="CSS/hikeDetails.css">
         <title>Journey | Detail-Page</title>
 
+        <!-- Include Bootstrap CSS and JS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
         <!-- Leaflet CSS -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
         <!-- Leaflet JavaScript -->
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
         <script src="https://unpkg.com/leaflet-gpx@1.4.0/gpx.js"></script>
+
+        <!-- Chart JS -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     </head>
 
     <body>
     <% Hike hike = (Hike) request.getAttribute("hike");%>
+    <% List<Map<String, String>> waypointsList = (List<Map<String, String>>) request.getAttribute("waypointsList");%>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="JS/hikeDetails.js"></script>
     <script src="JS/hikeDetailsMap.js"></script>
+    <script src="JS/fetchRoute.js"></script>
     <script>
       $(document).ready(function () {
           let recommendedMonths = <%=hike.getRecommendedMonths()%>;
@@ -97,25 +109,33 @@
                 </div>
                 <div>
                     <h2> Map view </h2>
-                    <%-- Use JSTL c:out tag to escape HTML characters --%>
+                    <!-- Use JSTL c:out tag to escape HTML characters -->
                     <input type="hidden" id="xmlText" name="xmlText" value="<c:out value='${xmlText}' />">
                     <div id="detailMap" style="height: 400px;"></div>
                     <br>
-                    <%
-                        List<Map<String, String>> waypointsList = (List<Map<String, String>>) request.getAttribute("waypointsList");
-
-                        if (waypointsList != null) {
-                            for (Map<String, String> waypoint : waypointsList) {
-                                String name = waypoint.get("name");
-                                if (name == null || name.trim().isEmpty()) {
-                                    name = "Unnamed Waypoint";
-                                }
-                    %>
-                    <p>Name: <%= name %>, (Latitude: <%= waypoint.get("latitude") %>, Longitude: <%= waypoint.get("longitude") %>)</p>
-                    <%
-                            }
-                        }
-                    %>
+                    <canvas id="elevationChart" width="800" height="300"></canvas>
+                    <br>
+                    <!-- Accordion for waypoint descriptions -->
+                    <c:forEach var="waypoint" items="${waypointsList}" varStatus="loop">
+                        <div class="card">
+                            <div class="card-header" id="heading${loop.index}">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${loop.index}" aria-expanded="true" aria-controls="collapse${loop.index}">
+                                        ${empty waypoint.name ? 'Waypoint' : waypoint.name}
+                                        <c:choose>
+                                            <c:when test="${waypoint.type eq 'poi'}">[Point of Interest]</c:when>
+                                            <c:when test="${waypoint.type eq 'hut'}">[Hut / Refuge]</c:when>
+                                        </c:choose>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapse${loop.index}" class="collapse" aria-labelledby="heading${loop.index}" data-parent="#accordion">
+                                <div class="card-body">
+                                    ${empty waypoint.description ? 'No description available' : waypoint.description}
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
             <!-- Right Field -->
@@ -213,6 +233,27 @@
                         </div>
                     </div>
                 </div>
+                    <div class="pathdetail">
+                        <span class="pathdetail-label">Weather Forecast:</span>
+                    </div>
+                    <br>
+
+                    <%
+                        String lastLat = "0";
+                        String lastLon = "0";
+
+                        if (waypointsList != null) {
+                            lastLat = waypointsList.get(0).get("latitude");
+                            lastLon = waypointsList.get(0).get("longitude");
+                        }
+                    %>
+
+
+                <!--https://www.windy.com/de/-Gewitter-thunder?thunder,2023120621,47.180,9.439,10,m:eX6agqS-->
+                    <iframe width="380" height="450" src="https://embed.windy.com/embed2.html?lat=<%=lastLat%>&lon=<%=lastLon%>&detailLat=<%=lastLat%>&detailLon=<%=lastLon%>&width=380&height=450&zoom=11&level=surface&overlay=temp&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=true&metricWind=default&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
+
+
+
             </div>
         </div>
     </body>
