@@ -240,10 +240,10 @@ h1 {
 /* Add this CSS to your JSP file or link to an external stylesheet */
 
 .comment-form {
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
-    max-width: 400px;
-    margin: 0 auto;
+    max-width: 100%;
 }
 
 .form-label {
@@ -266,16 +266,19 @@ h1 {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-bottom: 20px;
 }
 
 .form-button:hover {
     background-color: #45a049;
+
 }
 
 .comment {
     border: 1px solid #ddd;
     padding: 10px;
     margin-bottom: 15px;
+    border-radius: 5px;
 }
 
 .comment-header {

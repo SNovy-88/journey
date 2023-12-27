@@ -11,8 +11,12 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
 <%@ page import="at.fhv.journey.model.Comment" %>
+<%@ page import="at.fhv.journey.model.User" %>
+<%@ page import="jakarta.servlet.http.HttpSession" %>
+
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- Bootstrap css href -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -44,7 +48,7 @@
     <body>
     <% Hike hike = (Hike) request.getAttribute("hike");%>
     <% List<Map<String, String>> waypointsList = (List<Map<String, String>>) request.getAttribute("waypointsList");%>
-    <% List<Comment> comments = hike.getComments();%>
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="JS/hikeDetails.js"></script>
     <script src="JS/hikeDetailsMap.js"></script>
@@ -139,13 +143,11 @@
                     </c:forEach>
                 </div>
                 <!-- Comment Form -->
-                <form action="/Journey_war_exploded/detailPage" method="post" class="comment-form">
-                    <label for="commentText" class="form-label">Your Comment:</label>
-                    <textarea id="commentText" name="commentText" class="form-textarea" required></textarea>
-                    <input type="hidden" name="hikeId" value="${hike.hike_id}" />
-                    <button type="submit" class="form-button">Add Comment</button>
-                </form>
-
+                    <form action="/Journey_war_exploded/detailPage" method="post" class="comment-form">
+                        <textarea id="commentText" name="commentText" class="form-textarea" required placeholder="Tell us how your journey was!"></textarea>
+                        <input type="hidden" name="hikeId" value="${hike.hike_id}">
+                        <button type="submit" class="form-button">Add Comment</button>
+                    </form>
 
                 <!-- Comments Section -->
                 <div class="comments-section">

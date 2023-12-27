@@ -43,6 +43,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.awt.SystemColor.window;
+
 
 @WebServlet(name = "detailPage", value = "/detailPage")
 public class detailPageServlet extends HttpServlet {
@@ -56,6 +58,8 @@ public class detailPageServlet extends HttpServlet {
         Hike chosenhike = df.getHikeByID(hikeId);
         request.setAttribute("hike", chosenhike);
 
+        HttpSession session = request.getSession();
+
         String xmlText = chosenhike.getGpxLocation();
 
         request.setAttribute("xmlText", xmlText);
@@ -64,6 +68,8 @@ public class detailPageServlet extends HttpServlet {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/hikeDetails.jsp");
         dispatcher.forward(request, response);
+
+
 
     }
 
@@ -136,7 +142,12 @@ public class detailPageServlet extends HttpServlet {
 
             response.sendRedirect("/Journey_war_exploded/detailPage?hike-id=" + request.getParameter("hikeId") );
         } else {
-            // Handle the case where the user is not authenticated
+            // If the user is not logged in, display an alert window with a link to the login page
+            String errorMessage = "You need to be logged in to write a comment.";
+            String loginLink = "/Journey_war_exploded/login.jsp";
+            String alertScript = "alert('" + errorMessage + "'); window.location.href='" + loginLink + "';";
+
+            response.getWriter().println("<script>" + alertScript + "</script>");
 
         }
     }
