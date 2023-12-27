@@ -41,7 +41,7 @@ public class Comment {
         _comment_id = comment_id;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne( fetch = FetchType.EAGER) //cascade = CascadeType.ALL, --> causes merge error when creating a new comment
     @JoinColumn(name = "user_id")
     public User getUser() {
         return _user;
@@ -51,7 +51,7 @@ public class Comment {
         _user = user;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne( fetch = FetchType.EAGER) // cascade = CascadeType.ALL, --> causes merge error when creating a new comment
     @JoinColumn(name = "hike_id")
     public Hike getHike() {
         return _hike;

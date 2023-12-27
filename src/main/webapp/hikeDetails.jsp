@@ -138,20 +138,25 @@
                         </div>
                     </c:forEach>
                 </div>
-                <form action="/Journey_war_exploded/detailPage" method="post">
-                    <label for="commentText">Your Comment:</label>
-                    <textarea id="commentText" name="commentText" required></textarea>
+                <!-- Comment Form -->
+                <form action="/Journey_war_exploded/detailPage" method="post" class="comment-form">
+                    <label for="commentText" class="form-label">Your Comment:</label>
+                    <textarea id="commentText" name="commentText" class="form-textarea" required></textarea>
                     <input type="hidden" name="hikeId" value="${hike.hike_id}" />
-                    <button type="submit">Add Comment</button>
+                    <button type="submit" class="form-button">Add Comment</button>
                 </form>
 
 
+                <!-- Comments Section -->
                 <div class="comments-section">
                     <h2>Comments</h2>
                     <c:forEach var="comment" items="${hike.comments}">
                         <div class="comment">
-                            <p>${comment.comment_date} - ${comment.user.username}</p>
-                            <p>${comment.comment_text}</p>
+                            <div class="comment-header">
+                                <span class="comment-date">${comment.comment_date}</span>
+                                <span class="comment-author">${comment.user.username}</span>
+                            </div>
+                            <p class="comment-text">${comment.comment_text}</p>
                         </div>
                     </c:forEach>
                 </div>

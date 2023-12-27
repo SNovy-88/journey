@@ -125,15 +125,16 @@ public class detailPageServlet extends HttpServlet {
             Hike chosenHike = df.getHikeByID(hikeId);
 
             // Create a new Comment with the current user
-            Comment comment = new Comment(currentUser, null, commentText, LocalDate.now(),
+            Comment comment = new Comment(null, null, commentText, LocalDate.now(),
                     LocalTime.now().getHour(), LocalTime.now().getMinute());
 
             comment.setHike(chosenHike);
-
+            comment.setUser(currentUser);
             df.saveObject(comment);
+
             
 
-            response.sendRedirect("/Journey_war_exploded/detailPage?hike-id=1" + request.getParameter("hikeId") );
+            response.sendRedirect("/Journey_war_exploded/detailPage?hike-id=" + request.getParameter("hikeId") );
         } else {
             // Handle the case where the user is not authenticated
 
