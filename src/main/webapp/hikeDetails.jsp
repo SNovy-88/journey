@@ -150,7 +150,7 @@
                     <h2>Comments</h2>
                     <c:forEach var="comment" items="${hike.comments}">
                         <div class="comment">
-                            <p>${comment.comment_date}</p>
+                            <p>${comment.comment_date} - ${comment.user.username}</p>
                             <p>${comment.comment_text}</p>
                         </div>
                     </c:forEach>

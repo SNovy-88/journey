@@ -120,12 +120,16 @@ public class detailPageServlet extends HttpServlet {
         if (currentUser != null) {
             String commentText = request.getParameter("commentText");
             DatabaseFacade df = DatabaseFacade.getInstance();
+
+
             Hike chosenHike = df.getHikeByID(hikeId);
 
             // Create a new Comment with the current user
             Comment comment = new Comment(currentUser, null, commentText, LocalDate.now(),
                     LocalTime.now().getHour(), LocalTime.now().getMinute());
+
             comment.setHike(chosenHike);
+
             df.saveObject(comment);
             
 
