@@ -1,3 +1,4 @@
+<%@ page import="at.fhv.journey.utils.imagePath" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -399,7 +400,7 @@
                                 <br>
 
                                 <div id="preview-container">
-                                    <img id="uploaded-image"   src="" alt="Uploaded Image">
+                                    <img id="uploaded-image" src="<%=imagePath.getImagePath()%>test1.jpg" alt="Uploaded Image">
                                     <br>
                                     <div id="remove-btn" class="btn btn-primary" onclick="removeImage()">Remove Image</div>
                                 </div>
@@ -431,10 +432,10 @@
                                         fileInput.value = "";
 
                                         // Hide the preview container
-                                        previewContainer.style.display = "none";
+                                        previewContainer.style.display = "block";
 
                                         // Clear the image source
-                                        uploadedImage.src = "";
+                                        uploadedImage.src = "<%=imagePath.getImagePath()%>test1.jpg";
                                     }
 
                                     // Attach the showPreview function to the change event of the file input

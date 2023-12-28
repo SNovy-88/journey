@@ -36,3 +36,8 @@ input[readonly] {
     background-color: #f0f0f0; /* Greyed-out background color */
     color: #999999; /* Text color for disabled content */
 }
+
+#uploaded-image{
+    height: 300px;
+    width: auto;
+}
