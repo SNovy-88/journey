@@ -395,7 +395,7 @@
                                 <form id="image-form" enctype="multipart/form-data" class="btn btn-primary">
                                     <label for="image">Upload Image:</label>
                                     <br>
-                                    <input type="file" id="image" name="image" accept="image/*">
+                                    <input type="file" id="image" name="image" accept=".jpg, image/*">
                                 </form>
                                 <br>
 
