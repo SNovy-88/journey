@@ -33,7 +33,7 @@ async function initializeAndShowRoute() {
     // Parse GPX data to get waypoints
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(gpxData, 'text/xml');
-    const waypoints = Array.from(xmlDoc.querySelectorAll('wpt')).map((wpt) => ({
+    const waypoints = Array.from(xmlDoc.querySelectorAll('trkpt')).map((wpt) => ({
         lat: parseFloat(wpt.getAttribute('lat')),
         lon: parseFloat(wpt.getAttribute('lon')),
         name: wpt.querySelector('name').textContent.trim() || 'Unnamed Waypoint',

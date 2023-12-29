@@ -117,18 +117,19 @@
                                         <br>
                                         <div>
                                             <p>
-                                                Create your route by adding waypoints to the map! (Hint: use your mouse to drag a pin after adding it to the map)
+                                                Create your route by adding waypoints to the map! (Hint: Use your mouse to drag a pin after adding it to the map)
                                             </p>
                                         </div>
                                         <div class="invalid-feedback" id="mapFeedback">
-                                            Route needs at least one waypoint.
+                                            Route needs to have at least two waypoints.
                                         </div>
                                         <div id="map" style="height: 500px;"></div>
                                         <input type="hidden" id="gpxDataInput" name="gpxDataInput"> <!-- hidden input element for transferring gpxData from JS into JSP form element -->
                                         <br>
                                         <button class="btn btn-secondary" type="button" onclick="exportAsGPX()"> Export as GPX </button>
                                         <button class="btn btn-danger" type="button" onclick="deleteLastWaypoint()">Delete Last Waypoint</button>
-                                        <ul id="coordinates-list"></ul> <!-- List of waypoints -->
+                                        <br><br>
+                                        <table id="coordinates-table" class="table table-sm table-hover border table-borderless"></table>
                                     </div>
                                 <button class="btn btn-primary" type="button" onclick="if (validateStep1()) nextButtonClick()">Next</button>
                                 <button class="btn btn-success" type="submit" onclick="createHike()">Create Hike</button> <!-- Create Hike button -->
