@@ -1,10 +1,13 @@
 package at.fhv.journey.hibernate.facade;
 
+import at.fhv.journey.hibernate.broker.CommentBrokerJPA;
 import at.fhv.journey.hibernate.broker.HikeBrokerJPA;
 import at.fhv.journey.hibernate.broker.UserBrokerJPA;
+import at.fhv.journey.model.Comment;
 import at.fhv.journey.model.Hike;
 import at.fhv.journey.model.User;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class DatabaseFacade implements IdbFacadeJPA {
@@ -23,6 +26,10 @@ public class DatabaseFacade implements IdbFacadeJPA {
         if (value instanceof Hike) {
             try(HikeBrokerJPA hb = new HikeBrokerJPA()) {
                 hb.insert((Hike) value);
+            }
+        } else if (value instanceof Comment) {
+            try (CommentBrokerJPA cb = new CommentBrokerJPA()) {
+                cb.insert((Comment) value);
             }
         }
     }
@@ -62,9 +69,42 @@ public class DatabaseFacade implements IdbFacadeJPA {
         }
     }
 
+    public User getUserByID(int id) {
+        try (UserBrokerJPA ub = new UserBrokerJPA()) {
+            return ub.getById(User.class, id);
+        }
+    }
+
+    public List<Comment> getCommentsByUser(int userId) {
+        try (CommentBrokerJPA cb = new CommentBrokerJPA()) {
+            return cb.getCommentsByUser(userId);
+        }
+    }
+    public List<Comment> getCommentsByHike(int hikeId) {
+        try (CommentBrokerJPA cb = new CommentBrokerJPA()) {
+            return cb.getCommentsByHike(hikeId);
+        }
+    }
+
+
     public static void main(String[] args) {
 
+        DatabaseFacade facade = DatabaseFacade.getInstance();
+        try {
+            List<Hike> allHikes = facade.getAllHikes();
 
+            for (Hike hike : allHikes) {
+                System.out.println("Hike Name: " + hike.getName());
 
+                List<Comment> comments = hike.getComments();
+                for (Comment comment : comments) {
+                    System.out.println("  Comment: " + comment.getComment_text());
+                }
+
+                System.out.println();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

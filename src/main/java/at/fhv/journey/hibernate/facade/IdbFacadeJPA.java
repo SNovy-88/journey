@@ -2,6 +2,7 @@ package at.fhv.journey.hibernate.facade;
 
 import at.fhv.journey.model.Hike;
 import at.fhv.journey.model.User;
+import at.fhv.journey.model.Comment;
 
 import java.util.List;
 
@@ -19,4 +20,5 @@ public interface IdbFacadeJPA {
     List<Hike> getHikesByName(String name);
 
     List<User> getUsersByEmail(String email);
+    User getUserByID(int id);
 }
