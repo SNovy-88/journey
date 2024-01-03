@@ -1,20 +1,14 @@
-// Document ready function
-document.addEventListener("DOMContentLoaded", function () {
-    // Iterate over each month element
-    $('.month').each(function () {
-        let month = parseInt($(this).data('month'));
 
-        // Check if the month is within the range
-        if (end > 12) {
-            let startNew = 1;
-            let endNew = end - 12;
-            checkRangeAndHighlightRecommendedMonths($(this), month, startNew, endNew);
-            checkRangeAndHighlightRecommendedMonths($(this), month, start, end);
-        } else if (end <= 12) {
-            checkRangeAndHighlightRecommendedMonths($(this), month, start, end);
+function highlightRecommendedMonths(monthsBitmask){
+    $('.month').each(function () {
+        let month = parseInt($(this).data('month')); // month is value 1 to 2048
+        let monthElement = $(this);
+
+        if((monthsBitmask & month) !== 0) {
+            monthElement.css('background-color', '#b1ff2e');
         }
     });
-});
+}
 
 function insertIcons(value, full, empty, container_id) {
     console.log('insertIcons called with value:', value);
@@ -35,7 +29,6 @@ function insertIcons(value, full, empty, container_id) {
         }
     }
 }
-
 
 function checkRangeAndHighlightRecommendedMonths(element, month, start, end){
     if (month >= start && month <= end) {

@@ -5,10 +5,7 @@ import at.fhv.journey.model.Hike;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
+import jakarta.servlet.http.*;
 import jakarta.transaction.Transactional;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,6 +22,7 @@ public class createPageServlet extends HttpServlet {
     @Transactional
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
+        HttpSession session = request.getSession();
 
         //Stepper 1
         String name = request.getParameter("nameInput");
@@ -53,7 +51,6 @@ public class createPageServlet extends HttpServlet {
             }
         }
 
-        String author = "testAuthor";
         LocalDate date = LocalDate.now();
 
         Hike hike = new Hike();
@@ -68,8 +65,14 @@ public class createPageServlet extends HttpServlet {
         hike.setExperience(experience);
         hike.setScenery(scenery);
         hike.setRecommendedMonths(checkedMonths);
-        hike.setAuthor(author);
         hike.setDateCreated(date);
+
+        //TODO needs to be changed to userId once Create is locked for normal users
+        if(session.getAttribute("username") != null){
+            hike.setAuthor((String) session.getAttribute("username"));
+        }else{
+            hike.setAuthor("testAuthor");
+        }
 
         // Check the switch state
         String switchState = request.getParameter("switchState");

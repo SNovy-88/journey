@@ -26,6 +26,7 @@
 
     <!-- OpenRouteService JavaScript -->
     <script src="https://maps.openrouteservice.org/assets/js/openrouteservice-leaflet.js"></script>
+
 </head>
 <body>
     <jsp:include page="navBar.jsp"/>
@@ -101,7 +102,6 @@
                                                 <button type="button" class="btn btn-primary" onclick="showRoute()">Show Route</button>
                                             </div>
                                             <br>
-
                                         </div>
                                     </div>
                                 </div>
@@ -113,67 +113,60 @@
                                 </div>
                                 <br>
                                     <!-- Show Map -->
-                                    <div class="invalid-feedback" id="mapFeedback">
-                                        Route needs at least one waypoint.
-                                    </div>
                                     <div id="mapFeature">
                                         <br>
+                                        <div>
+                                            <p>
+                                                Create your route by adding waypoints to the map! (Hint: use your mouse to drag a pin after adding it to the map)
+                                            </p>
+                                        </div>
+                                        <div class="invalid-feedback" id="mapFeedback">
+                                            Route needs at least one waypoint.
+                                        </div>
                                         <div id="map" style="height: 500px;"></div>
                                         <input type="hidden" id="gpxDataInput" name="gpxDataInput"> <!-- hidden input element for transferring gpxData from JS into JSP form element -->
                                         <br>
                                         <button class="btn btn-secondary" type="button" onclick="exportAsGPX()"> Export as GPX </button>
                                         <button class="btn btn-danger" type="button" onclick="deleteLastWaypoint()">Delete Last Waypoint</button>
+                                        <ul id="coordinates-list"></ul> <!-- List of waypoints -->
                                     </div>
-                                    <ul id="coordinates-list"></ul> <!-- List of waypoints -->
-                                <button class="btn btn-primary" type="button" onclick="if (validateStep1()) stepper1.next()">Next</button>
+                                <button class="btn btn-primary" type="button" onclick="if (validateStep1()) nextButtonClick()">Next</button>
                                 <button class="btn btn-success" type="submit" onclick="createHike()">Create Hike</button> <!-- Create Hike button -->
                             </div>
 
                             <!-- STEPPER 2 -->
                             <div id="test-l-2" class="content"> <!-- Content of the 2nd stepper part -->
 
-                                <div class="row g-2">
-                                    <div class="col-md-3" style="margin-top: 30px"> <!-- Group for Duration hr and min -->
-                                        <label for="duration-hr" class="form-label">Duration<sup>*</sup></label>
-                                        <div class="invalid-feedback" id="duration-hr-feedback">
-                                            The hour field is mandatory. If duration is under 1 hour please input 0.
-                                        </div>
-                                        <div class="invalid-feedback" id="duration-min-feedback">
-                                            Minute value needs to be under 60.
-                                        </div>
+                                <div class="row g-2" style="margin-top: 30px">
+                                    <!-- Group for Duration hr and min -->
+                                    <label for="duration-hr" class="form-label">Duration (autom. calculated)</label>
+                                    <div class="col-md-2">
                                         <div class="input-group">
-                                            <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d+" inputmode="numeric" step="1" min="0" name="duration-hr">
+                                            <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d+" inputmode="numeric" step="1" min="0" name="duration-hr" readonly>
                                             <span class="input-group-text">hr</span>
-                                            <input type="number" aria-label="duration-min" class="form-control" id="duration-min" pattern="\d+" inputmode="numeric" step="1" min="0" max="59" name="duration-min">
+                                            <input type="number" aria-label="duration-min" class="form-control" id="duration-min" pattern="\d+" inputmode="numeric" step="1" min="0" max="59" name="duration-min" readonly>
                                             <span class="input-group-text">min</span>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="row g-1">
-                                    <div class="col-md-3" style="margin-top: 30px"> <!-- Height difference input -->
-                                        <label for="height-difference" class="form-label">Height Difference<sup>*</sup></label>
-                                        <div class="invalid-feedback" id="height-difference-feedback">
-                                            Please input a whole number.
-                                        </div>
+                                <div class="row g-1" style="margin-top: 30px">
+                                    <!-- Height difference input -->
+                                    <label for="height-difference" class="form-label">Height Difference (autom. calculated)</label>
+                                    <div class="col-md-2">
                                         <div class="input-group">
-                                            <input type="number" pattern="\d+" aria-label="height-difference" class="form-control" id="height-difference" name="height-difference">
+                                            <input type="number" pattern="\d+" aria-label="height-difference" class="form-control" id="height-difference" name="height-difference" readonly>
                                             <span class="input-group-text">m</span>
-
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row g-1">
-                                    <div class="col-md-3" style="margin-top: 30px"> <!-- Distance input -->
-                                        <label for="distance" class="form-label">Distance<sup>*</sup></label>
-                                        <div class="invalid-feedback" id="distance-feedback">
-                                            Please input a number i.e. 2.34 or 5.7
-                                        </div>
+                                <div class="row g-1" style="margin-top: 30px">
+                                    <!-- Distance input -->
+                                    <label for="distance" class="form-label">Distance (autom. calculated)</label>
+                                    <div class="col-md-2">
                                         <div class="input-group">
-                                            <input type="number" aria-label="distance" class="form-control" id="distance" name="distance" step="any">
+                                            <input type="number" aria-label="distance" class="form-control" id="distance" name="distance" step="any" readonly>
                                             <span class="input-group-text">km</span>
                                         </div>
-                                        <label for="distance" class="form-text">Input decimals with a dot, i.e. 12.4 or 4.67</label>
                                     </div>
                                 </div>
                                 <hr>
@@ -310,77 +303,77 @@
                                 <div class="form-check" id="check-box">
                                     <div class="container text-lg-start">
                                         <div class="row">
-                                            <div class="col">
+                                            <div class="col-md-2">
                                                 <input class="form-check-input" type="checkbox" name="Jan" value="1" id="Jan">
                                                 <label class="form-check-label" for="Jan">
                                                     January
                                                 </label>
                                             </div>
-                                            <div class="col">
-                                                <input class="form-check-input" type="checkbox" name="Feb" value="2" id="Feb">
-                                                <label class="form-check-label" for="Feb">
-                                                    February
-                                                </label>
-                                            </div>
-                                            <div class="col">
-                                                <input class="form-check-input" type="checkbox" name="Mar" value="4" id="Mar">
-                                                <label class="form-check-label" for="Mar">
-                                                    March
-                                                </label>
-                                            </div>
-                                            <div class="col">
+                                            <div class="col-md-2">
                                                 <input class="form-check-input" type="checkbox" name="Apr" value="8" id="Apr">
                                                 <label class="form-check-label" for="Apr">
                                                     April
                                                 </label>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <input class="form-check-input" type="checkbox" name="May" value="16" id="May">
-                                                <label class="form-check-label" for="May">
-                                                    May
-                                                </label>
-                                            </div>
-                                            <div class="col">
-                                                <input class="form-check-input" type="checkbox" name="Jun" value="32" id="Jun">
-                                                <label class="form-check-label" for="Jun">
-                                                    June
-                                                </label>
-                                            </div>
-                                            <div class="col">
+                                            <div class="col-md-2">
                                                 <input class="form-check-input" type="checkbox" name="Jul" value="64" id="Jul">
                                                 <label class="form-check-label" for="Jul">
                                                     July
                                                 </label>
                                             </div>
-                                            <div class="col">
-                                                <input class="form-check-input" type="checkbox" name="Aug" value="128" id="Aug">
-                                                <label class="form-check-label" for="Aug">
-                                                    August
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <input class="form-check-input" type="checkbox" name="Sep" value="256" id="Sep">
-                                                <label class="form-check-label" for="Sep">
-                                                    September
-                                                </label>
-                                            </div>
-                                            <div class="col">
+                                            <div class="col-md-2">
                                                 <input class="form-check-input" type="checkbox" name="Oct" value="512" id="Oct">
                                                 <label class="form-check-label" for="Oct">
                                                     October
                                                 </label>
                                             </div>
-                                            <div class="col">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <input class="form-check-input" type="checkbox" name="Feb" value="2" id="Feb">
+                                                <label class="form-check-label" for="Feb">
+                                                    February
+                                                </label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-check-input" type="checkbox" name="May" value="16" id="May">
+                                                <label class="form-check-label" for="May">
+                                                    May
+                                                </label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-check-input" type="checkbox" name="Aug" value="128" id="Aug">
+                                                <label class="form-check-label" for="Aug">
+                                                    August
+                                                </label>
+                                            </div>
+                                            <div class="col-md-2">
                                                 <input class="form-check-input" type="checkbox" name="Nov" value="1024" id="Nov">
                                                 <label class="form-check-label" for="Nov">
                                                     November
                                                 </label>
                                             </div>
-                                            <div class="col">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <input class="form-check-input" type="checkbox" name="Mar" value="4" id="Mar">
+                                                <label class="form-check-label" for="Mar">
+                                                    March
+                                                </label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-check-input" type="checkbox" name="Jun" value="32" id="Jun">
+                                                <label class="form-check-label" for="Jun">
+                                                    June
+                                                </label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-check-input" type="checkbox" name="Sep" value="256" id="Sep">
+                                                <label class="form-check-label" for="Sep">
+                                                    September
+                                                </label>
+                                            </div>
+                                            <div class="col-md-2">
                                                 <input class="form-check-input" type="checkbox" name="Dec" value="2048" id="Dec">
                                                 <label class="form-check-label" for="Dec">
                                                     December
@@ -429,11 +422,21 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="waypointModalLabel"> Enter Waypoint Name </h5>
+                        <h5 class="modal-title" id="waypointModalLabel"> Enter Waypoint Information </h5>
                     </div>
                     <div class="modal-body">
-                        <%--suppress HtmlFormInputWithoutLabel --%>
-                        <input type="text" id="waypointNameInput" class="form-control" placeholder="Enter name (optional)"> <!-- evtl. make it non-optional -->
+                        <label for="waypointNameInput">Waypoint Name:</label>
+                        <input type="text" id="waypointNameInput" class="form-control" placeholder="Enter name (optional)">
+                        <br>
+                        <label for="waypointTypeSelect">Select Waypoint Type:</label>
+                        <select id="waypointTypeSelect" class="form-control">
+                            <option value="standard">Standard Waypoint</option>
+                            <option value="poi">Point of Interest</option>
+                            <option value="hut">Hut / Refuge</option>
+                        </select>
+                        <br>
+                        <label for="waypointDescriptionInput">Waypoint Description:</label>
+                        <textarea id="waypointDescriptionInput" class="form-control" placeholder="Enter description (optional)"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -463,9 +466,10 @@
     <script src="JS/createHike.js"></script>
     <script src="JS/createHikeMap.js"></script>
     <script src="JS/createHikeUploadMap.js"></script>
+    <script src="JS/fetchRoute.js"></script>
     <script src="JS/createHikeImage.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js" integrity="sha384-cwmrdGZwrLYKw8X6zXkDo3MeqYTgVMiP+GxBSzLz3l2DE6/72UnZVJ8E+biqU1Kb" crossorigin="anonymous"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js" integrity="sha384-cwmrdGZwrLYKw8X6zXkDo3MeqYTgVMiP+GxBSzLz3l2DE6/72UnZVJ8E+biqU1Kb" crossorigin="anonymous"></script>-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- Bootstrap stepper script links -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
