@@ -48,25 +48,34 @@ public class filterResultListServlet extends HttpServlet {
 
         String heightDifference = request.getParameter("height-difference");
         String distance = request.getParameter("distance");
-        String duration = request.getParameter("duration");
+        String durationHr = request.getParameter("duration-hr");
+        String durationMin = request.getParameter("duration-min");
+        //TODO duration doesnt work properly as it will still find 1h 30min when 40min is selected or when only 1hr is selected
+        //also when 1hr 30min is selected it will not find 0hr and 50min, the hr and min need to be calculated into min and then compared
+
+        if(durationHr.isEmpty() && !durationMin.isEmpty()){
+            durationHr = "0";
+        }
+
+        System.out.println("searchString-FilterServlet: " + searchString);
 
         System.out.println("Months-FilterServlet: " + chosenMonths);
         System.out.println("FilterServlet: "+"\n"+
                             "height: "+heightDifference+"\n"
                             +"distance: "+distance+"\n"
-                            +"duration: "+duration);
+                            +"duration: "+durationHr+":"+durationMin);
 
         DatabaseFacade df = new DatabaseFacade();
         List<Hike> hikeList;
         System.out.println("fitness-FilterServlet: " + fitness);
 
-        //Todo months is empty, needs to be changed to bootstrap checkboxes and code changed
+
 
         if (fitness != null || stamina != null || experience != null || scenery != null
-                ||  chosenMonths != 0 || heightDifference != null || distance != null || duration != null) {
+                ||  chosenMonths != 0 || heightDifference != null || distance != null || durationHr != null || durationMin != null) {
 
             hikeList = df.getHikesWithFilter(searchString, fitness, stamina, experience, scenery,
-                    chosenMonths, heightDifference, distance, duration);
+                    chosenMonths, heightDifference, distance, durationHr, durationMin);
 
         } else if (searchString != null && !searchString.isEmpty()) {
             List<Hike> filteredHikeList = df.getHikesByName(searchString);
