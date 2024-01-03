@@ -17,7 +17,8 @@ public interface IdbFacadeJPA {
     // READ
     List<Hike> getAllHikes();
     Hike getHikeByID(int id);
-    List<Hike> getHikesWithFilter(String name, String fitness, String stamina, String experience, String scenery, int months);
+    List<Hike> getHikesWithFilter(String name, String fitness, String stamina, String experience, String scenery,
+                                  int months, String heightDiff, String distance, String durationHr, String durationMin);
     List<Hike> getHikesByName(String name);
 
     List<User> getUsersByEmail(String email);

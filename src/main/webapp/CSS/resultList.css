@@ -71,6 +71,7 @@
 
 .input-group {
     margin-top: -15px;
+    display:flex;
 }
 
 h1 {

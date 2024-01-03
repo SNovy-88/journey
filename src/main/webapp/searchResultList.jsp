@@ -60,6 +60,7 @@
 <%--                        <%= (request.getParameter("fitness-level") != null) ? request.getParameter("fitness-level") : "Choose here" %> <!-- if fitness-level is not null, set the value of the button to the fitness-level, else set it to "Choose here" -->--%>
                     </button>
                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="0">All options</a></li>
                         <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="1">Easy</a></li>
                         <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="2">Moderate</a></li>
                         <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="3">Intermediate</a></li>
@@ -78,6 +79,7 @@
                         Choose here
                     </button>
                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-stamina', this)" data-id="0">All options</a></li>
                         <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-stamina', this)" data-id="1">Untrained</a></li>
                         <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-stamina', this)" data-id="2">Moderate</a></li>
                         <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-stamina', this)" data-id="3">Intermediate</a></li>
@@ -97,6 +99,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         <!-- updateDropdown(dropdown Button(to change title), this option (to highlight it), categorie (to get right icons)) -->
+                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-experience', this)" data-id="0">All options</a></li>
                         <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-experience', this)" data-id="1">Novice</a></li>
                         <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-experience', this)" data-id="2">Practised</a></li>
                         <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-experience', this)" data-id="3">Intermediate</a></li>
@@ -116,6 +119,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         <!-- updateDropdown(dropdown Button(to change title), this option (to highlight it), categorie (to get right icons)) -->
+                        <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-scenery', this)" data-id="0">All options</a></li>
                         <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-scenery', this)" data-id="1">Unremarkable</a></li>
                         <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-scenery', this)" data-id="2">Ordinary</a></li>
                         <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-scenery', this)" data-id="3">Enjoyable</a></li>
@@ -131,25 +135,25 @@
                     <div class="container text-lg-start">
                         <div class="row">
                             <div class="col">
-                                <input class="form-check-input" type="checkbox" name="Jan" value="1" id="Jan">
+                                <input class="form-check-input" type="checkbox" name="Jan" value="1" id="Jan" <%=(request.getParameter("Jan") != null) ? "checked" : ""%> >
                                 <label class="form-check-label" for="Jan">
                                     Jan
                                 </label>
                             </div>
                             <div class="col">
-                                <input class="form-check-input" type="checkbox" name="Apr" value="8" id="Apr">
+                                <input class="form-check-input" type="checkbox" name="Apr" value="8" id="Apr" <%=(request.getParameter("Apr") != null) ? "checked" : ""%>>
                                 <label class="form-check-label" for="Apr">
                                     Apr
                                 </label>
                             </div>
                             <div class="col">
-                                <input class="form-check-input" type="checkbox" name="Jul" value="64" id="Jul">
+                                <input class="form-check-input" type="checkbox" name="Jul" value="64" id="Jul" <%=(request.getParameter("Jul") != null) ? "checked" : ""%>>
                                 <label class="form-check-label" for="Jul">
                                     Jul
                                 </label>
                             </div>
                             <div class="col">
-                                <input class="form-check-input" type="checkbox" name="Oct" value="512" id="Oct">
+                                <input class="form-check-input" type="checkbox" name="Oct" value="512" id="Oct" <%=(request.getParameter("Oct") != null) ? "checked" : ""%>>
                                 <label class="form-check-label" for="Oct">
                                     Oct
                                 </label>
@@ -157,25 +161,25 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input class="form-check-input" type="checkbox" name="Feb" value="2" id="Feb">
+                                <input class="form-check-input" type="checkbox" name="Feb" value="2" id="Feb" <%=(request.getParameter("Feb") != null) ? "checked" : ""%>>
                                 <label class="form-check-label" for="Feb">
                                     Feb
                                 </label>
                             </div>
                             <div class="col">
-                                <input class="form-check-input" type="checkbox" name="May" value="16" id="May">
+                                <input class="form-check-input" type="checkbox" name="May" value="16" id="May" <%=(request.getParameter("May") != null) ? "checked" : ""%>>
                                 <label class="form-check-label" for="May">
                                     May
                                 </label>
                             </div>
                             <div class="col">
-                                <input class="form-check-input" type="checkbox" name="Aug" value="128" id="Aug">
+                                <input class="form-check-input" type="checkbox" name="Aug" value="128" id="Aug" <%=(request.getParameter("Aug") != null) ? "checked" : ""%>>
                                 <label class="form-check-label" for="Aug">
                                     Aug
                                 </label>
                             </div>
                             <div class="col">
-                                <input class="form-check-input" type="checkbox" name="Nov" value="1024" id="Nov">
+                                <input class="form-check-input" type="checkbox" name="Nov" value="1024" id="Nov" <%=(request.getParameter("Nov") != null) ? "checked" : ""%>>
                                 <label class="form-check-label" for="Nov">
                                     Nov
                                 </label>
@@ -183,25 +187,25 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input class="form-check-input" type="checkbox" name="Mar" value="4" id="Mar">
+                                <input class="form-check-input" type="checkbox" name="Mar" value="4" id="Mar" <%=(request.getParameter("Mar") != null) ? "checked" : ""%>>
                                 <label class="form-check-label" for="Mar">
                                     Mar
                                 </label>
                             </div>
                             <div class="col">
-                                <input class="form-check-input" type="checkbox" name="Jun" value="32" id="Jun">
+                                <input class="form-check-input" type="checkbox" name="Jun" value="32" id="Jun" <%=(request.getParameter("Jun") != null) ? "checked" : ""%>>
                                 <label class="form-check-label" for="Jun">
                                     Jun
                                 </label>
                             </div>
                             <div class="col">
-                                <input class="form-check-input" type="checkbox" name="Sep" value="256" id="Sep">
+                                <input class="form-check-input" type="checkbox" name="Sep" value="256" id="Sep" <%=(request.getParameter("Sep") != null) ? "checked" : ""%>>
                                 <label class="form-check-label" for="Sep">
                                     Sep
                                 </label>
                             </div>
                             <div class="col">
-                                <input class="form-check-input" type="checkbox" name="Dec" value="2048" id="Dec">
+                                <input class="form-check-input" type="checkbox" name="Dec" value="2048" id="Dec" <%=(request.getParameter("Dec") != null) ? "checked" : ""%>>
                                 <label class="form-check-label" for="Dec">
                                     Dec
                                 </label>
@@ -210,31 +214,38 @@
                     </div>
                 </div>
             </div>
-            <div class="filterClass">
-                <p>Height-Difference:</p>
-                <div class="input-group">
-                    <input type="number" pattern="\d+" aria-label="height-difference" class="form-control" id="height-difference" name="height-difference">
-                    <span class="input-group-text">m</span>
+            <div class="row" style="width:20vw">
+                <div class="col" >
+                    <div class="filterClass">
+                        <p style="white-space: nowrap">Height-Difference</p>
+                        <div class="input-group" >
+                            <input type="number" pattern="\d+" aria-label="height-difference" class="form-control" id="height-difference" name="height-difference"
+                                   value="<%= (request.getParameter("height-difference") != null) ? request.getParameter("height-difference") : "" %>">
+                            <span class="input-group-text" style="width:30px; text-align: center; padding: 5px;">m</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="filterClass">
+                        <p >Distance:</p>
+                        <div class="input-group">
+                            <input type="number" aria-label="distance" class="form-control" id="distance" name="distance" step="any" value="<%= (request.getParameter("distance") != null) ? request.getParameter("distance") : "" %>">
+                            <span class="input-group-text" style="width:30px; text-align: center; padding: 5px;">km</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="filterClass">
-                <p>Distance:</p>
-                <div class="input-group">
-                    <input type="number" aria-label="distance" class="form-control" id="distance" name="distance" step="any">
-                    <span class="input-group-text">km</span>
-                </div>
-            </div>
-            <div class="filterClass">
+            <div class="filterClass" style="width: 17.5vw">
                 <p>Duration:</p>
                 <div class="input-group">
-                    <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d+" inputmode="numeric" step="1" min="0" name="duration-hr">
+                    <input type="number" aria-label="duration-hour" class="form-control" id="duration-hr" pattern="\d+" inputmode="numeric" step="1" min="0" name="duration-hr" value="<%= (request.getParameter("duration-hr") != null) ? request.getParameter("duration-hr") : "" %>">
                     <span class="input-group-text">hr</span>
-                    <input type="number" aria-label="duration-min" class="form-control" id="duration-min" pattern="\d+" inputmode="numeric" step="1" min="0" max="59" name="duration-min">
+                    <input type="number" aria-label="duration-min" class="form-control" id="duration-min" pattern="\d+" inputmode="numeric" step="1" min="0" max="59" name="duration-min" value="<%= (request.getParameter("duration-min") != null) ? request.getParameter("duration-min") : "" %>">
                     <span class="input-group-text">min</span>
                 </div>
             </div>
             <input type="hidden" name="search-input-hidden" id="search-input-hidden" value="">
-            <button type="submit" onclick="setHiddenInput()">Apply</button>
+            <button type="submit" class="btn btn-success btn-sm" onclick="setHiddenInput()">Apply</button>
         </form>
     </div>
 </div>
