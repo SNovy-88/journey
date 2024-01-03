@@ -12,10 +12,57 @@ package at.fhv.journey.hibernate.broker;
 
 import at.fhv.journey.model.Hike;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HikeBrokerJPA extends BrokerBaseJPA<Hike> {
+    //Todo months filter needs to be added and the other text fields
+    public List<Hike> getHikesWithFilter(String name, String fitness, String stamina, String experience, String scenery, Integer months) {
+        EntityManager entityManager = getEntityManager();
+
+        // Start with base query
+        StringBuilder queryString = new StringBuilder("SELECT h FROM Hike h WHERE TRIM(h.name) ILIKE :name");
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name", "%" + name + "%");
+
+
+        // Append conditions for each filter if they are not null
+        if ((fitness != null) && (!fitness.isEmpty())) {
+            System.out.println("fitness-HikeBroker: " + fitness);
+            Integer fitnessInt = Integer.parseInt(fitness);
+            queryString.append(" AND h.fitnessLevel = :fitness");
+            parameters.put("fitness", fitnessInt);
+        }
+        if (stamina != null && (!stamina.isEmpty())) {
+            Integer staminaInt = Integer.parseInt(stamina);
+            queryString.append(" AND h.stamina = :stamina");
+            parameters.put("stamina", staminaInt);
+        }
+        if (experience != null && !experience.isEmpty()) {
+            Integer experienceInt = Integer.parseInt(experience);
+            queryString.append(" AND h.experience = :experience");
+            parameters.put("experience", experienceInt);
+        }
+        if (scenery != null && !scenery.isEmpty()) {
+            Integer sceneryInt = Integer.parseInt(scenery);
+            queryString.append(" AND h.scenery = :scenery");
+            parameters.put("scenery", sceneryInt);
+        }
+
+        Query query = entityManager.createQuery(queryString.toString(), Hike.class);
+        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        System.out.println(queryString);
+
+        List<Hike> hikes = query.getResultList();
+        entityManager.close();
+        return hikes;
+    }
 
     public List<Hike> getHikesByName(String name) {
         EntityManager entityManager = getEntityManager();
@@ -25,4 +72,5 @@ public class HikeBrokerJPA extends BrokerBaseJPA<Hike> {
         entityManager.close();
         return hikes;
     }
+
 }
