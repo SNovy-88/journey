@@ -10,6 +10,13 @@
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
+<%@ page import="at.fhv.journey.model.Comment" %>
+<%@ page import="at.fhv.journey.model.User" %>
+<%@ page import="jakarta.servlet.http.HttpSession" %>
+
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- Bootstrap css href -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -19,32 +26,38 @@
         <link rel="stylesheet" href="CSS/styles.css">
         <link rel="stylesheet" href="CSS/hikeDetails.css">
         <title>Journey | Detail-Page</title>
+
+        <!-- Include Bootstrap CSS and JS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+        <!-- Leaflet CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+        <!-- Leaflet JavaScript -->
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet-gpx@1.4.0/gpx.js"></script>
+
+        <!-- Chart JS -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     </head>
 
     <body>
     <% Hike hike = (Hike) request.getAttribute("hike");%>
+    <% List<Map<String, String>> waypointsList = (List<Map<String, String>>) request.getAttribute("waypointsList");%>
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="JS/hikeDetails.js"></script>
+    <script src="JS/hikeDetailsMap.js"></script>
+    <script src="JS/fetchRoute.js"></script>
     <script>
-      
-      // Document ready function
       $(document).ready(function () {
-
-          // Extract the start and end months from the range
           let recommendedMonths = <%=hike.getRecommendedMonths()%>;
-
-          // Iterate over each month element and colour background if
-          // bit operation AND is true
-          $('.month').each(function () {
-              let month = parseInt($(this).data('month')); // month is value 1 to 2048
-              let monthElement = $(this);
-
-              if((recommendedMonths & month) !== 0) {
-                  monthElement.css('background-color', '#b1ff2e');
-              }
-          });
+          highlightRecommendedMonths(recommendedMonths);
       });
-   
     </script>
 
     <!--Navigation bar-->
@@ -100,23 +113,55 @@
                     <p><%= hike.getDescription()%></p>
                 </div>
                 <div>
-                    <h2>Waypoints</h2>
-
-                    <%
-                        List<Map<String, String>> waypointsList = (List<Map<String, String>>) request.getAttribute("waypointsList");
-
-                        if (waypointsList != null) {
-                            for (Map<String, String> waypoint : waypointsList) {
-                    %>
-                    <p>Name: <%= waypoint.get("name")%>, Latitude: <%= waypoint.get("latitude") %>, Longitude: <%= waypoint.get("longitude") %></p>
-                    <%
-                            }
-                        }
-                    %>
-
+                    <h2> Map view </h2>
+                    <!-- Use JSTL c:out tag to escape HTML characters -->
+                    <input type="hidden" id="xmlText" name="xmlText" value="<c:out value='${xmlText}' />">
+                    <div id="detailMap" style="height: 400px;"></div>
+                    <br>
+                    <canvas id="elevationChart" width="800" height="300"></canvas>
+                    <br>
+                    <!-- Accordion for waypoint descriptions -->
+                    <c:forEach var="waypoint" items="${waypointsList}" varStatus="loop">
+                        <div class="card">
+                            <div class="card-header" id="heading${loop.index}">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${loop.index}" aria-expanded="true" aria-controls="collapse${loop.index}">
+                                        ${empty waypoint.name ? 'Waypoint' : waypoint.name}
+                                        <c:choose>
+                                            <c:when test="${waypoint.type eq 'poi'}">[Point of Interest]</c:when>
+                                            <c:when test="${waypoint.type eq 'hut'}">[Hut / Refuge]</c:when>
+                                        </c:choose>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapse${loop.index}" class="collapse" aria-labelledby="heading${loop.index}" data-parent="#accordion">
+                                <div class="card-body">
+                                    ${empty waypoint.description ? 'No description available' : waypoint.description}
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
+                <!-- Comment Form -->
+                    <form action="/Journey_war_exploded/detailPage" method="post" class="comment-form">
+                        <textarea id="commentText" name="commentText" class="form-textarea" required placeholder="Tell us how your journey was!"></textarea>
+                        <input type="hidden" name="hikeId" value="${hike.hike_id}">
+                        <button type="submit" class="form-button">Add Comment</button>
+                    </form>
 
-
+                <!-- Comments Section -->
+                <div class="comments-section">
+                    <h2>Comments</h2>
+                    <c:forEach var="comment" items="${hike.comments}">
+                        <div class="comment">
+                            <div class="comment-header">
+                                <span class="comment-date">${comment.comment_date}</span>
+                                <span class="comment-author">${comment.user.username}</span>
+                            </div>
+                            <p class="comment-text">${comment.comment_text}</p>
+                        </div>
+                    </c:forEach>
+                </div>
             </div>
             <!-- Right Field -->
             <div class = "right-box">
@@ -213,6 +258,27 @@
                         </div>
                     </div>
                 </div>
+                    <div class="pathdetail">
+                        <span class="pathdetail-label">Weather Forecast:</span>
+                    </div>
+                    <br>
+
+                    <%
+                        String lastLat = "0";
+                        String lastLon = "0";
+
+                        if (waypointsList != null) {
+                            lastLat = waypointsList.get(0).get("latitude");
+                            lastLon = waypointsList.get(0).get("longitude");
+                        }
+                    %>
+
+
+                <!--https://www.windy.com/de/-Gewitter-thunder?thunder,2023120621,47.180,9.439,10,m:eX6agqS-->
+                    <iframe width="380" height="450" src="https://embed.windy.com/embed2.html?lat=<%=lastLat%>&lon=<%=lastLon%>&detailLat=<%=lastLat%>&detailLon=<%=lastLon%>&width=380&height=450&zoom=11&level=surface&overlay=temp&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=true&metricWind=default&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
+
+
+
             </div>
         </div>
     </body>
