@@ -46,15 +46,27 @@ public class filterResultListServlet extends HttpServlet {
             }
         }
 
+        String heightDifference = request.getParameter("height-difference");
+        String distance = request.getParameter("distance");
+        String duration = request.getParameter("duration");
+
+        System.out.println("Months-FilterServlet: " + chosenMonths);
+        System.out.println("FilterServlet: "+"\n"+
+                            "height: "+heightDifference+"\n"
+                            +"distance: "+distance+"\n"
+                            +"duration: "+duration);
+
         DatabaseFacade df = new DatabaseFacade();
         List<Hike> hikeList;
         System.out.println("fitness-FilterServlet: " + fitness);
 
         //Todo months is empty, needs to be changed to bootstrap checkboxes and code changed
 
-        if (fitness != null || stamina != null || experience != null || scenery != null) {
-            System.out.println("Months-FilterServlet: " + chosenMonths);
-            hikeList = df.getHikesWithFilter(searchString, fitness, stamina, experience, scenery, chosenMonths);
+        if (fitness != null || stamina != null || experience != null || scenery != null
+                ||  chosenMonths != 0 || heightDifference != null || distance != null || duration != null) {
+
+            hikeList = df.getHikesWithFilter(searchString, fitness, stamina, experience, scenery,
+                    chosenMonths, heightDifference, distance, duration);
 
         } else if (searchString != null && !searchString.isEmpty()) {
             List<Hike> filteredHikeList = df.getHikesByName(searchString);
