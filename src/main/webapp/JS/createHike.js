@@ -32,7 +32,7 @@ function validateStep1() {
     if (switchState === 'map') {
         const mapInput = document.getElementById('gpxDataInput');
         const mapFeedback = document.getElementById('mapFeedback');
-        const isMapValid = waypoints.length > 0;
+        const isMapValid = waypoints.length > 1;
         validation(isMapValid, mapInput, mapFeedback);
         return isInputValid && isTextareaValid && isMapValid;
     } else if (switchState === 'upload') {
@@ -215,7 +215,16 @@ const successParam = urlParams.get('success');
 
 // If the success parameter is present, show the success modal
 if (successParam === 'true') {
+
+    unsavedChanges = false
+
     $(document).ready(function () {
         $('#successModal').modal('show');
+
+        // Add event listener for modal close event
+        $('#successModal').on('hidden.bs.modal', function () {
+            // Redirect to the specified URL when the modal is closed
+            window.location.href = "/Journey_war_exploded/search.jsp";
+        });
     });
 }

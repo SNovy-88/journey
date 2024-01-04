@@ -12,8 +12,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // Initialize an empty array to store waypoints
 const waypoints = [];
 
-// Get the <ul> element to display coordinates
-const coordinatesList = document.getElementById('coordinates-list');
+// coordinates table element
+const coordinatesTable = document.getElementById('coordinates-table');
 
 // Get the modal and input elements
 const waypointModal = document.getElementById('waypointModal');
@@ -110,8 +110,8 @@ map.on('click', function (e) {
             map.fitBounds(L.latLngBounds(waypoints.map(wp => wp.latlng)));
         }
 
-        // Update the coordinates list
-        updateCoordinatesList();
+        // Update the coordinates table
+        updateCoordinatesTable();
 
         // Create GPX data and update the hidden input field
         cachedGPXData = createGPX();
@@ -172,6 +172,11 @@ window.nextButtonClick = async function () {
         }
     }
 
+    // Check if the calculated values are NaN and replace them with 0
+    totalDuration = isNaN(totalDuration) ? 0 : totalDuration;
+    totalAscent = isNaN(totalAscent) ? 0 : totalAscent;
+    totalDistance = isNaN(totalDistance) ? 0 : totalDistance;
+
     // Autofill the input fields in the second step
     document.getElementById('duration-hr').value = Math.floor(totalDuration / 3600);
     document.getElementById('duration-min').value = Math.floor((totalDuration % 3600) / 60);
@@ -182,19 +187,59 @@ window.nextButtonClick = async function () {
     stepper1.next();
 };
 
-// Function to update the coordinates list below the map
-function updateCoordinatesList() {
-    // Clear the existing list
-    coordinatesList.innerHTML = '';
+// Function to update the coordinates table below the map
+function updateCoordinatesTable() {
+    // Clear the existing table
+    coordinatesTable.innerHTML = '';
 
-    // Add coordinates and delete button to the list
+    // Create the table header
+    const thead = document.createElement('thead');
+    thead.className = 'thead-light border table-borderless';
+    const headerRow = document.createElement('tr');
+    headerRow.innerHTML = `
+        <th scope="col">Nr.</th>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Description</th>
+    `;
+    thead.appendChild(headerRow);
+
+    // Create the table body
+    const tbody = document.createElement('tbody');
     waypoints.forEach(function (waypoint, index) {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            Waypoint ${index + 1}: ${waypoint.name} (${waypoint.latlng.lat}, ${waypoint.latlng.lng})
+        const row = document.createElement('tr');
+
+        // Default values if it is empty
+        const name = waypoint.name.trim() !== '' ? waypoint.name : 'Unnamed Waypoint';
+        const desc = waypoint.description.trim() !== '' ? waypoint.description : 'No Description';
+        let type;
+        switch (waypoint.type) {
+            case 'standard':
+                type = 'Standard';
+                break;
+            case 'poi':
+                type = 'Point of Interest';
+                break;
+            case 'hut':
+                type = 'Hut / Refuge';
+                break;
+            default:
+                type = 'Unknown Type';
+                break;
+        }
+
+        row.innerHTML = `
+            <th scope="row">${index + 1}</th>
+            <td>${name}</td>
+            <td>${type}</td>
+            <td>${desc}</td>
         `;
-        coordinatesList.appendChild(li);
+        tbody.appendChild(row);
     });
+
+    // Append the header and body to the table
+    coordinatesTable.appendChild(thead);
+    coordinatesTable.appendChild(tbody);
 }
 
 // Function to be called when the "Delete Last Waypoint" button is clicked
@@ -210,7 +255,7 @@ window.deleteLastWaypoint = function () {
         updateRoute();
 
         // Update the coordinates list
-        updateCoordinatesList();
+        updateCoordinatesTable();
 
         // Create GPX data and update the hidden input field
         cachedGPXData = createGPX();
@@ -266,8 +311,8 @@ function enableMarkerDragging(marker, index) {
             // Update the route with the new waypoints
             updateRoute();
 
-            // Update the coordinates list
-            updateCoordinatesList();
+            // Update the coordinates table
+            updateCoordinatesTable();
 
             // Create GPX data and update the hidden input field
             cachedGPXData = createGPX();
@@ -283,7 +328,7 @@ function exportAsGPX() {
     // Create a link for downloading the GPX file
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'waypoints.gpx';
+    link.download = 'YourJourney.gpx';
     link.click();
 }
 
@@ -299,12 +344,7 @@ function createGPX() {
                 '<name>' + waypoint.name + '</name>' +
                 '<type>' + waypoint.type + '</type>' +
                 '<desc>' + waypoint.description + '</desc>' +
-                '</trkpt>' +
-                '<wpt lat="' + waypoint.latlng.lat + '" lon="' + waypoint.latlng.lng + '">' +
-                '<name>' + waypoint.name + '</name>' +
-                '<type>' + waypoint.type + '</type>' +
-                '<desc>' + waypoint.description + '</desc>' +
-                '</wpt>';
+                '</trkpt>';
         }).join('') +
         '</trkseg>' +
         '</trk>' +

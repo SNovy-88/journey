@@ -86,7 +86,7 @@ public class detailPageServlet extends HttpServlet {
             InputStream stream = new ByteArrayInputStream(xmlText.getBytes(StandardCharsets.UTF_8));
             Document document = builder.parse(stream);
 
-            NodeList waypointNodes = document.getElementsByTagName("wpt");
+            NodeList waypointNodes = document.getElementsByTagName("trkpt");
 
             List<Map<String, String>> waypointsList = new ArrayList<>();
 
