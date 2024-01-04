@@ -95,3 +95,45 @@ function convertValueToString(type, value) {
 
     }
 }
+
+function resetFilter() {
+    let dropdownFitness = document.getElementById("drop-down-btn-fitness");
+    let dropdownStamina = document.getElementById("drop-down-btn-stamina");
+    let dropdownExperience = document.getElementById("drop-down-btn-experience");
+    let dropdownScenery = document.getElementById("drop-down-btn-scenery");
+
+    let dropdownFitnessHidden = document.getElementById("drop-down-btn-fitness-hidden");
+    let dropdownStaminaHidden = document.getElementById("drop-down-btn-stamina-hidden");
+    let dropdownExperienceHidden = document.getElementById("drop-down-btn-experience-hidden");
+    let dropdownSceneryHidden = document.getElementById("drop-down-btn-scenery-hidden");
+
+    dropdownFitness.textContent = "Choose here";
+    dropdownFitnessHidden.value = "";
+
+    dropdownStamina.textContent = "Choose here";
+    dropdownStaminaHidden.value = "";
+
+    dropdownExperience.textContent = "Choose here";
+    dropdownExperienceHidden.value = "";
+
+    dropdownScenery.textContent = "Choose here";
+    dropdownSceneryHidden.value = "";
+
+    let monthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    monthList.forEach(function (month) {
+        document.getElementById(month).checked = false;
+    });
+
+    let heightDiff = document.getElementById("height-difference");
+    let distance = document.getElementById("distance");
+    let durationHr = document.getElementById("duration-hr");
+    let durationMin = document.getElementById("duration-min");
+
+    heightDiff.value = "";
+    distance.value = "";
+    durationHr.value = "";
+    durationMin.value = "";
+
+    setHiddenInput();
+    document.getElementById('filterForm').submit();
+}
