@@ -49,7 +49,7 @@
     </div>
 
     <div class="filter">
-        <form action="filterResultList">
+        <form action="filterResultList" id="filterForm">
             <div class="filterClass">
                 <label for="drop-down-btn-fitness">Fitness-Level:</label>
                 <br>
@@ -245,7 +245,18 @@
                 </div>
             </div>
             <input type="hidden" name="search-input-hidden" id="search-input-hidden" value="">
-            <button type="submit" class="btn btn-success btn-sm" onclick="setHiddenInput()">Apply</button>
+            <div class="row" style="width:20vw">
+                <div class="col">
+                    <div class="filterClass">
+                        <button type="submit" class="btn btn-success btn-sm" onclick="setHiddenInput()">Apply</button>
+                    </div>
+                </div>
+                <div class="col" >
+                    <div class="filterClass" align="right">
+                        <button type="button" class="btn btn-danger btn-sm" onclick="resetFilter()">Clear All</button>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 </div>
