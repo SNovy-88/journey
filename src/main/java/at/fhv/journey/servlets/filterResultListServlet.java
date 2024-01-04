@@ -52,9 +52,13 @@ public class filterResultListServlet extends HttpServlet {
         String durationMin = request.getParameter("duration-min");
         //TODO duration doesnt work properly as it will still find 1h 30min when 40min is selected or when only 1hr is selected
         //also when 1hr 30min is selected it will not find 0hr and 50min, the hr and min need to be calculated into min and then compared
-
-        if(durationHr.isEmpty() && !durationMin.isEmpty()){
-            durationHr = "0";
+        int totalMinutesFiltered = 0;
+        if(!durationHr.isEmpty() && !durationMin.isEmpty()){
+            totalMinutesFiltered = (Integer.parseInt(durationHr)*60) + Integer.parseInt(durationMin);
+        }else if(durationHr.isEmpty() && !durationMin.isEmpty()){
+            totalMinutesFiltered = Integer.parseInt(durationMin);
+        }else if(durationMin.isEmpty() && !durationHr.isEmpty()){
+            totalMinutesFiltered = Integer.parseInt(durationHr)*60;
         }
 
         System.out.println("searchString-FilterServlet: " + searchString);
@@ -72,10 +76,10 @@ public class filterResultListServlet extends HttpServlet {
 
 
         if (fitness != null || stamina != null || experience != null || scenery != null
-                ||  chosenMonths != 0 || heightDifference != null || distance != null || durationHr != null || durationMin != null) {
+                ||  chosenMonths != 0 || heightDifference != null || distance != null || totalMinutesFiltered != 0) {
 
             hikeList = df.getHikesWithFilter(searchString, fitness, stamina, experience, scenery,
-                    chosenMonths, heightDifference, distance, durationHr, durationMin);
+                    chosenMonths, heightDifference, distance, totalMinutesFiltered);
 
         } else if (searchString != null && !searchString.isEmpty()) {
             List<Hike> filteredHikeList = df.getHikesByName(searchString);
