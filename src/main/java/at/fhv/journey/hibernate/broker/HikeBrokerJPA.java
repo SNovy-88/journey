@@ -22,7 +22,7 @@ import java.util.Map;
 public class HikeBrokerJPA extends BrokerBaseJPA<Hike> {
     //Todo months filter needs to be added and the other text fields
     public List<Hike> getHikesWithFilter(String name, String fitness, String stamina, String experience, String scenery,
-                                         Integer months, String heightDiff, String distance, String durationHr, String durationMin) {
+                                         Integer months, String heightDiff, String distance, int duration) {
         EntityManager entityManager = getEntityManager();
 
         // Start with base query
@@ -59,19 +59,9 @@ public class HikeBrokerJPA extends BrokerBaseJPA<Hike> {
             parameters.put("heightDiff", heightDiffInt);
         }
         if (distance != null && !distance.isEmpty()) {
-            Integer distanceInt = Integer.parseInt(distance);
+            Double distanceInt = Double.parseDouble(distance);
             queryString.append(" AND h.distance <= :distance");
             parameters.put("distance", distanceInt);
-        }
-        if (durationHr != null && !durationHr.isEmpty()) {
-            Integer durationHrInt = Integer.parseInt(durationHr);
-            queryString.append(" AND h.durationHour <= :durationHr");
-            parameters.put("durationHr", durationHrInt);
-        }
-        if (durationMin != null && !durationMin.isEmpty()) {
-            Integer durationMinInt = Integer.parseInt(durationMin);
-            queryString.append(" AND h.durationMin <= :durationMin");
-            parameters.put("durationMin", durationMinInt);
         }
 
         Query query = entityManager.createQuery(queryString.toString(), Hike.class);
@@ -87,16 +77,19 @@ public class HikeBrokerJPA extends BrokerBaseJPA<Hike> {
 
         List <Hike> finalHikesList = new LinkedList<>(hikes);
 
-        if (months != 0){
+        if (months != 0 || duration != 0){
             System.out.println("Final Hikes List has been cleared");
             finalHikesList.clear();
         }
-        if(months != 0) {
+        if(months != 0 || duration != 0) {
             for (Hike hike : hikes) {
                 int bitmask = hike.getRecommendedMonths();
-                System.out.println("Hikes bitmaks is: "+bitmask);
-                System.out.println("Hikes months & bitmask equals: "+(months & bitmask));
-                if ((months & bitmask) != 0) {
+                int hikeDuration = (hike.getDurationHour() *60)+ hike.getDurationMin();
+                        System.out.println("Hikes bitmaks is: "+bitmask);
+                        System.out.println("Hikes months & bitmask equals: "+(months & bitmask));
+                        System.out.println("Filtered duration is: "+duration);
+                        System.out.println("Hikes duration is: "+hikeDuration);
+                if (((months & bitmask) != 0) || (hikeDuration <= duration )) {
                     System.out.println("Hike added to finalHikesList");
                     finalHikesList.add(hike);
                 }
