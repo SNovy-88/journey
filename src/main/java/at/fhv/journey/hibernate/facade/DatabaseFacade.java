@@ -43,17 +43,21 @@ public class DatabaseFacade implements IdbFacadeJPA {
         }
     }
 
-
     public List<Hike> getAllHikes() {
         try (HikeBrokerJPA hb = new HikeBrokerJPA()) {
             return hb.getAll(Hike.class);
         }
     }
 
-
     public Hike getHikeByID(int id) {
         try (HikeBrokerJPA hb = new HikeBrokerJPA()) {
             return hb.getById(Hike.class, id);
+        }
+    }
+
+    public List<Hike> getHikesWithFilter(String name, String fitness, String stamina, String experience, String scenery, int months, String heightDiff, String distance, int duration) {
+        try (HikeBrokerJPA hb = new HikeBrokerJPA()){
+            return hb.getHikesWithFilter(name, fitness, stamina, experience, scenery, months, heightDiff, distance, duration);
         }
     }
 
