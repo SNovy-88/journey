@@ -1,17 +1,13 @@
-const ORS_API_KEY = '5b3ce3597851110001cf6248e11f847fc0db4d8eb62bc09dcf82494f';
-
-// Document ready function
 document.addEventListener("DOMContentLoaded", function () {
     initializeAndShowRoute();
 });
 
-// Initialize the upload map
+// Declare the upload map
 let detailMap = null;
 
 // Initialize arrays to accumulate distances and elevation data
 let accumulatedDistances = [];
 let accumulatedElevationData = [];
-let distanceArray = [];
 let totalAccumulatedDistance = 0;
 
 // Function to initialize the Leaflet map and show the route
@@ -21,57 +17,25 @@ async function initializeAndShowRoute() {
     console.log("XML Text: " + gpxData);
 
     if (!detailMap) {
-        // Create a new map instance for file upload
+        // Initialize the map
         detailMap = L.map('detailMap').setView([47, 11], 7); // Adjust the initial view as needed
 
-        // Add a tile layer to the upload map
+        // Add OpenStreetMap tile layer to the map
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(detailMap);
     }
 
     // Parse GPX data to get waypoints
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(gpxData, 'text/xml');
-    const waypoints = Array.from(xmlDoc.querySelectorAll('trkpt')).map((wpt) => ({
-        lat: parseFloat(wpt.getAttribute('lat')),
-        lon: parseFloat(wpt.getAttribute('lon')),
-        name: wpt.querySelector('name').textContent.trim() || 'Unnamed Waypoint',
-        type: wpt.querySelector('type').textContent.trim() || 'standard',
-    }));
+    const waypoints = parseGPX(gpxData);
 
     // Add waypoint markers with the custom icon and popup to the detail map
     waypoints.forEach((waypoint) => {
-        let icon;
 
         // Choose icon based on waypoint type
-        switch (waypoint.type) {
-            case 'poi':
-                icon = L.icon({
-                    iconUrl: 'pictures/Leaflet/pin-icon-poi.png',
-                    iconSize: [64, 64],
-                    iconAnchor: [32, 64],
-                    popupAnchor: [0, -32]
-                });
-                break;
-            case 'hut':
-                icon = L.icon({
-                    iconUrl: 'pictures/Leaflet/pin-icon-hut.png',
-                    iconSize: [64, 64],
-                    iconAnchor: [32, 64],
-                    popupAnchor: [0, -32]
-                });
-                break;
-            default:
-                icon = L.icon({
-                    iconUrl: 'pictures/Leaflet/pin-icon-wpt.png',
-                    iconSize: [64, 64],
-                    iconAnchor: [32, 64],
-                    popupAnchor: [0, -32]
-                });
-        }
+        const customIcon = getWaypointIcon(waypoint.type);
 
-        const marker = L.marker([waypoint.lat, waypoint.lon], { icon: icon }).addTo(detailMap);
+        const marker = L.marker([waypoint.lat, waypoint.lon], { icon: customIcon }).addTo(detailMap);
         marker.bindPopup(waypoint.name);
     });
 
@@ -106,6 +70,7 @@ async function initializeAndShowRoute() {
     detailMap.fitBounds(bounds);
 }
 
+// Extract specifically the elevation data for the chart
 function extractElevationData(responseData) {
     const coordinates = responseData.features[0].geometry.coordinates;
     const elevationData = coordinates.map(coord => coord[2]); // Extracting height from the third entry of each coordinate
@@ -114,19 +79,19 @@ function extractElevationData(responseData) {
     const distances = coordinates.reduce((acc, coord, index) => {
         if (index > 0) {
             const prevCoord = coordinates[index - 1];
-            const distance = getDistance(prevCoord[1], prevCoord[0], coord[1], coord[0]);
+            const distance = getDistance(prevCoord[1], prevCoord[0], coord[1], coord[0]); // Get corresponding distance data of the specific coordinates
             acc.push(acc[index - 1] + distance);
         } else {
             acc.push(0);
         }
+
         return acc;
     }, []);
 
     return { elevationData, distances };
 }
 
-
-// Function to calculate distance between two points
+// Function to calculate distance between two points for the chart
 function getDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; // Radius of the earth in km
     const dLat = deg2rad(lat2 - lat1);
@@ -145,6 +110,7 @@ function deg2rad(deg) {
     return deg * (Math.PI / 180);
 }
 
+// Add chart below the map
 function addElevationProfileChart(distances, elevationData, distanceArray) {
     const ctx = document.getElementById('elevationChart').getContext('2d');
 

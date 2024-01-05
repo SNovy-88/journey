@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Search value in string
     var searchString = getParameterByName("searchString");
 
-
     window.location.href = "/Journey_war_exploded/searchResultList?searchString=" + encodeURIComponent(searchString);
 });
 

@@ -26,8 +26,7 @@ h1 {
     width: 100%;
     box-sizing: border-box;
     position: relative;
-    overflow: hidden; /* this makes sure that all boxes stay same width even when
-                        text is too long */
+    overflow: hidden; /* This makes sure that all boxes stay same width even when text is too long */
 }
 
 /* hike-box-information contains all the information related to one search result
@@ -48,7 +47,7 @@ h1 {
     max-width: 95%; /* Allow text to wrap */
 }
 
-/* tooltip */
+/* Tooltip */
 .hike-box h2::after {
     content: "";
 }
@@ -68,7 +67,7 @@ h1 {
     cursor: pointer;
 }
 
-/* image resizing and aspect ratio */
+/* Image resizing and aspect ratio */
 .image-container {
     position: relative;
     width: 100%;
@@ -84,7 +83,7 @@ h1 {
     border-radius: 15px;
 }
 
-/* additional formatting for the grid system: vertical lines */
+/* Additional formatting for the grid system: vertical lines */
 .row-cols-auto .col-md-3 {
     position: relative;
 }
@@ -104,13 +103,13 @@ h1 {
 }
 */
 
-/* link-container contains link to details page of the hike result */
+/* Link-container contains link to details page of the hike result */
 .link-container {
     font-size: 16px;
     position: relative;
 }
 
-/* this is not working yet, is a future feature */
+/* This is not working yet, is a future feature */
 .safe-trail-link {
     float: left;
     color: green;
@@ -120,6 +119,7 @@ h1 {
     border: 1px solid green;
     border-radius: 5px;
 }
+
 .safe-trail-link:hover {
     transition-duration: 300ms;
     background-color: green;
@@ -136,6 +136,7 @@ h1 {
     border: 1px solid blue;
     border-radius: 5px;
 }
+
 .hike-details-link:hover {
     transition-duration: 300ms;
     background-color: blue;
@@ -148,7 +149,7 @@ h1 {
 }
 */
 
-/* fitness level tags */
+/* Fitness level tags */
 .fitnesslevel {
     font-size: 14px;
     margin-top: 7px;
@@ -211,7 +212,6 @@ h1 {
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
 }
-
 
 .search-button-rlist:hover {
     background-color: #8ddb1f;

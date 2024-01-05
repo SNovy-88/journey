@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: wolfp
-  Date: 26.10.2023
-  Time: 14:45
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page import="at.fhv.journey.model.Hike" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
@@ -13,11 +6,13 @@
 <%@ page import="at.fhv.journey.model.Comment" %>
 <%@ page import="at.fhv.journey.model.User" %>
 <%@ page import="jakarta.servlet.http.HttpSession" %>
+<%@ include file="favicon.jsp" %>
 
-
+<!-- JSTL tag library to retrieve GPX-XML data from DB without character losses -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!-- Bootstrap css href -->
+
+<!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
 <html>
@@ -25,9 +20,9 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="CSS/styles.css">
         <link rel="stylesheet" href="CSS/hikeDetails.css">
-        <title>Journey | Detail-Page</title>
+        <title> Journey | See hike details </title>
 
-        <!-- Include Bootstrap CSS and JS -->
+        <!-- Bootstrap CSS and JS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -42,49 +37,51 @@
 
         <!-- Chart JS -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     </head>
-
     <body>
-    <% Hike hike = (Hike) request.getAttribute("hike");%>
-    <% List<Map<String, String>> waypointsList = (List<Map<String, String>>) request.getAttribute("waypointsList");%>
+    <jsp:include page="navBar.jsp"/>
+    <% Hike hike = (Hike) request.getAttribute("hike"); %>
+    <% List<Map<String, String>> waypointsList = (List<Map<String, String>>) request.getAttribute("waypointsList"); %>
 
+    <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="JS/hikeDetails.js"></script>
+    <script src="JS/attributeIcons.js"></script>
     <script src="JS/hikeDetailsMap.js"></script>
+    <script src="JS/parseGPX.js"></script>
+    <script src="JS/waypointIcons.js"></script>
     <script src="JS/fetchRoute.js"></script>
+    <script src="JS/ORS_API_KEY.js"></script>
+
     <script>
       $(document).ready(function () {
           let recommendedMonths = <%=hike.getRecommendedMonths()%>;
           highlightRecommendedMonths(recommendedMonths);
       });
     </script>
-
-    <!--Navigation bar-->
-    <jsp:include page="navBar.jsp"/>
-    <!--end of Navigation bar-->
-
     <!-- Hike Details -->
         <div class ="hike-details-page-container">
-
-            <!-- Left Field -->
+            <!-- Left section of the page -->
             <div class = "left-box">
+                <!-- Header part -->
                 <div class = left-box-header>
-                    <a class="back-button" onclick="history.back()" >  <!-- Back-Button to go back to Result-page -->
-                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <a class="back-button" onclick="history.back()" >  <!-- Back-Button to get back to Result-page -->
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                             <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"></path>
                         </svg>
                         Back
                     </a>
-                    <span class = "author"><%=hike.getAuthor() + " | " + hike.getDateCreated()%> </span>
-
+                    <span class = "author"> <%=hike.getAuthor() + " | " + hike.getDateCreated()%> </span>
                 </div>
+                <!-- Image -->
                 <div class="image-container">
                     <img class="image" src="pictures/examples/ex02.jpg" alt="Hike picture"/>
                 </div>
+                <!-- Details and Attributes -->
                 <div class = hike-details-stats-container>
                     <div class="row">
-                        <div class="col"> <!-- fitness level -->
+                        <!-- Fitness level -->
+                        <div class="col">
                             <p class="fitnesslevel"><span class="<%= getFitnessLevelCSSClass(hike) %>"><%= hike.convertFitnessLevelToString() %></span></p>
                         </div>
                         <div class="col stats"> <!-- distance with icon -->
@@ -93,14 +90,16 @@
                             </svg>
                             <%= hike.getDistance() %>km
                         </div>
-                        <div class="col stats"> <!-- duration with icon -->
+                        <!-- Duration -->
+                        <div class="col stats">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-stopwatch" viewBox="0 0 16 16">
                                 <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z"></path>
                                 <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z"></path>
                             </svg>
                             <%= hike.getDurationHour() %>h <%= hike.getDurationMin() %>min
                         </div>
-                        <div class="col stats"> <!-- height difference with icon -->
+                        <!-- Height difference -->
+                        <div class="col stats">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-arrows-vertical" viewBox="0 0 16 16">
                                 <path d="M8.354 14.854a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 13.293V2.707L6.354 3.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 2.707v10.586l1.146-1.147a.5.5 0 0 1 .708.708l-2 2Z"></path>
                             </svg>
@@ -108,19 +107,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="description"> <!-- Name and short descprition -->
-                    <h1><%= hike.getName() %></h1>
-                    <p><%= hike.getDescription()%></p>
+                <!-- Name and description -->
+                <div class="description">
+                    <h1> <%= hike.getName() %> </h1>
+                    <p> <%= hike.getDescription()%> </p>
                 </div>
+                <!-- Geo data (Map) -->
                 <div>
                     <h2> Map view </h2>
-                    <!-- Use JSTL c:out tag to escape HTML characters -->
+                    <!-- JSTL 'c:out' to escape HTML characters -->
                     <input type="hidden" id="xmlText" name="xmlText" value="<c:out value='${xmlText}' />">
                     <div id="detailMap" style="height: 400px;"></div>
                     <br>
                     <canvas id="elevationChart" width="800" height="300"></canvas>
                     <br>
-                    <!-- Accordion for waypoint descriptions -->
+                    <!-- Accordion element for waypoint descriptions -->
                     <c:forEach var="waypoint" items="${waypointsList}" varStatus="loop">
                         <div class="card">
                             <div class="card-header" id="heading${loop.index}">
@@ -143,12 +144,11 @@
                     </c:forEach>
                 </div>
                 <!-- Comment Form -->
-                    <form action="/Journey_war_exploded/detailPage" method="post" class="comment-form">
-                        <textarea id="commentText" name="commentText" class="form-textarea" required placeholder="Tell us how your journey was!"></textarea>
-                        <input type="hidden" name="hikeId" value="${hike.hike_id}">
-                        <button type="submit" class="form-button">Add Comment</button>
-                    </form>
-
+                <form action="/Journey_war_exploded/detailPage" method="post" class="comment-form">
+                    <textarea id="commentText" name="commentText" class="form-textarea" required placeholder="Tell us how your journey was!"></textarea>
+                    <input type="hidden" name="hikeId" value="${hike.hike_id}">
+                    <button type="submit" class="form-button"> Add Comment </button>
+                </form>
                 <!-- Comments Section -->
                 <div class="comments-section">
                     <h2>Comments</h2>
@@ -163,7 +163,7 @@
                     </c:forEach>
                 </div>
             </div>
-            <!-- Right Field -->
+            <!-- Right section of the page -->
             <div class = "right-box">
                 <%--<button class="favorite-button">  <!-- Button to mark Favorites (Does nothing right now!)-->
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -171,21 +171,23 @@
                     </svg>
                     Favorite
                 </button>--%> <!-- Button has no functionality yet -->
-                <h1>Hike details</h1>
-                <div class = "pathdetails-container"> <!-- Container for Path-details -->
+                <h1> Hike details </h1>
+                <!-- Additional attributes -->
+                <div class = "pathdetails-container">
+                    <!-- Stamina -->
                     <div class="pathdetail">
-                        <span class="pathdetail-label">Stamina:</span>
-                            <div id="stamina" class="pathdetail-icons">
-                                <script>
-                                    let stamina = <%=hike.getStamina()%>;
-                                    $(document).ready(function ()
-                                    {insertIcons(stamina, staminaFullIcon, staminaEmptyIcon,'stamina')});
-                                </script>
-                            </div>
-
+                        <span class="pathdetail-label"> Stamina: </span>
+                        <div id="stamina" class="pathdetail-icons">
+                            <script>
+                                let stamina = <%=hike.getStamina()%>;
+                                $(document).ready(function ()
+                                {insertIcons(stamina, staminaFullIcon, staminaEmptyIcon,'stamina')});
+                            </script>
+                        </div>
                     </div>
+                    <!-- Experience -->
                     <div class="pathdetail">
-                        <span class="pathdetail-label">Experience:</span>
+                        <span class="pathdetail-label"> Experience: </span>
                         <div id="experience" class="pathdetail-icons">
                             <script>
                                 let experience = <%=hike.getExperience()%>;
@@ -194,19 +196,20 @@
                             </script>
                         </div>
                     </div>
+                    <!-- Scenery -->
                     <div class="pathdetail">
-                        <span class="pathdetail-label">Scenery:</span>
-                            <div id="scenery" class="pathdetail-icons">
-                                <script>
-                                    let scenery = <%=hike.getScenery()%>;
-                                    $(document).ready(function ()
-                                    {insertIcons(scenery, sceneryFullIcon, sceneryEmptyIcon, 'scenery')});
-                                </script>
-                            </div>
+                        <span class="pathdetail-label"> Scenery: </span>
+                        <div id="scenery" class="pathdetail-icons">
+                            <script>
+                                let scenery = <%=hike.getScenery()%>;
+                                $(document).ready(function ()
+                                {insertIcons(scenery, sceneryFullIcon, sceneryEmptyIcon, 'scenery')});
+                            </script>
+                        </div>
                     </div>
-
+                    <!-- Recommended months -->
                     <div class="pathdetail">
-                        <span class="pathdetail-label">Recommended:</span>
+                        <span class="pathdetail-label"> Recommended: </span>
                     </div>
                 </div>
                 <div class="months-container">
@@ -258,27 +261,23 @@
                         </div>
                     </div>
                 </div>
-                    <div class="pathdetail">
-                        <span class="pathdetail-label">Weather Forecast:</span>
-                    </div>
-                    <br>
+                <!-- Weather -->
+                <div class="pathdetail">
+                    <span class="pathdetail-label"> Weather Forecast: </span>
+                </div>
+                <br>
+                <%
+                    String lastLat = "0";
+                    String lastLon = "0";
 
-                    <%
-                        String lastLat = "0";
-                        String lastLon = "0";
-
-                        if (waypointsList != null) {
-                            lastLat = waypointsList.get(0).get("latitude");
-                            lastLon = waypointsList.get(0).get("longitude");
-                        }
-                    %>
-
-
+                    if (waypointsList != null) {
+                        lastLat = waypointsList.get(0).get("latitude");
+                        lastLon = waypointsList.get(0).get("longitude");
+                    }
+                %>
+                <!-- Embedded weather forecast by windy.com -->
                 <!--https://www.windy.com/de/-Gewitter-thunder?thunder,2023120621,47.180,9.439,10,m:eX6agqS-->
-                    <iframe width="380" height="450" src="https://embed.windy.com/embed2.html?lat=<%=lastLat%>&lon=<%=lastLon%>&detailLat=<%=lastLat%>&detailLon=<%=lastLon%>&width=380&height=450&zoom=11&level=surface&overlay=temp&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=true&metricWind=default&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
-
-
-
+                <iframe width="380" height="450" src="https://embed.windy.com/embed2.html?lat=<%=lastLat%>&lon=<%=lastLon%>&detailLat=<%=lastLat%>&detailLon=<%=lastLon%>&width=380&height=450&zoom=11&level=surface&overlay=temp&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=true&metricWind=default&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
             </div>
         </div>
     </body>

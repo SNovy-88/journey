@@ -1,70 +1,104 @@
 // Flag to track unsaved changes
 let unsavedChanges = true;
 
-const stepper1Node = document.querySelector('#stepper1');
+// Stepper element
 const stepper1 = new Stepper(document.querySelector('#stepper1'));
-
-stepper1Node.addEventListener('show.bs-stepper', function (event) {
-    console.warn('show.bs-stepper', event);
-});
-stepper1Node.addEventListener('shown.bs-stepper', function (event) {
-    console.warn('shown.bs-stepper', event);
-});
 
 // Function for validation of Name & Description input
 function validateStep1() {
+    // Validation: Name input
     const inputElement = document.getElementById('floatingInput');
     const inputFeedback = document.getElementById('inputFeedback');
+    const isInputValid = inputElement.value.trim() !== '';
+    validation(isInputValid, inputElement, inputFeedback);
+
+    // Validation: Description input
     const textareaElement = document.getElementById('floatingTextarea2');
     const textareaFeedback = document.getElementById('textareaFeedback');
-    const isInputValid = inputElement.value.trim() !== '';
     const isTextareaValid = textareaElement.value.trim() !== '';
-    // Get the switch-element state
+    validation(isTextareaValid, textareaElement, textareaFeedback);
+
+    // Get the switch-element state ('map' or 'upload')
     const switchStateInput = document.getElementById('switchState');
     const switchState = switchStateInput.value;
 
-    // Validation: Name input
-    validation(isInputValid, inputElement, inputFeedback);
-    // Validation: Description input
-    validation(isTextareaValid, textareaElement, textareaFeedback);
     // Additional validation based on the switch state
-    // Validation: Map vs. file-upload input
+    // Validation: Map vs. file-upload input (Note: Remaining validation of 'upload' feature in showRoute() function)
     if (switchState === 'map') {
         const mapInput = document.getElementById('gpxDataInput');
         const mapFeedback = document.getElementById('mapFeedback');
         const isMapValid = waypoints.length > 1;
         validation(isMapValid, mapInput, mapFeedback);
+
         return isInputValid && isTextareaValid && isMapValid;
+
     } else if (switchState === 'upload') {
         const fileUploadInput = document.getElementById('customFileEnd');
-        const fileUploadFeedback = document.getElementById('fileUploadFeedback');
+        const fileUploadFeedback  = document.getElementById('fileUploadFeedback');
         const isFileUploadValid = fileUploadInput.files.length > 0;
+        validation(isFileUploadValid, fileUploadInput, fileUploadFeedback );
 
-        if (!isFileUploadValid) {
-            fileUploadInput.classList.add('is-invalid');
-            fileUploadFeedback.textContent = 'Please select a GPX file.';
-            fileUploadFeedback.style.display = 'block';
-        } else {
-            const uploadedFileName = fileUploadInput.files[0].name;
-            const isFileExtensionValid = uploadedFileName.toLowerCase().endsWith('.gpx');
-
-            if (!isFileExtensionValid) {
-                fileUploadInput.classList.add('is-invalid');
-                fileUploadFeedback.textContent = 'Please upload a file with the ".gpx" extension.';
-                fileUploadFeedback.style.display = 'block';
-            } else {
-                fileUploadInput.classList.remove('is-invalid');
-                fileUploadFeedback.style.display = 'none';
-            }
-        }
         return isInputValid && isTextareaValid && isFileUploadValid;
     }
+
     // Default case (should not reach here)
     return false;
 }
 
-//Function for validation of duration (hr and min), height difference, distance
-//fitness level, stamina, experience and scenery
+// Function to be called when the "Next" button is clicked in the first step to calculate Geo data automatically
+window.nextButtonClick = async function () {
+    // Get the switch-element state
+    const switchStateInput = document.getElementById('switchState');
+    const switchState = switchStateInput.value;
+
+    let totalDuration = null;
+    let totalAscent = null;
+    let totalDistance = null;
+
+    if (switchState === 'map') {
+        // Check if route data array is not empty
+        if (storedRouteDataMap.length > 0) {
+            // Sum up the total duration, ascent, and distance from all segments
+            totalDuration = storedRouteDataMap.reduce((acc, segment) => acc + segment.duration, 0);
+            totalAscent = storedRouteDataMap.reduce((acc, segment) => acc + segment.ascent, 0);
+            totalDistance = storedRouteDataMap.reduce((acc, segment) => acc + segment.distance, 0);
+        }
+    } else if (switchState === 'upload') {
+        // Check if showRoute() has been called and uploadMapRouteDataArray is not empty
+        if (storedRouteDataUploadMap.length === 0) {
+            // Call showRoute() to populate uploadMapRouteDataArray (and validate uploadMap feature)
+            await showRoute();
+        }
+
+        // Check if route data array is not empty
+        if (storedRouteDataUploadMap.length > 0) {
+            // Sum up the total duration, ascent, and distance from all segments
+            totalDuration = storedRouteDataUploadMap.reduce((acc, segment) => acc + segment.duration, 0);
+            totalAscent = storedRouteDataUploadMap.reduce((acc, segment) => acc + segment.ascent, 0);
+            totalDistance = storedRouteDataUploadMap.reduce((acc, segment) => acc + segment.distance, 0);
+        }
+    }
+
+    // Check if the calculated values are NaN and replace them with 0
+    totalDuration = isNaN(totalDuration) ? 0 : totalDuration;
+    totalAscent = isNaN(totalAscent) ? 0 : totalAscent;
+    totalDistance = isNaN(totalDistance) ? 0 : totalDistance;
+
+    // Autofill the input fields in the second step
+    document.getElementById('duration-hr').value = Math.floor(totalDuration / 3600);
+    document.getElementById('duration-min').value = Math.floor((totalDuration % 3600) / 60);
+    document.getElementById('height-difference').value = Math.round(totalAscent);
+    document.getElementById('distance').value = (totalDistance / 1000).toFixed(2);
+
+    // Move to the next step
+    stepper1.next();
+
+    // Scroll to the top of the page
+    window.scrollTo(0, 0);
+};
+
+// Function for validation of duration (hr and min), height difference, distance
+// fitness level, stamina, experience and scenery
 function validateStep2() {
     const inputFitnessElement = document.getElementById('drop-down-btn-fitness');
     const inputFitnessFeedback = document.getElementById('fitness-feedback');
@@ -77,7 +111,6 @@ function validateStep2() {
 
     const inputSceneryElement = document.getElementById('drop-down-btn-scenery');
     const inputSceneryFeedback = document.getElementById('scenery-feedback');
-
 
     const isFitnessValid = inputFitnessElement.getAttribute('chosen-value-id') !== '';
     const isStaminaValid = inputStaminaElement.getAttribute('chosen-value-id') !== '';
@@ -106,18 +139,8 @@ function validation(valid, input, feedback){
     }
 }
 
-//checks if number is a whole number withough decimals
-function isWholeNumber(value){
-    return /^\d+$/.test(value);
-}
-
-//checks if number is a decimal with either none, 1 or 2 decimals
-function isDecimalNumber(value){
-    return /^\d+(\.\d{1,2})?$/.test(value);
-}
-
-//Updates Dropbox Title to display chosen option
-//Marks chosen option and displays icons according to chosen option
+// Updates Dropbox Title to display chosen option
+// Marks chosen option and displays icons according to chosen option
 function updateDropdown(dropdown, element) {
     // Setting the Text of the button to the selected option
     let dropdownButton = document.getElementById(dropdown);
@@ -128,12 +151,11 @@ function updateDropdown(dropdown, element) {
 
     // Highlighting the selected option so this is visible when opening dropdown again
     let dropdownItem = document.querySelector("a.dropdown-item.active");
+
     if (dropdownItem) {
         dropdownItem.classList.remove("active");
     }
     element.classList.add("active");
-
-    //console.log(selectedValue);
 
     // Inserting the right icons, depending on the hike attribute
     let attribute = dropdownButton.getAttribute("data-id");
@@ -159,7 +181,7 @@ const uploadMapFeature = document.getElementById('uploadMap');
 const mapFeature = document.getElementById('mapFeature');
 const switchStateInput = document.getElementById('switchState');
 
-// Add event listener to the switch
+// Event listener for the map/upload-switch
 featureSwitch.addEventListener('change', function() {
     // Toggle the visibility of features based on the switch state
     fileUploadFeature.style.display = featureSwitch.checked ? 'block' : 'none';
@@ -186,21 +208,21 @@ featureSwitch.addEventListener('change', function() {
 
 // Function to create hike and send GPX data to the servlet
 function createHike() {
-    // Reset the flag
+    // Bypass the flag
     unsavedChanges = false;
 
     // Update the hidden input field with cached GPX data
     updateGPXInput();
 }
 
-// Prevent pressing enter while typing
+// Prevent pressing enter while typing to submit the form
 document.getElementById("createHike").addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
         e.preventDefault();
     }
 });
 
-// Attach a beforeunload event to show a toast-pop-up warning if there are unsaved changes
+// Beforeunload event to show a toast-pop-up warning if there are unsaved changes
 window.addEventListener('beforeunload', function (e) {
     if (unsavedChanges) {
         const confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
@@ -209,21 +231,22 @@ window.addEventListener('beforeunload', function (e) {
     }
 });
 
-// Check if the URL contains a success parameter
+// Check if the URL contains a success parameter after submitting
 const urlParams = new URLSearchParams(window.location.search);
 const successParam = urlParams.get('success');
 
 // If the success parameter is present, show the success modal
 if (successParam === 'true') {
 
+    // Bypass the flag
     unsavedChanges = false
 
     $(document).ready(function () {
         $('#successModal').modal('show');
 
-        // Add event listener for modal close event
+        // Event listener for modal close event
         $('#successModal').on('hidden.bs.modal', function () {
-            // Redirect to the specified URL when the modal is closed
+            // Redirect to search.jsp when the modal is closed
             window.location.href = "/Journey_war_exploded/search.jsp";
         });
     });

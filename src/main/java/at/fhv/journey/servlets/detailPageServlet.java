@@ -1,13 +1,3 @@
-/*
- * Copyright (c) 2023 Sarah N
- *
- * Project Name:         Journey
- * Description:
- *
- * Date of Creation/
- * Last Update:          21/11/2023
- */
-
 package at.fhv.journey.servlets;
 
 import at.fhv.journey.hibernate.facade.DatabaseFacade;
@@ -45,7 +35,6 @@ import java.util.Map;
 
 import static java.awt.SystemColor.window;
 
-
 @WebServlet(name = "detailPage", value = "/detailPage")
 public class detailPageServlet extends HttpServlet {
 
@@ -61,22 +50,12 @@ public class detailPageServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         String xmlText = chosenhike.getGpxLocation();
-
         request.setAttribute("xmlText", xmlText);
-
         extractWaypoints(xmlText, request);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/hikeDetails.jsp");
         dispatcher.forward(request, response);
-
-
-
     }
-
-    public void destroy(){
-
-    }
-
 
     public void extractWaypoints(String xmlText, HttpServletRequest request) {
         try {
@@ -116,18 +95,19 @@ public class detailPageServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
         int hikeId = Integer.parseInt(request.getParameter("hikeId"));
+
         // Retrieve the current user from the session or wherever it is stored during login
         User currentUser = (User) session.getAttribute("user");
 
         if (currentUser != null) {
             String commentText = request.getParameter("commentText");
+
             DatabaseFacade df = DatabaseFacade.getInstance();
-
-
             Hike chosenHike = df.getHikeByID(hikeId);
 
             // Create a new Comment with the current user
@@ -138,23 +118,19 @@ public class detailPageServlet extends HttpServlet {
             comment.setUser(currentUser);
             df.saveObject(comment);
 
-            
-
             response.sendRedirect("/Journey_war_exploded/detailPage?hike-id=" + request.getParameter("hikeId") );
         } else {
+
             // If the user is not logged in, display an alert window with a link to the login page
             String errorMessage = "You need to be logged in to write a comment.";
             String loginLink = "/Journey_war_exploded/login.jsp";
             String alertScript = "alert('" + errorMessage + "'); window.location.href='" + loginLink + "';";
 
             response.getWriter().println("<script>" + alertScript + "</script>");
-
         }
     }
 
+    public void destroy(){
 
-
-
-
-
+    }
 }
