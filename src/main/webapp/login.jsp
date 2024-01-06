@@ -21,7 +21,7 @@
 <div class="login-container">
   <div class="left-box">
     <div class="left-box-header">
-      <a class="back-button" onclick="goBack()">
+      <a class="back-button" onclick="window.location.href = 'index.jsp';">
         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
           <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"></path>
         </svg>
@@ -75,20 +75,9 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
 <script>
   var loginError = <%= request.getAttribute("loginError") %>;
-
-  function goBack() {
-    if (loginError) {
-      window.history.go(-2);
-    } else {
-      window.history.back();
-    }
-  }
-
 </script>
 <script src="JS/loginValidation.js"></script>
-
 </body>
 </html>
