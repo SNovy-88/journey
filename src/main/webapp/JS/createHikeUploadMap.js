@@ -1,7 +1,7 @@
-// Initialize the upload map
+// Declare the upload map
 let uploadMap = null;
 
-// Declare a global variable to store an array of route data
+// Variable to store an array of route data
 let storedRouteDataUploadMap = [];
 
 // Function to reset the upload map
@@ -20,7 +20,7 @@ function resetUploadMap() {
         // Reinitialize the upload map with default settings
         uploadMap.setView([47, 11], 7);
 
-        // Add a new tile layer to the upload map
+        // Add OpenStreetMap tile layer to the upload map
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(uploadMap);
@@ -31,7 +31,7 @@ function resetUploadMap() {
 function initializeUploadMap() {
     if (!uploadMap) {
         // Create a new map instance for file upload
-        uploadMap = L.map('uploadMap').setView([47, 11], 7); // Adjust the initial view as needed
+        uploadMap = L.map('uploadMap').setView([47, 11], 7);
 
         // Add a tile layer to the upload map
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -46,6 +46,7 @@ function initializeUploadMap() {
 async function showRoute() {
     return new Promise((resolve, reject) => {
 
+        // Additional validation
         const fileUploadInput = document.getElementById('customFileEnd');
         const fileUploadFeedback = document.getElementById('fileUploadFeedback');
         const isFileUploadValid = fileUploadInput.files.length > 0;
@@ -83,47 +84,15 @@ async function showRoute() {
             const gpxData = e.target.result;
 
             // Parse GPX data to get waypoints
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(gpxData, 'text/xml');
-            const waypoints = Array.from(xmlDoc.querySelectorAll('trkpt')).map((wpt) => ({
-                lat: parseFloat(wpt.getAttribute('lat')),
-                lon: parseFloat(wpt.getAttribute('lon')),
-                name: wpt.querySelector('name').textContent.trim() || 'Unnamed Waypoint',
-                type: wpt.querySelector('type').textContent.trim() || 'standard',
-            }));
+            const waypoints = parseGPX(gpxData);
 
             // Add waypoint markers with the custom icon and popup to the upload map
             waypoints.forEach((waypoint) => {
-                let icon;
 
                 // Choose icon based on waypoint type
-                switch (waypoint.type) {
-                    case 'poi':
-                        icon = L.icon({
-                            iconUrl: 'pictures/Leaflet/pin-icon-poi.png',
-                            iconSize: [64, 64],
-                            iconAnchor: [32, 64],
-                            popupAnchor: [0, -32]
-                        });
-                        break;
-                    case 'hut':
-                        icon = L.icon({
-                            iconUrl: 'pictures/Leaflet/pin-icon-hut.png',
-                            iconSize: [64, 64],
-                            iconAnchor: [32, 64],
-                            popupAnchor: [0, -32]
-                        });
-                        break;
-                    default:
-                        icon = L.icon({
-                            iconUrl: 'pictures/Leaflet/pin-icon-wpt.png',
-                            iconSize: [64, 64],
-                            iconAnchor: [32, 64],
-                            popupAnchor: [0, -32]
-                        });
-                }
+                const customIcon = getWaypointIcon(waypoint.type);
 
-                const marker = L.marker([waypoint.lat, waypoint.lon], {icon: icon}).addTo(uploadMap);
+                const marker = L.marker([waypoint.lat, waypoint.lon], {icon: customIcon}).addTo(uploadMap);
                 marker.bindPopup(waypoint.name);
             });
 

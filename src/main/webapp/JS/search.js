@@ -2,14 +2,15 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("form").addEventListener("submit", function (event) {
         event.preventDefault(); //prevents default submit
 
-        // input value from search-input
+        // Input value from search-input
         var searchString = document.querySelector(".search-input").value;
 
-        // jump to loadingSpinner
+        // Jump to loadingSpinner
         window.location.href = "/Journey_war_exploded/loadingSpinner.jsp?searchString=" + encodeURIComponent(searchString);
     });
 });
 
+// Function to update Dropdown in Filter-options
 function updateDropdownExIcons(dropdown, element) {
     // Setting the Text of the button to the selected option
     let dropdownButton = document.getElementById(dropdown);
@@ -23,10 +24,11 @@ function updateDropdownExIcons(dropdown, element) {
     if (dropdownItem) {
         dropdownItem.classList.remove("active");
     }
+
     element.classList.add("active");
 }
 
-//Function to dynamically add the icons and rating to the individual Hikes of the list
+// Function to dynamically add the icons and rating to the individual Hikes of the list
 function insertHikeIconAndRating(iconContainer, icon, value){
     let container = document.getElementById(iconContainer)
     container.innerHTML = icon+" "+value+"/5";

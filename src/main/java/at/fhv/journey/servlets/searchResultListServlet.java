@@ -1,13 +1,3 @@
-/*
- * Copyright (c) 2023 Sarah N
- *
- * Project Name:         Journey
- * Description:
- *
- * Date of Creation/
- * Last Update:          20/12/2023
- */
-
 package at.fhv.journey.servlets;
 
 import java.io.IOException;
@@ -23,7 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "searchResultList", value = "/searchResultList")
 public class searchResultListServlet extends HttpServlet {
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
 
