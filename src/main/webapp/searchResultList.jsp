@@ -227,7 +227,7 @@
                         </div>
                         <div class="col">
                             <div class="filterClass">
-                                <p> Max. distance: </p>
+                                <p> Max. dist.: </p>
                                 <div class="input-group">
                                     <input type="number" aria-label="distance" class="form-control" id="distance" name="distance" step="any" value="<%= (request.getParameter("distance") != null) ? request.getParameter("distance") : "" %>">
                                     <span class="input-group-text" style="width:30px; text-align: center; padding: 5px;">km</span>
