@@ -218,4 +218,9 @@ if (successParam === 'true') {
     $(document).ready(function () {
         $('#successModal').modal('show');
     });
+    // Add a click event listener to the close button
+    $('#closeButton').on('click', function () {
+        // Close the modal when the close button is clicked
+        $('#successModal').modal('hide');
+    });
 }

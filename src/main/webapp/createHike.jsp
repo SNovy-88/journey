@@ -494,7 +494,7 @@
                         Hike successfully created!
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        <button type="button" id="closeButton" class="btn btn-primary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
