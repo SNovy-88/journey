@@ -2,6 +2,78 @@
     scrollbar-width: none;
 }
 
+.search-container-rlist {
+    text-align: center;
+    padding: 2vh;
+    background-color: #2b2b2b;
+    opacity: 90%;
+}
+
+.search-button-rlist {
+    margin-left: 10px;
+    padding: 0.5vh;
+    background-color: #b1ff2e;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.search-button-rlist:hover {
+    background-color: #8ddb1f;
+    transform: scale(1.2);
+}
+
+.search-input {
+    color: #999999;
+    font-style: italic;
+    height: 1vh;
+    background-color: white;
+}
+
+.scroll {
+    top: 0;
+    position: sticky;
+    z-index: 100;
+}
+
+.noHikeText {
+    width: 100%;
+    text-align: center;
+}
+
+.filter {
+    background-color: #2b2b2b;
+    width: 20vw;
+    float: left;
+    height: 100%;
+    opacity: 90%;
+}
+
+.filterClass {
+    margin-left: 2vh;
+    margin-bottom: 1vh;
+    border-bottom: #ffffff;
+    color: #ffffff;
+}
+
+.filterRating {
+    width: 50%;
+}
+
+.monthsSelect {
+    column-count: 3;
+    column-gap: 20px;
+    column-rule: 1px solid lightgrey;
+    margin-top: -15px;
+}
+
+.input-group {
+    margin-top: -15px;
+    display:flex;
+}
+
 h1 {
     text-align: center;
     margin-top: 10px;
@@ -14,28 +86,20 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     margin-left: 20%;
-    margin-right: 20%;
 }
 
 /* hike-box is one hike in the search results list*/
 .hike-box {
     border: 1px solid #ccc;
     padding: 10px;
-    margin: 10px;
+    margin-top: 2vh;
+    margin-left: 25vh;
     background-color: #ffffff;
-    width: 100%;
+    width: 70%;
     box-sizing: border-box;
     position: relative;
-    overflow: hidden; /* this makes sure that all boxes stay same width even when
-                        text is too long */
+    overflow: hidden; /* This makes sure that all boxes stay same width even when text is too long */
 }
-
-/* hike-box-information contains all the information related to one search result
-.hike-box-information {
-    margin-left: 160px;
-    overflow: hidden;
-}
-*/
 
 /* h2 is the hike name */
 .hike-box h2 {
@@ -48,7 +112,7 @@ h1 {
     max-width: 95%; /* Allow text to wrap */
 }
 
-/* tooltip */
+/* Tooltip */
 .hike-box h2::after {
     content: "";
 }
@@ -68,7 +132,7 @@ h1 {
     cursor: pointer;
 }
 
-/* image resizing and aspect ratio */
+/* Image resizing and aspect ratio */
 .image-container {
     position: relative;
     width: 100%;
@@ -84,7 +148,7 @@ h1 {
     border-radius: 15px;
 }
 
-/* additional formatting for the grid system: vertical lines */
+/* Additional formatting for the grid system: vertical lines */
 .row-cols-auto .col-md-3 {
     position: relative;
 }
@@ -104,13 +168,13 @@ h1 {
 }
 */
 
-/* link-container contains link to details page of the hike result */
+/* Link-container contains link to details page of the hike result */
 .link-container {
     font-size: 16px;
     position: relative;
 }
 
-/* this is not working yet, is a future feature */
+/* This is not working yet, is a future feature */
 .safe-trail-link {
     float: left;
     color: green;
@@ -120,6 +184,7 @@ h1 {
     border: 1px solid green;
     border-radius: 5px;
 }
+
 .safe-trail-link:hover {
     transition-duration: 300ms;
     background-color: green;
@@ -136,6 +201,7 @@ h1 {
     border: 1px solid blue;
     border-radius: 5px;
 }
+
 .hike-details-link:hover {
     transition-duration: 300ms;
     background-color: blue;
@@ -148,7 +214,7 @@ h1 {
 }
 */
 
-/* fitness level tags */
+/* Fitness level tags */
 .fitnesslevel {
     font-size: 14px;
     margin-top: 7px;
@@ -189,48 +255,4 @@ h1 {
     color: white;
     padding: 5px;
     border-radius: 5px;
-}
-
-.search-container-rlist {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    place-items: center;
-    padding: 2vh;
-    background-color: #2b2b2b;
-}
-
-.search-button-rlist {
-    margin-left: 10px;
-    padding: 0.5vh;
-    background-color: #b1ff2e;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-
-.search-button-rlist:hover {
-    background-color: #8ddb1f;
-    transform: scale(1.2);
-}
-
-.search-input {
-    color: #999999;
-    font-style: italic;
-    height: 1vh;
-}
-
-.scroll {
-    top: 0;
-    position: sticky;
-    z-index: 100;
-}
-
-.noHikeText {
-    width: 100%;
-    text-align: center;
 }

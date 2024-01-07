@@ -8,8 +8,6 @@ async function fetchRoute(coordinates) {
         elevation: true
     };
 
-    //console.log(JSON.stringify(body));
-
     const response = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(body),
@@ -19,9 +17,6 @@ async function fetchRoute(coordinates) {
             'Authorization': ORS_API_KEY
         }
     });
-
-    //console.log("response: ", JSON.stringify(response));
-    //console.log(response);
 
     if (!response.ok) {
         const message = response.statusText;
@@ -38,12 +33,7 @@ async function fetchRoute(coordinates) {
             ascent: segment.ascent,
             descent: segment.descent
         };
-
-        //console.log("Distance: ${totalDistance} meters, Duration: ${totalDuration} seconds, Ascent: ${totalAscent} meters, Descent: ${totalDescent} meters");
     }
-
-    console.log("Responsedata!");
-    console.log(responseData);
 
     return {geojson: responseData, details: routeData};
 }
