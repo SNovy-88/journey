@@ -31,6 +31,10 @@ public class DatabaseFacade implements IdbFacadeJPA {
             try (CommentBrokerJPA cb = new CommentBrokerJPA()) {
                 cb.insert((Comment) value);
             }
+        } else if (value instanceof User){
+            try (UserBrokerJPA ub = new UserBrokerJPA()){
+                ub.insert((User) value);
+            }
         }
     }
 
