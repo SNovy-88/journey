@@ -23,7 +23,6 @@ public class registerPageServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         if (!isExistingUser(email)) {
-            // Hash the password before storing it in the database
             String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
             User newUser = new User();
@@ -35,20 +34,16 @@ public class registerPageServlet extends HttpServlet {
                 DatabaseFacade df = new DatabaseFacade();
                 df.saveObject(newUser);
 
-                // Set session attribute for successful registration
-                HttpSession session = request.getSession();
-                session.setAttribute("registrationSuccess", true);
-
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                response.sendRedirect("register.jsp?registrationSuccess=true");
             } catch (Exception e) {
                 e.printStackTrace();
-                response.sendRedirect("register.jsp?error=registration_failed");
+                response.sendRedirect("register.jsp?registrationSuccess=false");
             }
         } else {
-            // Redirect to registration page with an error message
-            response.sendRedirect("register.jsp?error=user_exists");
+            response.sendRedirect("register.jsp?registrationSuccess=false");
         }
     }
+
 
     private boolean isExistingUser(String email) {
         try {
