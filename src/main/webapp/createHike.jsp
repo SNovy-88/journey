@@ -131,7 +131,6 @@
                                             <table id="coordinates-table" class="table table-sm table-hover border table-borderless"></table> <!-- Coordinate table under the map -->
                                         </div>
                                     <button class="btn btn-primary" type="button" onclick="if (validateStep1()) nextButtonClick()"> Next </button>
-                                    <button class="btn btn-success" type="submit" onclick="createHike()">Create Hike</button>
                                 </div>
                                 <!-- Content of the 2nd stepper part -->
                                 <div id="test-l-2" class="content">
@@ -404,8 +403,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    <button class="btn btn-primary" type="button" onclick="stepper1.next()">Next</button>
                                     <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
+                                    <button class="btn btn-success" type="submit" onclick="createHike()">Create Hike</button>
                                 </div>
                             </div>
                         </div>
