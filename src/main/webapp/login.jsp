@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="CSS/styles.css">
         <link rel="stylesheet" href="CSS/login.css">
 
-        <title> Journey | Log in </title>
+        <title> Journey | Sign in </title>
     </head>
     <body style="background:#1a1a1a">
     <jsp:include page="navBar.jsp"/>
@@ -31,23 +31,26 @@
             </div>
             <div class="login-text mb-4 text-center">
                 <h2 class="text-light font-weight-bold">Welcome to <span style="color: #b1ff2e;">Journey</span>!</h2>
-                <p class="lead" style="color: #ffffff">Embark on your journey. Sign in to Journey now!</p>
+                <p class="lead" style="color: #ffffff">Embark on your journey. Sign in to Journey now or quickly sign up to get started!</p>
             </div>
             <div class="login-form">
                 <form action="loginPageServlet" method="post" class="col-md-6 mx-auto d-flex flex-column align-items-center">
                     <div class="form-group">
-                        <label for="inputEmail" class="mb-2"></label>
+                        <label for="inputEmail" class="mb-3"></label>
                         <input type="email" class="form-control" id="inputEmail" placeholder="Email Address" name="email" required>
                         <div class="invalid-feedback">
                             Please enter a valid email address.
                         </div>
-                        <label for="inputPassword" class="mb-2"></label>
+                        <label for="inputPassword" class="mb-3"></label>
                         <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" required>
                         <div class="invalid-feedback">
                             Please enter a valid password.
                         </div>
                     </div>
-                    <button class="submit-button">Sign in</button>
+                    <div class="d-flex">
+                        <button class="submit-button mr-2">Sign in</button>
+                        <button class="submit-button" onclick="window.location.href = 'register.jsp';">Sign up</button>
+                    </div>
                 </form>
             </div>
         </div>
