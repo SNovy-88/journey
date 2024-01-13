@@ -7,6 +7,7 @@
 <%@ page import="at.fhv.journey.model.User" %>
 <%@ page import="jakarta.servlet.http.HttpSession" %>
 <%@ include file="favicon.jsp" %>
+<%@ page import="at.fhv.journey.utils.imagePath" %>
 
 <!-- JSTL tag library to retrieve GPX-XML data from DB without character losses -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -75,7 +76,7 @@
                 </div>
                 <!-- Image -->
                 <div class="image-container">
-                    <img class="image" src="pictures/examples/ex02.jpg" alt="Hike picture"/>
+                    <img class="image" src="<%=imagePath.getImagePath()%><%=hike.getImage()%>" alt="Hike picture"/>
                 </div>
                 <!-- Details and Attributes -->
                 <div class = hike-details-stats-container>

@@ -2,6 +2,7 @@ package at.fhv.journey.servlets;
 
 import at.fhv.journey.hibernate.facade.DatabaseFacade;
 import at.fhv.journey.model.Hike;
+import at.fhv.journey.utils.imagePath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,9 +12,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "createPageServlet", value = "/create_hike")
@@ -68,6 +74,36 @@ public class createPageServlet extends HttpServlet {
         hike.setScenery(scenery);
         hike.setRecommendedMonths(checkedMonths);
         hike.setDateCreated(date);
+        hike.setImage("test1.jpg");
+
+        Part filePart = request.getPart("image");
+        // Get the InputStream to upload the file to the server
+        if (filePart != null && filePart.getSize() > 0) {
+            try (InputStream fileContent = filePart.getInputStream();
+                 InputStream fileContent2 = filePart.getInputStream()) {
+
+                String fileName = UUID.randomUUID() + ".jpg";
+
+                // Use Paths.get instead of resolve to construct a path relative to the source directory
+                Path serverImagePath = Paths.get(getServletContext().getRealPath(imagePath.getImagePath()),fileName);
+                Path serverPath = Paths.get(getServletContext().getRealPath(""));
+                Path subPath = serverPath.subpath(0, serverPath.getNameCount() - 2);
+                Path realPath = Paths.get(serverImagePath.getRoot().toString(), subPath.toString(), imagePath.getImagePathFromRepository(), fileName);
+
+                if (!Files.exists(serverImagePath)) {
+                    Files.createDirectories(serverImagePath);
+                }
+                Files.copy(fileContent, serverImagePath, StandardCopyOption.REPLACE_EXISTING);
+                if (!Files.exists(realPath)) {
+                    Files.createDirectories(realPath);
+                }
+                Files.copy(fileContent2, realPath, StandardCopyOption.REPLACE_EXISTING);
+
+                hike.setImage(fileName);
+            }
+        }
+
+
 
         //TODO needs to be changed to userId once Create is locked for normal users
         if (session.getAttribute("username") != null) {
