@@ -42,3 +42,7 @@ input[readonly] {
     height: 300px;
     width: auto;
 }
+
+#remove-btn {
+    max-width: 150px;
+}

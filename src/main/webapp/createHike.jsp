@@ -403,26 +403,23 @@
                                     <br>
 
                                     <div id="preview-container">
-                                        <img id="uploaded-image" src="<%=imagePath.getImagePath()%>test1.jpg" alt="Uploaded Image">
+                                        <img id="uploaded-image" src="" alt="Uploaded Image">
                                         <br>
                                         <div id="remove-btn" class="btn btn-primary" onclick="removeImage()">Remove Image</div>
                                     </div>
 
                                     <script>
-                                        function showPreview(input) {
-                                            const fileInput = input.files[0];
-                                            const previewContainer = document.getElementById("preview-container");
-                                            const uploadedImage = document.getElementById("uploaded-image");
+                                        var removeBtn = document.getElementById('remove-btn');
 
-                                            if (fileInput) {
-                                                const reader = new FileReader();
+                                        function checkRemoveButtonVisibility() {
+                                            var uploadedImage = document.getElementById('uploaded-image');
 
-                                                reader.onload = function (e) {
-                                                    previewContainer.style.display = "block";
-                                                    uploadedImage.src = e.target.result;
-                                                };
-
-                                                reader.readAsDataURL(fileInput);
+                                            if (uploadedImage.src === "") {
+                                                // No file uploaded, hide the remove button
+                                                removeBtn.style.display = 'none';
+                                            } else {
+                                                // File uploaded, show the remove button
+                                                removeBtn.style.display = 'block';
                                             }
                                         }
 
@@ -435,17 +432,46 @@
                                             fileInput.value = "";
 
                                             // Hide the preview container
-                                            previewContainer.style.display = "block";
+                                            previewContainer.style.display = "none";
 
                                             // Clear the image source
-                                            uploadedImage.src = "<%=imagePath.getImagePath()%>test1.jpg";
+                                            uploadedImage.src = "";
+
+                                            // Hide the remove button
+                                            removeBtn.style.display = 'none';
+                                        }
+
+                                        function showPreview(input) {
+                                            const fileInput = input.files[0];
+                                            const previewContainer = document.getElementById("preview-container");
+                                            const uploadedImage = document.getElementById("uploaded-image");
+
+                                            if (fileInput) {
+                                                const reader = new FileReader();
+
+                                                reader.onload = function (e) {
+                                                    previewContainer.style.display = "block";
+                                                    uploadedImage.src = e.target.result;
+
+                                                    // Show the remove button
+                                                    removeBtn.style.display = 'block';
+                                                };
+
+                                                reader.readAsDataURL(fileInput);
+                                            }
                                         }
 
                                         // Attach the showPreview function to the change event of the file input
                                         document.getElementById("image").addEventListener("change", function () {
                                             showPreview(this);
                                         });
+
+                                        // Call the function after the page has loaded
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            checkRemoveButtonVisibility();
+                                        });
                                     </script>
+
                                     <br>
 
                                     <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
