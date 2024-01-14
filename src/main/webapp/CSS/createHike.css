@@ -43,6 +43,10 @@ input[readonly] {
     width: auto;
 }
 
+#remove-btn{
+    max-width: 200px;
+}
+
 #remove-btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
