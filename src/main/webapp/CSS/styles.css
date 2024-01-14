@@ -92,6 +92,10 @@ body {
     align-items: center;
 }
 
+#navbar a {
+    text-decoration: none;
+}
+
 .links {
     color:white;
     padding: 100% 16px;
