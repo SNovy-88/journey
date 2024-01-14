@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="favicon.jsp" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" accept-language="en">
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="CSS/styles.css">
@@ -403,9 +403,9 @@
                                     <br>
 
                                     <div id="preview-container">
-                                        <img id="uploaded-image" src="<%=imagePath.getImagePath()%>test1.jpg" alt="Uploaded Image">
+                                        <img id="uploaded-image" src="<%=imagePath.getImagePath()%>empty.png" alt="Uploaded Image">
                                         <br>
-                                        <div id="remove-btn" class="btn btn-primary" onclick="removeImage()">Remove Image</div>
+                                        <div id="remove-btn" class="btn btn-primary" onclick="removeImage()" disabled>Remove Image</div>
                                     </div>
 
                                     <script>
@@ -413,6 +413,7 @@
                                             const fileInput = input.files[0];
                                             const previewContainer = document.getElementById("preview-container");
                                             const uploadedImage = document.getElementById("uploaded-image");
+                                            const removeBtn = document.getElementById("remove-btn");
 
                                             if (fileInput) {
                                                 const reader = new FileReader();
@@ -420,6 +421,7 @@
                                                 reader.onload = function (e) {
                                                     previewContainer.style.display = "block";
                                                     uploadedImage.src = e.target.result;
+                                                    removeBtn.desabled = false;
                                                 };
 
                                                 reader.readAsDataURL(fileInput);
@@ -430,6 +432,7 @@
                                             const previewContainer = document.getElementById("preview-container");
                                             const uploadedImage = document.getElementById("uploaded-image");
                                             const fileInput = document.getElementById("image");
+                                            const removeBtn = document.getElementById("remove-btn");
 
                                             // Clear the file input
                                             fileInput.value = "";
@@ -438,7 +441,8 @@
                                             previewContainer.style.display = "block";
 
                                             // Clear the image source
-                                            uploadedImage.src = "<%=imagePath.getImagePath()%>test1.jpg";
+                                            uploadedImage.src = "<%=imagePath.getImagePath()%>empty.png";
+                                            removeBtn.disabled = true;
                                         }
 
                                         // Attach the showPreview function to the change event of the file input

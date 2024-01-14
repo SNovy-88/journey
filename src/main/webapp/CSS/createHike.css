@@ -42,3 +42,8 @@ input[readonly] {
     height: 300px;
     width: auto;
 }
+
+#remove-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
