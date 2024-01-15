@@ -9,19 +9,17 @@
 
         <title> Journey | Create your hike </title>
 
-        <!-- Additional Bootstrap JavaScript -->
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+        <!-- Bootstrap JavaScript -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-        <!-- Additional Bootstrap stepper JavaScript -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
-        <!-- Bootstrap -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
         <!-- Bootstrap stepper JavaScript & CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
         <!-- Leaflet CSS -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -393,27 +391,21 @@
                                 </div>
                                 <!-- Content of the 3rd stepper part -->
                                 <div id="test-l-3" class="content">
-                                        <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-                                    <p><b>Upload Image:</b></p>
-
-                                    <form id="image-form" enctype="multipart/form-data" class="btn btn-primary">
-
-                                        <input type="file" id="image" name="image" accept=".jpg, image/*">
-                                    </form>
-                                    <br>
-
-                                    <div id="preview-container">
-                                        <img id="uploaded-image" src="" alt="Uploaded Image">
-                                        <br>
-                                        <div id="remove-btn" class="btn btn-danger" onclick="removeImage()" style="display: none">Remove Image</div>
-
+                                    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+                                    <p><b> Upload Image: (Optional) </b></p>
+                                    <div class="invalid-feedback" id="imageUploadFeedback" style="display: none">
+                                        Please choose a valid .jpg or .png file.
                                     </div>
-                                    <script>window.onload = onLoad;
-                                    function onLoad() {
-                                        removeImage();
-                                    }
-                                    </script>
-
+                                    <div class="custom-file-input">
+                                        <label for="image" class="btn btn-secondary"> Choose File </label>
+                                        <input type="file" id="image" name="image" accept=".jpg, .png, image/*" onchange="showPreview(this)">
+                                    </div>
+                                    <br>
+                                    <div id="preview-container">
+                                        <img id="uploaded-image" src="" alt="Uploaded Image" style="display: none">
+                                        <br>
+                                        <button type="button" id="remove-btn" class="btn btn-danger" onclick="removeImage()" style="display: none"> Remove Image </button>
+                                    </div>
                                     <br>
                                     <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
                                     <button class="btn btn-success" type="submit" onclick="createHike()">Create Hike</button>

@@ -44,6 +44,19 @@ input[readonly] {
     width: auto;
 }
 
-#remove-btn{
-    max-width: 200px;
+.custom-file-input {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.custom-file-input input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
 }
