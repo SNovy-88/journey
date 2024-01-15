@@ -394,9 +394,10 @@
                                 <!-- Content of the 3rd stepper part -->
                                 <div id="test-l-3" class="content">
                                         <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+                                    <p><b>Upload Image:</b></p>
+
                                     <form id="image-form" enctype="multipart/form-data" class="btn btn-primary">
-                                        <label for="image">Upload Image:</label>
-                                        <br>
+
                                         <input type="file" id="image" name="image" accept=".jpg, image/*">
                                     </form>
                                     <br>
@@ -404,7 +405,8 @@
                                     <div id="preview-container">
                                         <img id="uploaded-image" src="" alt="Uploaded Image">
                                         <br>
-                                        <div id="remove-btn" class="btn btn-primary" onclick="removeImage()" disabled>Remove Image</div>
+                                        <div id="remove-btn" class="btn btn-danger" onclick="removeImage()" style="display: none">Remove Image</div>
+
                                     </div>
                                     <script>window.onload = onLoad;
                                     function onLoad() {

@@ -39,6 +39,7 @@ input[readonly] {
 }
 
 #uploaded-image{
+    padding: 10px;
     height: 300px;
     width: auto;
 }

@@ -10,7 +10,7 @@ function showPreview(input) {
         reader.onload = function (e) {
             previewContainer.style.display = "block";
             uploadedImage.src = e.target.result;
-            removeBtn.disabled = false;
+            removeBtn.style.display = "block";
         };
 
         reader.readAsDataURL(fileInput);
@@ -27,13 +27,13 @@ function removeImage() {
     fileInput.value = "";
 
     // Hide the preview container if the image is empty
-    if (uploadedImage.src.includes("empty.png")) {
+    if (uploadedImage.src.includes("")) {
         previewContainer.style.display = "none";
     }
 
     // Set the image source to empty.png
-    uploadedImage.src = "<%=imagePath.getImagePath()%>empty.png";
-    removeBtn.disabled = true;
+    uploadedImage.src = "";
+    removeBtn.style.display = "none";
 }
 
 // Attach the showPreview function to the change event of the file input
