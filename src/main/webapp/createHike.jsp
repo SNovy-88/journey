@@ -403,7 +403,7 @@
                                     <br>
 
                                     <div id="preview-container">
-                                        <img id="uploaded-image" src="<%=imagePath.getImagePath()%>empty.png" alt="Uploaded Image">
+                                        <img id="uploaded-image" src="" alt="Uploaded Image">
                                         <br>
                                         <div id="remove-btn" class="btn btn-primary" onclick="removeImage()" disabled>Remove Image</div>
                                     </div>
@@ -421,7 +421,7 @@
                                                 reader.onload = function (e) {
                                                     previewContainer.style.display = "block";
                                                     uploadedImage.src = e.target.result;
-                                                    removeBtn.desabled = false;
+                                                    removeBtn.disabled = false;
                                                 };
 
                                                 reader.readAsDataURL(fileInput);
@@ -437,10 +437,12 @@
                                             // Clear the file input
                                             fileInput.value = "";
 
-                                            // Hide the preview container
-                                            previewContainer.style.display = "block";
+                                            // Hide the preview container if the image is empty
+                                            if (uploadedImage.src.includes("empty.png")) {
+                                                previewContainer.style.display = "none";
+                                            }
 
-                                            // Clear the image source
+                                            // Set the image source to empty.png
                                             uploadedImage.src = "<%=imagePath.getImagePath()%>empty.png";
                                             removeBtn.disabled = true;
                                         }
@@ -449,7 +451,13 @@
                                         document.getElementById("image").addEventListener("change", function () {
                                             showPreview(this);
                                         });
+
+                                        function onLoad() {
+                                            removeImage();
+                                        }
+                                        window.onload = onLoad;
                                     </script>
+
                                     <br>
 
                                     <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
