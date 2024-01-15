@@ -469,7 +469,7 @@
         <script src="JS/waypointIcons.js"></script>
         <script src="JS/fetchRoute.js"></script>
         <script src="JS/ORS_API_KEY.js"></script>
-        <script src="JS/createHikeImage1.js"></script>
+        <script src="JS/createHikeImage.js"></script>
 
     </body>
 </html>
