@@ -1,4 +1,3 @@
-<%@ page import="at.fhv.journey.utils.imagePath" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="favicon.jsp" %>
 <!DOCTYPE html>
