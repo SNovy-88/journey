@@ -394,11 +394,11 @@
                                     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
                                     <p><b> Upload Image: (Optional) </b></p>
                                     <div class="invalid-feedback" id="imageUploadFeedback" style="display: none">
-                                        Please choose a valid .jpg or .png file.
+                                        Please choose a .jpg file.
                                     </div>
                                     <div class="custom-file-input">
-                                        <label for="image" class="btn btn-secondary"> Choose File </label>
-                                        <input type="file" id="image" name="image" accept=".jpg, .png, image/*" onchange="showPreview(this)">
+                                        <label for="image" class="btn btn-secondary"> Choose JPG File </label>
+                                        <input type="file" id="image" name="image" accept=".jpg, image/*" onchange="showPreview(this)">
                                     </div>
                                     <br>
                                     <div id="preview-container">
@@ -469,7 +469,7 @@
         <script src="JS/waypointIcons.js"></script>
         <script src="JS/fetchRoute.js"></script>
         <script src="JS/ORS_API_KEY.js"></script>
-        <script src="JS/createHikeImage.js"></script>
+        <script src="JS/createHikeImage1.js"></script>
 
     </body>
 </html>

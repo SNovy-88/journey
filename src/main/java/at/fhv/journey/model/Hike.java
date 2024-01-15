@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "hike", schema = "journey")
+@Table(name = "hikepicture", schema = "journey")
 public class Hike {
 
     private int _hike_id;

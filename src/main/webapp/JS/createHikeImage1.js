@@ -10,10 +10,10 @@ function showPreview(input) {
     imageUploadFeedback.style.display = 'none';
 
     if (fileInput) {
-        const isFileExtensionValid = fileInput.name.toLowerCase().endsWith('.jpg') || fileInput.name.toLowerCase().endsWith('.png');
+        const isFileExtensionValid = fileInput.name.toLowerCase().endsWith('.jpg');
 
         if (!isFileExtensionValid) {
-            imageUploadFeedback.textContent = 'Please upload a valid .jpg or .png file.';
+            imageUploadFeedback.textContent = 'Please upload a valid .jpg file.';
             imageUploadFeedback.style.display = 'block';
             return;
         }
