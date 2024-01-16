@@ -398,7 +398,7 @@
                                     </div>
                                     <div class="custom-file-input">
                                         <label for="image" class="btn btn-secondary"> Choose File </label>
-                                        <input type="file" id="image" name="image" accept=".jpg, .png, image/*" onchange="showPreview(this)">
+                                        <input type="file" id="image" name="image" accept=".jpg,.png,image/*" onchange="showPreview(this)">
                                     </div>
                                     <br>
                                     <div id="preview-container">
