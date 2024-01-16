@@ -397,8 +397,8 @@
                                         Please choose a .jpg file.
                                     </div>
                                     <div class="custom-file-input">
-                                        <label for="image" class="btn btn-secondary"> Choose JPG File </label>
-                                        <input type="file" id="image" name="image" accept=".jpg, image/*" onchange="showPreview(this)">
+                                        <label for="image" class="btn btn-secondary"> Choose File </label>
+                                        <input type="file" id="image" name="image" accept=".jpg, .png, image/*" onchange="showPreview(this)">
                                     </div>
                                     <br>
                                     <div id="preview-container">
