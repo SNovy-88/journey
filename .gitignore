@@ -2,6 +2,8 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+/q
+src/main/webapp/JS/ORS_API_KEY.js
 
 ### IntelliJ IDEA ###
 .idea/
@@ -37,4 +39,3 @@ build/
 
 ### Mac OS ###
 .DS_Store
-/q
