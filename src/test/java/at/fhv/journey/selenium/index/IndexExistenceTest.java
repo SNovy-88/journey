@@ -1,4 +1,4 @@
-package at.fhv.journey.Integration;
+package at.fhv.journey.selenium.index;
 
 import org.junit.After;
 import org.junit.Before;
