@@ -23,6 +23,7 @@ public class Hike {
     private String _author;
     private LocalDate _dateCreated;
     private String _gpxLocation;
+    private String _image;
 
     private List<Comment> comments;
 
@@ -175,6 +176,9 @@ public class Hike {
     public void setRecommendedMonths(int recommendedMonths) {
         _recommendedMonths = recommendedMonths;
     }
+    @Column(name = "image")
+    public String getImage(){return _image;}
+    public void setImage(String image) {_image = image;}
 
 
     //Functions to convert 1-5 Scales into String output

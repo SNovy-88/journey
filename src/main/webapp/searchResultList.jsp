@@ -3,6 +3,8 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="static at.fhv.journey.utils.CssClassGetters.getFitnessLevelCSSClass" %>
 <%@ include file="favicon.jsp" %>
+<%@ page import="at.fhv.journey.utils.imagePath" %>
+
 <html>
     <head lang="en">
         <meta charset="UTF-8">
@@ -268,7 +270,7 @@
                     <div class="row"> <!-- Grid system for the infos inside a box -->
                         <div class="col-md-4"> <!-- Column for the image -->
                             <div class="image-container">
-                                <div class="image rounded" style="background-image: url('pictures/examples/ex02.jpg');"></div>
+                                <div class="image rounded" style="background-image: url('<%=imagePath.getImagePath()%><%=hike.getImage()%>');"></div>
                             </div>
                         </div>
                         <div class="col-md-8"> <!-- Column for the header and description -->
