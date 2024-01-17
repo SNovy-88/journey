@@ -1,5 +1,8 @@
-// Initialize the upload map
+// Declare the upload map
 let uploadMap = null;
+
+// Variable to store an array of route data
+let storedRouteDataUploadMap = [];
 
 // Function to reset the upload map
 function resetUploadMap() {
@@ -11,10 +14,13 @@ function resetUploadMap() {
             }
         });
 
+        // Clear the storedRouteDataArray before recalculating the route
+        storedRouteDataUploadMap = [];
+
         // Reinitialize the upload map with default settings
         uploadMap.setView([47, 11], 7);
 
-        // Add a new tile layer to the upload map
+        // Add OpenStreetMap tile layer to the upload map
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(uploadMap);
@@ -25,7 +31,7 @@ function resetUploadMap() {
 function initializeUploadMap() {
     if (!uploadMap) {
         // Create a new map instance for file upload
-        uploadMap = L.map('uploadMap').setView([47, 11], 7); // Adjust the initial view as needed
+        uploadMap = L.map('uploadMap').setView([47, 11], 7);
 
         // Add a tile layer to the upload map
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -38,103 +44,88 @@ function initializeUploadMap() {
 
 // Function to show route on the upload map
 async function showRoute() {
-    const fileUploadInput = document.getElementById('customFileEnd');
-    const fileUploadFeedback = document.getElementById('fileUploadFeedback');
-    const isFileUploadValid = fileUploadInput.files.length > 0;
+    return new Promise((resolve, reject) => {
 
-    if (!isFileUploadValid) {
-        fileUploadInput.classList.add('is-invalid');
-        fileUploadFeedback.textContent = 'Please select a GPX file.';
-        fileUploadFeedback.style.display = 'block';
-    } else {
-        const uploadedFileName = fileUploadInput.files[0].name;
-        const isFileExtensionValid = uploadedFileName.toLowerCase().endsWith('.gpx');
+        // Additional validation
+        const fileUploadInput = document.getElementById('customFileEnd');
+        const fileUploadFeedback = document.getElementById('fileUploadFeedback');
+        const isFileUploadValid = fileUploadInput.files.length > 0;
 
-        if (!isFileExtensionValid) {
+        if (!isFileUploadValid) {
             fileUploadInput.classList.add('is-invalid');
-            fileUploadFeedback.textContent = 'Please upload a file with the ".gpx" extension.';
+            fileUploadFeedback.textContent = 'Please select a GPX file.';
             fileUploadFeedback.style.display = 'block';
+
+            // Reject the promise
+            reject("Invalid file upload");
+            return;
         } else {
-            fileUploadInput.classList.remove('is-invalid');
-            fileUploadFeedback.style.display = 'none';
-        }
-    }
+            const uploadedFileName = fileUploadInput.files[0].name;
+            const isFileExtensionValid = uploadedFileName.toLowerCase().endsWith('.gpx');
 
-    // Reset the upload map before showing a new route
-    resetUploadMap();
-
-    // Initialize a new Leaflet map for file upload
-    const uploadMap = initializeUploadMap();
-
-    const reader = new FileReader();
-    reader.onload = async function (e) {
-        const gpxData = e.target.result;
-
-        // Parse GPX data to get waypoints
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(gpxData, 'text/xml');
-        const waypoints = Array.from(xmlDoc.querySelectorAll('wpt')).map((wpt) => ({
-            lat: parseFloat(wpt.getAttribute('lat')),
-            lon: parseFloat(wpt.getAttribute('lon')),
-            name: wpt.querySelector('name').textContent.trim() || 'Unnamed Waypoint',
-        }));
-
-        // Create a custom icon for the waypoint marker
-        const customIcon = L.icon({
-            iconUrl: 'pictures/Leaflet/pin-icon-wpt.png',
-            iconSize: [33, 51],
-            iconAnchor: [16, 51],
-            popupAnchor: [0, -51]
-        });
-
-        // Add waypoint markers with the custom icon and popup to the upload map
-        waypoints.forEach((waypoint) => {
-            const marker = L.marker([waypoint.lat, waypoint.lon], { icon: customIcon }).addTo(uploadMap);
-            marker.bindPopup(waypoint.name);
-        });
-
-        // Request routes between waypoints using OpenRouteService API
-        for (let i = 0; i < waypoints.length - 1; i++) {
-            const startPoint = waypoints[i];
-            const endPoint = waypoints[i + 1];
-
-            const route = await calculateRoute(startPoint, endPoint);
-
-            // Add the route as a layer to the upload map
-            L.polyline(route, { color: 'red' }).addTo(uploadMap);
+            if (!isFileExtensionValid) {
+                fileUploadInput.classList.add('is-invalid');
+                fileUploadFeedback.textContent = 'Please upload a file with the ".gpx" extension.';
+                fileUploadFeedback.style.display = 'block';
+            } else {
+                fileUploadInput.classList.remove('is-invalid');
+                fileUploadFeedback.style.display = 'none';
+            }
         }
 
-        // Fit the upload map to the bounds of all routes
-        const bounds = L.latLngBounds(waypoints.map((wpt) => L.latLng(wpt.lat, wpt.lon)));
-        uploadMap.fitBounds(bounds);
+        // Reset the upload map before showing a new route
+        resetUploadMap();
 
-        // Hide the message container when the map is loaded
-        const messageContainer = document.getElementById('messageContainer');
-        messageContainer.style.display = 'none';
-    };
-    reader.readAsText(fileUploadInput.files[0]);
-}
+        // Initialize a new Leaflet map for file upload
+        const uploadMap = initializeUploadMap();
 
-// Function to calculate route between two waypoints using OpenRouteService API
-async function calculateRoute(startPoint, endPoint) {
-    const profile = 'foot-hiking'; // Specify the hiking profile
-    const url = `https://api.openrouteservice.org/v2/directions/${profile}?api_key=${ORS_API_KEY}&start=${startPoint.lon},${startPoint.lat}&end=${endPoint.lon},${endPoint.lat}`;
+        const reader = new FileReader();
+        reader.onload = async function (e) {
+            const gpxData = e.target.result;
 
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
+            // Parse GPX data to get waypoints
+            const waypoints = parseGPX(gpxData);
 
-        if (data.features && data.features.length > 0) {
-            // Extract coordinates from the route geometry
-            return data.features[0].geometry.coordinates.map(([lon, lat]) => [lat, lon]);
-        } else {
-            console.error('Error calculating route:', data);
-            return [];
-        }
-    } catch (error) {
-        console.error('Error calculating route:', error);
-        return [];
-    }
+            // Add waypoint markers with the custom icon and popup to the upload map
+            waypoints.forEach((waypoint) => {
+
+                // Choose icon based on waypoint type
+                const customIcon = getWaypointIcon(waypoint.type);
+
+                const marker = L.marker([waypoint.lat, waypoint.lon], {icon: customIcon}).addTo(uploadMap);
+                marker.bindPopup(waypoint.name);
+            });
+
+            // Request routes between waypoints using OpenRouteService API
+            for (let i = 0; i < waypoints.length - 1; i++) {
+                const startPoint = waypoints[i];
+                const endPoint = waypoints[i + 1];
+
+                const {geojson, details} = await fetchRoute([
+                    {lat: startPoint.lat, lng: startPoint.lon},
+                    {lat: endPoint.lat, lng: endPoint.lon}
+                ]);
+
+                // Add the route as a layer to the upload map
+                L.geoJSON(geojson, {color: 'red'}).addTo(uploadMap);
+
+                // Store the route data in the global array
+                storedRouteDataUploadMap.push(details);
+            }
+
+            // Fit the upload map to the bounds of all routes
+            const bounds = L.latLngBounds(waypoints.map((wpt) => L.latLng(wpt.lat, wpt.lon)));
+            uploadMap.fitBounds(bounds);
+
+            // Hide the message container when the map is loaded
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.style.display = 'none';
+
+            // Resolve the promise
+            resolve();
+        };
+        reader.readAsText(fileUploadInput.files[0]);
+    });
 }
 
 // Function to reset the file input and upload map

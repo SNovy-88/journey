@@ -13,12 +13,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.mindrot.jbcrypt.BCrypt;
 
 @WebServlet(name = "loginPageServlet", value = "/loginPageServlet")
 public class loginPageServlet extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
@@ -28,6 +28,9 @@ public class loginPageServlet extends HttpServlet {
 
             String username = getUsernameFromDatabase(email);
             session.setAttribute("username", username);
+
+            User currentUser = getUserFromDatabase(email);
+            session.setAttribute("user", currentUser);
 
             response.sendRedirect("success.jsp");
         } else {
@@ -41,8 +44,13 @@ public class loginPageServlet extends HttpServlet {
             DatabaseFacade df = new DatabaseFacade();
             List<User> users = df.getUsersByEmail(email);
 
-            return users != null && !users.isEmpty() && Objects.equals(users.get(0).getPassword(), password);
-
+            if (users != null && !users.isEmpty()) {
+                User user = users.get(0);
+                String hashedPassword = user.getHashedPassword();
+                return hashedPassword != null && BCrypt.checkpw(password, hashedPassword);
+            } else {
+                return false;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -59,7 +67,22 @@ public class loginPageServlet extends HttpServlet {
             } else {
                 return null;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    private User getUserFromDatabase(String email) {
+        try {
+            DatabaseFacade df = new DatabaseFacade();
+            List<User> users = df.getUsersByEmail(email);
+
+            if (users != null && !users.isEmpty()) {
+                return users.get(0);
+            } else {
+                return null;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return null;
