@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 /src/main/webapp/JS/ORS_API_KEY.js
 __pycache__
+/q
 
 
 ### IntelliJ IDEA ###
@@ -40,4 +41,3 @@ build/
 
 ### Mac OS ###
 .DS_Store
-/q

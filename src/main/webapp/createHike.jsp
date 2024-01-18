@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="favicon.jsp" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" accept-language="en">
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="CSS/styles.css">
@@ -9,12 +9,17 @@
 
         <title> Journey | Create your hike </title>
 
-        <!-- Bootstrap -->
+        <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+        <!-- Bootstrap JavaScript -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
         <!-- Bootstrap stepper JavaScript & CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
         <!-- Leaflet CSS -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -131,7 +136,6 @@
                                             <table id="coordinates-table" class="table table-sm table-hover border table-borderless"></table> <!-- Coordinate table under the map -->
                                         </div>
                                     <button class="btn btn-primary" type="button" onclick="if (validateStep1()) nextButtonClick()"> Next </button>
-                                    <button class="btn btn-success" type="submit" onclick="createHike()">Create Hike</button>
                                 </div>
                                 <!-- Content of the 2nd stepper part -->
                                 <div id="test-l-2" class="content">
@@ -387,31 +391,30 @@
                                 </div>
                                 <!-- Content of the 3rd stepper part -->
                                 <div id="test-l-3" class="content">
-                                        <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-                                        <!-- Image input -->
-                                        <div class="file-upload">
-                                            <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
-                                            <div class="image-upload-wrap">
-                                                <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
-                                                <div class="drag-text">
-                                                    <h3>Drag and drop a file or select add Image</h3>
-                                                </div>
-                                            </div>
-                                            <div class="file-upload-content">
-                                                <img class="file-upload-image" src="#" alt="your image" />
-                                                <div class="image-title-wrap">
-                                                    <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <button class="btn btn-primary" type="button" onclick="stepper1.next()">Next</button>
+                                    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+                                    <p><b> Upload Image: (Optional) </b></p>
+                                    <div class="invalid-feedback" id="imageUploadFeedback" style="display: none">
+                                        Please choose a .jpg file.
+                                    </div>
+                                    <div class="custom-file-input">
+                                        <label for="image" class="btn btn-secondary"> Choose File </label>
+                                        <input type="file" id="image" name="image" accept=".jpg,.png,image/*" onchange="showPreview(this)">
+                                    </div>
+                                    <br>
+                                    <div id="preview-container">
+                                        <img id="uploaded-image" src="" alt="Uploaded Image" style="display: none">
+                                        <br>
+                                        <button type="button" id="remove-btn" class="btn btn-danger" onclick="removeImage()" style="display: none"> Remove Image </button>
+                                    </div>
+                                    <br>
                                     <button class="btn btn-primary" type="button" onclick="stepper1.previous()">Previous</button>
+                                    <button class="btn btn-success" type="submit" onclick="createHike()">Create Hike</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> <!-- End of 3-step form element -->
+            </div>
             <!-- Bootstrap pop-up-modal for map input -->
             <div class="modal fade" id="waypointModal" tabindex="-1" role="dialog" aria-labelledby="waypointModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -451,7 +454,7 @@
                             Hike successfully created!
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"> Close </button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"> Close </button>
                         </div>
                     </div>
                 </div>
@@ -468,11 +471,5 @@
         <script src="JS/ORS_API_KEY.js"></script>
         <script src="JS/createHikeImage.js"></script>
 
-        <!-- Additional Bootstrap JavaScript -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-        <!-- Additional Bootstrap stepper JavaScript -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     </body>
 </html>

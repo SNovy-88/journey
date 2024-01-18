@@ -1,32 +1,52 @@
-function readURL(input) {
-    if (input.files && input.files[0]) {
+// Function to show the image on screen
+function showPreview(input) {
+    const fileInput = input.files[0];
+    const previewContainer = document.getElementById("preview-container");
+    const uploadedImage = document.getElementById("uploaded-image");
+    const removeBtn = document.getElementById("remove-btn");
+    const imageUploadFeedback = document.getElementById('imageUploadFeedback');
 
-        var reader = new FileReader();
+    // Clear previous feedback
+    imageUploadFeedback.style.display = 'none';
 
-        reader.onload = function(e) {
-            $('.image-upload-wrap').hide();
+    if (fileInput) {
+        const isFileExtensionValid = fileInput.name.toLowerCase().endsWith('.jpg') || fileInput.name.toLowerCase().endsWith('.png');
 
-            $('.file-upload-image').attr('src', e.target.result);
-            $('.file-upload-content').show();
+        if (!isFileExtensionValid) {
+            imageUploadFeedback.textContent = 'Please upload a valid .png or .jpg file.';
+            imageUploadFeedback.style.display = 'block';
+            return;
+        }
 
-            $('.image-title').html(input.files[0].name);
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            previewContainer.style.display = "block";
+            uploadedImage.src = e.target.result;
+            uploadedImage.style.display = "block";
+            removeBtn.style.display = "block";
         };
 
-        reader.readAsDataURL(input.files[0]);
-
-    } else {
-        removeUpload();
+        reader.readAsDataURL(fileInput);
     }
 }
 
-function removeUpload() {
-    $('.file-upload-input').replaceWith($('.file-upload-input').clone());
-    $('.file-upload-content').hide();
-    $('.image-upload-wrap').show();
+// Function to remove the image from screen
+function removeImage() {
+    const previewContainer = document.getElementById("preview-container");
+    const uploadedImage = document.getElementById("uploaded-image");
+    const fileInput = document.getElementById("image");
+    const removeBtn = document.getElementById("remove-btn");
+    const imageUploadFeedback = document.getElementById('imageUploadFeedback');
+
+    // Clear the file input
+    fileInput.value = "";
+
+    if (uploadedImage.src.includes("")) {
+        previewContainer.style.display = "none";
+        removeBtn.style.display = "none";
+        imageUploadFeedback.style.display = 'none';
+    }
+
+    uploadedImage.src = "";
 }
-$('.image-upload-wrap').bind('dragover', function () {
-    $('.image-upload-wrap').addClass('image-dropping');
-});
-$('.image-upload-wrap').bind('dragleave', function () {
-    $('.image-upload-wrap').removeClass('image-dropping');
-});
