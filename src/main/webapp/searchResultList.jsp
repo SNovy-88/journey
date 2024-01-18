@@ -66,8 +66,8 @@
                                 <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="1">Easy</a></li>
                                 <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="2">Moderate</a></li>
                                 <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="3">Intermediate</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="4">Expert</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="5">Challenging</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="4">Challenging</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0)" onclick="updateDropdownExIcons('drop-down-btn-fitness', this)" data-id="5">Expert</a></li>
                             </ul>
                         </div>
                     </div>
