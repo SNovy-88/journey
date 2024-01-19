@@ -41,9 +41,9 @@ function convertValueToString(type, value) {
                 case "3":
                     return "Intermediate";
                 case "4":
-                    return "Expert";
-                case "5":
                     return "Challenging";
+                case "5":
+                    return "Expert";
                 default:
                     return "Choose here";
             }
