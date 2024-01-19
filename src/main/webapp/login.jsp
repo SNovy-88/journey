@@ -49,7 +49,7 @@
                     </div>
                     <div class="d-flex">
                         <button class="submit-button mr-2">Sign in</button>
-                        <button class="submit-button" onclick="window.location.href = 'register.jsp';">Sign up</button>
+                        <button type="button" class="submit-button" onclick="window.location.href = 'register.jsp';">Sign up</button>
                     </div>
                 </form>
             </div>
