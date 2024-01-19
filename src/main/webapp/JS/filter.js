@@ -1,26 +1,20 @@
-
-//sets the value of the hidden input field to the value of the search input field
+// Sets the value of the hidden input field to the value of the search input field
 function setHiddenInput(){
     console.log("setHiddenInput called");
     let searchValue = document.getElementById("search-input").value;
     document.getElementById("search-input-hidden").value = searchValue;
 }
 
-//sets the chosen dropdown value to the dropdown after the site reloads, so it doesnt need to be reselected
+// Sets the chosen dropdown value to the dropdown after the site reloads, so it doesn't need to be reselected
 function setSelectedDropdownOption(dropdownButtonId) {
     var dropdownButton = document.getElementById(dropdownButtonId);
     var parameterValue = dropdownButton.getAttribute('data-parameter-value');
     dropdownButton.textContent = convertValueToString(dropdownButtonId, parameterValue);
-    /*if (parameterValue) {
-        dropdownButton.textContent = convertValueToString(dropdownButtonId, parameterValue);
-    } else {
-        dropdownButton.textContent = "Choose here";
-    }*/
 }
 
-//calls the setSelectedDropdownOption function for each dropdown button
+// Calls the setSelectedDropdownOption function for each dropdown button
 window.onload = function() {
-    //List of all dropdwon button IDs
+    // List of all dropdown button IDs
     var dropdownButtonIds = ['drop-down-btn-fitness', 'drop-down-btn-stamina', 'drop-down-btn-experience', 'drop-down-btn-scenery'];
 
     // Call setSelectedDropdownOption for each dropdown button
@@ -29,7 +23,7 @@ window.onload = function() {
     });
 }
 
-//converts the value of the dropdown button to a string
+// Converts the value of the dropdown button to a string
 function convertValueToString(type, value) {
     switch (type) {
         case "drop-down-btn-fitness":

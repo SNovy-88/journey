@@ -1,7 +1,4 @@
-// Flag to track unsaved changes
 let unsavedChanges = true;
-
-// Stepper element
 const stepper1 = new Stepper(document.querySelector('#stepper1'));
 
 // Function for validation of Name & Description input
@@ -90,10 +87,7 @@ window.nextButtonClick = async function () {
     document.getElementById('height-difference').value = Math.round(totalAscent);
     document.getElementById('distance').value = (totalDistance / 1000).toFixed(2);
 
-    // Move to the next step
     stepper1.next();
-
-    // Scroll to the top of the page
     window.scrollTo(0, 0);
 };
 
@@ -210,8 +204,6 @@ featureSwitch.addEventListener('change', function() {
 function createHike() {
     // Bypass the flag
     unsavedChanges = false;
-
-    // Update the hidden input field with cached GPX data
     updateGPXInput();
 }
 
