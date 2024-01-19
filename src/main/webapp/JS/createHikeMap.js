@@ -1,4 +1,3 @@
-// Initialize the map
 const map = L.map('map').setView([47, 11], 7); // Set the initial view
 
 // Add OpenStreetMap tile layer to the map
@@ -6,22 +5,11 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// Initialize an empty array to store waypoints
 const waypoints = [];
-
-// Coordinates-table element
 const coordinatesTable = document.getElementById('coordinates-table');
-
-// Get the modal and input elements
 const waypointNameInput = document.getElementById('waypointNameInput');
-
-// Initialize a variable to store GPX data
 let cachedGPXData = '';
-
-// Route-display variable
 let routePolyline;
-
-// Variable to store an array of route data
 let storedRouteDataMap = [];
 
 // Click event listener for the map
@@ -37,14 +25,11 @@ map.on('click', function (e) {
         // Reset the description input and type selection when modal opens
         $('#waypointDescriptionInput').val('');
         $('#waypointTypeSelect').val('standard');
-
-        // Focus on the waypoint name input
         $('#waypointNameInput').focus();
     });
 
     // Click event listener for the "Cancel" button in the modal
     $('#waypointModal .btn-secondary').on('click', function () {
-        // Close the modal without adding the waypoint
         $('#waypointModal').modal('hide');
         unsavedChanges = false;
     });
@@ -56,28 +41,13 @@ map.on('click', function (e) {
 
     // Function to be called when the "Add Waypoint" button is clicked
     window.addWaypoint = function () {
-        // Get the waypoint name from the input field
         const waypointName = waypointNameInput.value;
-
-        // Get the selected waypoint type from the dropdown
         const waypointType = document.getElementById('waypointTypeSelect').value;
-
-        // Get the waypoint description from the textarea
         const waypointDescription = document.getElementById('waypointDescriptionInput').value;
-
-        // Close the modal
         $('#waypointModal').modal('hide');
-
-        // Create a custom icon based on the selected waypoint type
-        const customIcon = getWaypointIcon(waypointType);
-
-        // Add a marker at the clicked location with the custom icon
+        const customIcon = getWaypointIcon(waypointType); // Create a custom icon based on the selected waypoint type
         const marker = L.marker(clickedLatLng, { icon: customIcon }).addTo(map);
-
-        // Enable dragging the marker on the map
         enableMarkerDragging(marker, waypoints.length - 1);
-
-        // Store the waypoint in waypoints array with name, type, description, and marker
         waypoints.push({ name: waypointName, type: waypointType, description: waypointDescription, latlng: clickedLatLng, marker: marker });
 
         // If there are at least two waypoints, fetch route and zoom the map accordingly
@@ -87,10 +57,7 @@ map.on('click', function (e) {
             map.fitBounds(L.latLngBounds(waypoints.map(wp => wp.latlng)));
         }
 
-        // Update the coordinates table below the map
         updateCoordinatesTable();
-
-        // Cache GPX data and update the hidden input field
         cachedGPXData = createGPX();
     };
 });
@@ -100,13 +67,8 @@ async function addRouting(startLatLng, endLatLng) {
     const coordinates = [startLatLng, endLatLng];
     try {
         const { geojson, details } = await fetchRoute(coordinates);
-
-        // Add the route GeoJSON layer to the map
-        routePolyline = L.geoJSON(geojson, {color: 'red'}).addTo(map);
-
-        // Store the route data in an array
+        routePolyline = L.geoJSON(geojson, {color: 'red'}).addTo(map); // Add the route GeoJSON layer to the map
         storedRouteDataMap.push(details);
-
     } catch (error) {
         console.error('Error fetching route:', error);
     }
@@ -114,8 +76,7 @@ async function addRouting(startLatLng, endLatLng) {
 
 // Function to update the coordinates table below the map
 function updateCoordinatesTable() {
-    // Clear the existing table
-    coordinatesTable.innerHTML = '';
+    coordinatesTable.innerHTML = ''; // Clear the existing table
 
     // Create the table header
     const thead = document.createElement('thead');
@@ -170,24 +131,16 @@ function updateCoordinatesTable() {
 // Function to be called when the "Delete Last Waypoint" button is clicked
 window.deleteLastWaypoint = function () {
     if (waypoints.length > 0) {
-        // Remove the last waypoint from the array
         const removedWaypoint = waypoints.pop();
-
-        // Remove the marker from the map
         map.removeLayer(removedWaypoint.marker);
-
-        // Update the route (and fit bounds)
         updateRoute();
     }
 };
 
 // Function to update the route when waypoints are added, deleted, or dragged
 async function updateRoute() {
-    // Clear the existing route
-    clearRoute();
-
-    // Clear the storedRouteDataArray before fully recalculating the route
-    storedRouteDataMap = [];
+    clearRoute(); // Clear the existing route
+    storedRouteDataMap = []; // Clear the storedRouteDataArray before fully recalculating the route
 
     // Recalculate the route if there are at least two waypoints
     if (waypoints.length >= 2) {
@@ -204,10 +157,7 @@ async function updateRoute() {
         }
     }
 
-    // Update the coordinates table
     updateCoordinatesTable();
-
-    // Cache GPX data and update the hidden input field
     cachedGPXData = createGPX();
 }
 
@@ -232,8 +182,6 @@ function enableMarkerDragging(marker, index) {
         if (draggedIndex !== -1) {
             // Update the latlng of the dragged waypoint
             waypoints[draggedIndex].latlng = marker.getLatLng();
-
-            // Update the route with the new waypoints
             updateRoute();
         }
     });

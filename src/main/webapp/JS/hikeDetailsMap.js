@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeAndShowRoute();
 });
 
-// Declare the upload map
 let detailMap = null;
 
 // Initialize arrays to accumulate distances and elevation data
@@ -17,8 +16,7 @@ async function initializeAndShowRoute() {
     console.log("XML Text: " + gpxData);
 
     if (!detailMap) {
-        // Initialize the map
-        detailMap = L.map('detailMap').setView([47, 11], 7); // Adjust the initial view as needed
+        detailMap = L.map('detailMap').setView([47, 11], 7); // Set the initial view
 
         // Add OpenStreetMap tile layer to the map
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -26,12 +24,10 @@ async function initializeAndShowRoute() {
         }).addTo(detailMap);
     }
 
-    // Parse GPX data to get waypoints
     const waypoints = parseGPX(gpxData);
 
     // Add waypoint markers with the custom icon and popup to the detail map
     waypoints.forEach((waypoint) => {
-
         // Choose icon based on waypoint type
         const customIcon = getWaypointIcon(waypoint.type);
 
@@ -55,14 +51,10 @@ async function initializeAndShowRoute() {
         accumulatedDistances = accumulatedDistances.concat(adjustedDistances);
         accumulatedElevationData = accumulatedElevationData.concat(elevationDataObj.elevationData);
 
-        // Update total accumulated distance
-        totalAccumulatedDistance += elevationDataObj.distances.slice(-1)[0];
-
-        // Add the route as a layer to the upload map
+        totalAccumulatedDistance += elevationDataObj.distances.slice(-1)[0]; // Update total accumulated distance
         L.geoJSON(geojson, { color: 'red' }).addTo(detailMap);
     }
 
-    // Add elevation profile chart
     addElevationProfileChart(accumulatedDistances, accumulatedElevationData);
 
     // Fit the upload map to the bounds of all routes

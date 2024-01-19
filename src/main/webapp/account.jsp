@@ -8,7 +8,6 @@
     </head>
     <body>
         <jsp:include page="navBar.jsp"/> <!-- Navigation bar -->
-        <img src="pictures/wireframes/profiledetail.png" alt="Stand-In" class="center">
         <%
             if (session != null && session.getAttribute("email") != null) {
                 response.sendRedirect("success.jsp");
