@@ -13,7 +13,6 @@ let totalAccumulatedDistance = 0;
 async function initializeAndShowRoute() {
     // Get the GPX data from the hidden input
     const gpxData = document.getElementById('xmlText').value;
-    console.log("XML Text: " + gpxData);
 
     if (!detailMap) {
         detailMap = L.map('detailMap').setView([47, 11], 7); // Set the initial view

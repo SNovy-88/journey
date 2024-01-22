@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 
@@ -59,6 +60,8 @@ public class detailPageServlet extends HttpServlet {
 
     public void extractWaypoints(String xmlText, HttpServletRequest request) {
         try {
+            xmlText = xmlText.replaceAll("&", "&amp;");
+
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
 
@@ -72,11 +75,18 @@ public class detailPageServlet extends HttpServlet {
             // Iterate through Waypoints and add them to the list
             for (int i = 0; i < waypointNodes.getLength(); i++) {
                 Element waypoint = (Element) waypointNodes.item(i);
+
                 String latitude = waypoint.getAttribute("lat");
                 String longitude = waypoint.getAttribute("lon");
-                String name = waypoint.getElementsByTagName("name").item(0).getTextContent();
-                String type = waypoint.getElementsByTagName("type").item(0).getTextContent();
-                String description = waypoint.getElementsByTagName("desc").item(0).getTextContent();
+
+                Node nameNode = waypoint.getElementsByTagName("name").item(0);
+                String name = (nameNode != null) ? nameNode.getTextContent() : "";
+
+                Node typeNode = waypoint.getElementsByTagName("type").item(0);
+                String type = (typeNode != null) ? typeNode.getTextContent() : "";
+
+                Node descNode = waypoint.getElementsByTagName("desc").item(0);
+                String description = (descNode != null) ? descNode.getTextContent() : "";
 
                 Map<String, String> waypointMap = new HashMap<>();
                 waypointMap.put("latitude", latitude);
