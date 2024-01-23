@@ -69,21 +69,12 @@ public class HikeBrokerJPA extends BrokerBaseJPA<Hike> {
 
         List <Hike> finalHikesList = new LinkedList<>(hikes);
 
-        if (months != 0 || duration != 0){
-            System.out.println("Final Hikes List has been cleared");
-            finalHikesList.clear();
-        }
-
         if (months != 0 || duration != 0) {
+            finalHikesList.clear();
             for (Hike hike : hikes) {
                 int bitmask = hike.getRecommendedMonths();
                 int hikeDuration = (hike.getDurationHour() *60)+ hike.getDurationMin();
-                        System.out.println("Hikes bitmaks is: "+bitmask);
-                        System.out.println("Hikes months & bitmask equals: "+(months & bitmask));
-                        System.out.println("Filtered duration is: "+duration);
-                        System.out.println("Hikes duration is: "+hikeDuration);
                 if (((months & bitmask) != 0) || (hikeDuration <= duration )) {
-                    System.out.println("Hike added to finalHikesList");
                     finalHikesList.add(hike);
                 }
             }
