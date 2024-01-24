@@ -278,7 +278,7 @@
                 %>
                 <!-- Embedded weather forecast by windy.com -->
                 <!--https://www.windy.com/de/-Gewitter-thunder?thunder,2023120621,47.180,9.439,10,m:eX6agqS-->
-                <iframe width="380" height="450" src="https://embed.windy.com/embed2.html?lat=<%=lastLat%>&lon=<%=lastLon%>&detailLat=<%=lastLat%>&detailLon=<%=lastLon%>&width=380&height=450&zoom=11&level=surface&overlay=temp&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=true&metricWind=default&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
+                    <iframe width="380" height="450" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=°C&metricWind=km/h&zoom=9&overlay=rain&product=ecmwf&level=surface&lat=<%=lastLat.substring(0,5)%>&lon=<%=lastLon.substring(0,5)%>&detailLat=<%=lastLat%>&detailLon=<%=lastLon%>&marker=true&message=true" frameborder="0"></iframe>
             </div>
         </div>
     </body>
